@@ -1,0 +1,478 @@
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 240px;
+    background: var(--sidebar);
+    box-shadow: 0 0 14px rgba(0,0,0,.1);
+    overflow: scroll;
+    transition: .5s;
+}
+
+.sidebar.activate{
+    left: -100%;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar .stitle{
+    padding: 15px 10px;
+    margin: 0 10px;
+    text-align: center;
+    border-bottom: 1px solid #efdddd59;
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--sidebar);
+}
+
+.sidebar ul{
+    margin: 50px 15px;
+}
+
+.sidebar ul li{
+    margin: 30px 0;
+}
+
+.sidebar ul li.logout{
+    position: absolute;
+    bottom: 0px;
+    margin: 0;
+}
+
+.sidebar ul li a,.sidebar ul li.forms{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: var(--gray);
+}
+
+.sidebar ul li a svg,.sidebar ul li.forms svg{
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.sidebar ul ul{
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.sidebar ul ul li{
+    color: var(--gray);
+    font-size: 14px;
+    margin: 15px 0;
+    line-height: 25px;
+}
+
+.sidebar ul ul li a{
+    font-size: 12px;
+    margin: 7px 0;
+}
+
+.about{
+    margin-left: 240px;
+    transition: .5s;
+}
+
+.about.activate{
+    margin-left: 0;
+}
+
+.about .content{
+    margin: 0 10px;
+}
+
+.about .content .hdr{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10px;
+    position: fixed;
+    top: 0;
+    left: 240px;
+    width: calc(100% - 240px);
+    background: aliceblue;
+}
+
+.about .content .hdr .beg{
+    display: flex;
+    align-items: center;
+}
+
+.about .content .hdr .beg svg{
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.about .content .hdr .beg h3{
+    margin-left: 10px;
+}
+
+.about .content .hdr b{
+    position: relative;
+    cursor: pointer;
+}
+
+.about .content .hdr b ul.men{
+    position: absolute;
+    top: 65px;
+    right: 0;
+    width: 190px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.about .content .hdr b ul.men.active{
+    top: 33px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.about .content .hdr b ul.men::before{
+    position: absolute;
+    content: '';
+    top: -16px;
+    right: 15px;
+    border: solid 8px;
+    border-color: transparent transparent #b5b5bb;
+}
+
+.about .content .hdr b ul.men li a{
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #00000094;
+    transition: .2s;
+}
+
+.about .content .hdr b ul.men li:hover a{
+    background: var(--bx1);
+    color: var(--white);
+}
+
+.about .content .hdr b ul.men li a svg{
+    font-size: 17px;
+    margin-right: 10px;
+}
+
+.about .content .submitted{
+    margin-top: 80px;
+}
+
+.hdr p span{
+    font-size: 13px;
+}
+
+.boxes{
+    margin: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.boxes .box{
+    padding: 25px;
+    border-radius: 8px;
+    flex-basis: 25%;
+    text-align: center;
+    background-color: var(--white) !important;
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.boxes .box p{
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.boxes .box svg{
+    font-size: 55px;
+    padding: 15px;
+    border-radius: 50px;
+    color: var(--white);
+}
+
+.boxes .box-1 svg{
+    background: var(--bx1);
+}
+
+.boxes .box-2 svg{
+    background: linear-gradient(87deg,#2dce89,#2dcecc);
+}
+
+.boxes .box-3 svg{
+    background: var(--bx3);
+}
+
+.about .content .pro-data{
+    margin: 30px 10px 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+    background-color: var(--white);
+    margin-top: 80px;
+    /* background: var(--bx1);
+    color: var(--white); */
+}
+
+.about .content .fo{
+    margin: 80px 15px 20px;
+    padding: 25px;
+    background-color: var(--white);
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+}
+
+.about .content .pro-data p{
+    line-height: 50px;
+    font-size: 14px;
+}
+
+.about .content .pro-data .hdrs{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.about .content .pro-data .hdrs button{
+    padding: 7px;
+    border-radius: 5px;
+    background: none;
+    cursor: pointer;
+    border: none;
+    background: var(--bx1);
+    color: var(--white);
+    box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.about .content .pro-data .hdrs button svg{
+    font-size: 15px;
+}
+
+.about .content form{
+    background-color: var(--white);
+}
+
+.about .content form h3{
+    text-align: center;
+}
+
+.about .content form p{
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.about .content form p.resin{
+    font-size: 12px;
+    margin: 15px 0;
+    color: #848484cf;
+}
+
+.about .content form .fields{
+    margin: 20px 0;
+}
+
+.about .content form .fields label{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.about .content form .fields input,.about .content form .fields select{
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid rgb(202, 202, 202);
+}
+
+.about .content form .fields p.error{
+    color: var(--error);
+    font-size: 11px;
+    margin: 4px;
+}
+
+.about .content form .btn{
+    text-align: center;
+}
+
+.about .content form .btn button{
+    margin: 20px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    background: var(--bx1);
+    box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+    color: var(--white);
+    padding: 10px;
+    border: none;
+}
+
+.research h4{
+    margin: 15px 0 15px 10px;
+    color: #615c5c;
+}
+
+.research h3{
+    margin-bottom: 10px;
+}
+
+.research .research_projects{
+    padding: 10px 15px;
+    margin: 25px 10px;
+    background-color: var(--white);
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+    border-radius: 5px;
+    color: #615c5c;
+}
+
+.research .research_projects .btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.research .research_projects .btn button{
+    margin: 0 10px;
+    cursor: pointer;
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: none;
+    color: var(--white);
+}
+
+.research .research_projects .btn a.edit button{
+    background: linear-gradient(87deg,#2dce89,#2dcecc) !important;
+}
+
+.research .research_projects .btn button{
+    background: #ff002f9e;
+}
+
+.research .research_projects p{
+    line-height: 35px;
+    font-size: 14px;
+}
+
+.research p.no{
+    margin-bottom: 35px;
+    color: #ff002f9e;
+    text-align: center;
+    font-weight: bold;
+}
+
+.iqac{
+    margin: 20px 10px;
+}
+
+.iqac form{
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.iqac form .fields p.error{
+    color: var(--error);
+    font-size: 12px;
+}
+
+.iqac form button{
+    color: var(--white);
+    font-size: 11px;
+    margin-left: 50px;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    background: rgb(3, 155, 229);
+}
+
+.iqac .tables .table{
+    margin: 25px 0;
+}
+
+/* table{
+    margin: 50px auto !important;
+    width: 90% !important;
+    border-collapse: collapse;
+} */
+
+table tr th{
+    font-weight: bolder !important;
+    font-size: 13px !important;
+}
+
+table th,table td{
+    text-align: center !important;
+}
+
+table td{
+    font-size: 13px !important;
+}
+
+.MuiButtonBase-root{
+    display: block !important;
+}
+
+.MuiInputBase-input{
+    font-size: 12px !important;
+}
+
+.MuiIcon-root {
+    width: .9em !important;
+    height: .9em !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+}
+
+.material-icons{
+    line-height: .9 !important;
+}
+
+.MTablePaginationInner-root-14,.MTablePaginationInner-root-15,.MTablePaginationInner-root-14 span:nth-child(2){
+    display: flex;
+    align-items: center;
+}
+
+.MuiTableSortLabel-root:hover .MuiTableSortLabel-icon{
+    opacity: 1 !important;
+}
+
+@media(max-width:1080px){
+    .boxes{
+       flex-wrap: wrap;
+    }
+    
+    .boxes .box{
+        flex-basis: 95%;
+        margin-bottom: 35px;
+    }
+}
+
+@media(max-width:700px){
+    .about{
+        margin-left: 0 !important;
+    }
+
+    .sidebar{
+        left: -100%;
+    }
+
+    .sidebar.sidebar.activate{
+        left: 0;
+    }
+}
