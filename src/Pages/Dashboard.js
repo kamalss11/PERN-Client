@@ -858,6 +858,915 @@ function Dashboard(){
     return (
         <>
             <Sidebar />
+            <div id="docx" style={{display:'none'}}>
+            <div class="WordSection1">
+                <h1>Name : {uData ? uData[0].name : ''}</h1>
+                <h1>Department : {uData ? uData[0].department : ''}</h1>
+                <h2>RESEARCH </h2>
+                <h4>1.1 Research Projects</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Faculty Member</th>
+                    <th>Title of Project</th>
+                    <th>Newly sanctioned or Ongoing</th>
+                    <th>Sanctioned Amount(Rs.)</th>
+                    <th>Grant No. / File No.</th>
+                    <th>Amount Received(Rs.)</th>
+                    <th>Funding Agency</th>
+                    <th>Date of Sanction</th>
+                </tr>
+                {
+                    research_projects ? research_projects.map((r,i)=>
+                    { const {name,title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency} = r
+                    return(
+                        <tr key={i}>
+                            <td>{i+1}</td>
+                            <td>{name ? name : '-'}</td>
+                            <td>{title ? title : '-'}</td>
+                            <td>{no ? no : '-'}</td>
+                            <td>{amount_sanctioned ? amount_sanctioned : '-'}</td>
+                            <td>{fileno ? fileno : '-'}</td>
+                            <td>{amount_received ? amount_received : '-'}</td>
+                            <td>{funding_agency ? funding_agency : '-'}</td>
+                            <td>{date_sanctioned ? date_sanctioned : '-'}</td>
+                        </tr>
+                    )
+                    }):null
+                }
+                </tbody>
+                </table>
+                
+                <h4>1.2 Patents</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Faculty Member</th>
+                    <th>Title of the Patent  </th>
+                    <th>Patent Field</th>
+                    <th>Patent No. / File No.  </th>
+                    <th>Date of awarded of patent</th>
+                    <th>Royalty Received  </th>
+                    <th>Patent Providing Agency  </th>
+                    <th>India / Abroad(specify country)  </th>
+                </tr>
+                {
+                    patents ? patents.map((r,i)=>{
+                        const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{field ? field : '-'}</td>
+                                <td>{fileno ? fileno : '-'}</td>
+                                <td>{date_awarded_patent ? date_awarded_patent : '-'}</td>
+                                <td>{royalty_received ? royalty_received : '-'}</td>
+                                <td>{providing_agency ? providing_agency : '-'}</td>
+                                <td>{country ? country : '-'}</td>
+                            </tr>
+                        )
+                    }):null
+                }
+                </tbody>
+                </table>
+
+                <h4>1.3 Awards for Innovation</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Faculty Member</th>
+                    <th>Title of the innovation</th>
+                    <th>Award Category</th>
+                    <th>Name of the awardee</th>
+                    <th>Designation</th>
+                    <th>Awarding agency (include our College also)</th>
+                    <th>Date</th>
+                    <th>Venue </th>
+                    <th>Regional/State/ National/ International</th>
+                </tr>
+                {
+                    awards_for_innovation ? awards_for_innovation.map((r,i)=>{
+                    const {awardee_name,designation,award_category,title,awarding_agency,venue,level,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{award_category ? award_category : '-'}</td>
+                                <td>{awardee_name ? awardee_name : '-'}</td>
+                                <td>{designation ? designation : '-'}</td>
+                                <td>{awarding_agency ? awarding_agency : '-'}</td>
+                                <td>{date? date : '-'}</td>
+                                <td>{venue? venue : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>     
+
+                <h4>1.4 Ph. D/M. Phil awarded during the period</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Scholar</th>
+                    <th>Ph. D/M. Phil</th>
+                    <th>Guide’s Name</th>
+                    <th>Title of the Thesis</th>
+                    <th>External Examiner’s Name, Designation and Address</th>
+                    <th>Date</th>
+                    <th>Venue of Viva</th>
+                </tr>
+                {
+                    degree ? degree.map((r,i)=>{
+                        const {deg,guide_name,title,external,venue,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{deg? deg : '-'}</td>
+                                <td>{guide_name ? guide_name : '-'}</td>
+                                <td>{title? title : '-'}</td>
+                                <td>{external ? external : '-'}</td>
+                                <td>{date? date : '-'}</td>
+                                <td>{venue? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>           
+
+                <h4>1.5 National/International Fellowship</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Faculty Member</th>
+                    <th>National/International Fellowship</th>
+                    <th>Date of Sanction</th>
+                    <th>Funding Agency</th>
+                    <th>Sanctioned Amount </th>
+                </tr>
+                {
+                    fellowship ? fellowship.map((r,i)=>{
+                        const {fellowship,date_sanctioned,funding_agency,sanctioned_amount,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{fellowship? fellowship : '-'}</td>
+                                <td>{date_sanctioned? date_sanctioned : '-'}</td>
+                                <td>{funding_agency ? funding_agency : '-'}</td>
+                                <td>{sanctioned_amount ? sanctioned_amount : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>   
+
+                <h2>COLLABORATIONS</h2>
+
+                <h4>2.1 Number of Collaborative activities</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Nature of Activity</th>
+                    <th>Participant</th>
+                    <th>Source of financial support</th>
+                    <th>Period(from – to)</th>
+                </tr>
+                {
+                    collab_activ ? collab_activ.map((r,i)=>{
+                        const {activity,participant,financial_support,period,name
+                            } = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{activity? activity : '-'}</td>
+                                <td>{participant? participant : '-'}</td>
+                                <td>{financial_support ? financial_support : '-'}</td>
+                                <td>{period ? period : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>  
+
+                <h4>2.2 Linkages</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Nature and Title  of the Linkage</th>
+                    <th>Partnering agency</th>
+                    <th>Period(from – to)</th>
+                </tr>
+                {
+                    linkages ? linkages.map((r,i)=>{
+                        const {title,partnering_agency,period,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{title? title : '-'}</td>
+                                <td>{partnering_agency? partnering_agency : '-'}</td>
+                                <td>{period ? period : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>  
+
+                <h4>2.3 MoU(s) Signed</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Organization</th>
+                    <th>Date Signed</th>
+                    <th>Period(from – to)</th>
+                    <th>Participants</th>
+                    <th>Purpose</th>
+                    <th>Total No. of Beneficiaries</th>
+                </tr>
+                {
+                    mou ? mou.map((r,i)=>{
+                        const {organization,date_signed,period,participants,purpose,total,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{organization? organization : '-'}</td>
+                                <td>{date_signed? date_signed : '-'}</td>
+                                <td>{period ? period : '-'}</td>
+                                <td>{participants ? participants : '-'}</td>
+                                <td>{purpose ? purpose : '-'}</td>
+                                <td>{total ? total : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table> 
+
+                <h2>EVENTS/PROGRAMMES/VISITS ORGANIZED</h2>
+
+                <h4>3.1 Conference / Seminar / Symposium / Workshop organized</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Conference/ Seminar/  Symposium / Workshop</th>
+                    <th>Title</th>
+                    <th>Sponsoring Agency(if applicable)</th>
+                    <th>Resource Person, Designation/Address  </th>
+                    <th>Objective of the event</th>
+                    <th>Outcome of the event</th>
+                    <th>National/International/State/Regional</th>
+                    <th>Total No. of Participants</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    conference ? conference.map((r,i)=>{
+                        const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{con_sem? con_sem : '-'}</td>
+                                <td>{title? title : '-'}</td>
+                                <td>{sponsoring_agency ? sponsoring_agency : '-'}</td>
+                                <td>{resource_person ? resource_person : '-'}</td>
+                                <td>{objective ? objective : '-'}</td>
+                                <td>{outcome ? outcome : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{total ? total : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table> 
+
+                <h4>3.2 Guest Lectures organized</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Name of Resource Person</th>
+                    <th>Designation / Address</th>
+                    <th>Topic</th>
+                    <th>Objective of the event</th>
+                    <th>Outcome of the event</th>
+                    <th>Total No. of Participants</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    guest_lectures ? guest_lectures.map((r,i)=>{
+                        const {resource_person,designation,topic,venue,objective,outcome,total,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{resource_person ? resource_person : '-'}</td>
+                                <td>{designation ? designation : '-'}</td>
+                                <td>{topic ? topic : '-'}</td>
+                                <td>{objective ? objective : '-'}</td>
+                                <td>{outcome ? outcome : '-'}</td>
+                                <td>{total ? total : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>3.3 Extension Activities</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Activities Performed</th>
+                    <th>Collaborating agency if any</th>
+                    <th>Total No. of Students</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    extension_activities ? extension_activities.map((r,i)=>{
+                        const {activities,collaborations,venue,total,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{activities ? activities : '-'}</td>
+                                <td>{collaborations ? collaborations : '-'}</td>
+                                <td>{total ? total : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>3.4 Industrial Visits</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Class</th>
+                    <th>Industry  Visited with address</th>
+                    <th>Total  No. of Beneficiaries</th>
+                    <th>Programme outcome</th>
+                    <th>Date</th>
+                </tr>
+                {
+                    industrial_visits ? industrial_visits.map((r,i)=>{
+                        const {classes,date,address,total,outcome,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{classes ? classes : '-'}</td>
+                                <td>{address ? address : '-'}</td>
+                                <td>{total ? total : '-'}</td>
+                                <td>{outcome ? outcome : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>3.5 Environmental Science (EVS) visit</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Nature of Activity</th>
+                    <th>Place of Visit with Address</th>
+                    <th>Total  No. of Students</th>
+                    <th>Date</th>
+                </tr>
+                {
+                    evs ? evs.map((r,i)=>{
+                        const {date,place,total,activity,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{activity ? activity : '-'}</td>
+                                <td>{place ? place : '-'}</td>
+                                <td>{total ? total : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>3.6 Any other departmental activities</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Name of the Activity</th>
+                    <th>Chief Guest / Resource Person with Designation/Address</th>
+                    <th>Topic</th>
+                    <th>No. of Participants</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    departmental_activities ? departmental_activities.map((r,i)=>{
+                        const {activity,guest,topic,total,venue,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{activity ? activity : '-'}</td>
+                                <td>{guest ? guest : '-'}</td>
+                                <td>{topic ? topic : '-'}</td>
+                                <td>{total ? total : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h2>CONSULTANCY PROJECTS / SERVICES</h2>
+
+                <h4>4.1 Consultancy Projects / Services</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Project Title</th>
+                    <th>New/On going</th>
+                    <th>Revenue Generated</th>
+                    <th>Date of Sanction</th>
+                    <th>Sponsoring / Consultancy Agency</th>
+                </tr>
+                {
+                    projects_services ? projects_services.map((r,i)=>{
+                        const {title,no,revenue_generated,date_sanction,sponsor,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{no ? no : '-'}</td>
+                                <td>{revenue_generated ? revenue_generated : '-'}</td>
+                                <td>{date_sanction ? date_sanction : '-'}</td>
+                                <td>{sponsor ? sponsor : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h2>FACULTY DETAILS </h2>
+
+                <h4>5.1 Honours and Recognitions received by Teachers</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Award /Honour Received </th>
+                    <th>Details</th>
+                    <th>International / National / State/Regional</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    honours ? honours.map((r,i)=>{
+                        const {award_honour,details,venue,level,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{award_honour ? award_honour : '-'}</td>
+                                <td>{details ? details : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.2 Qualifying in state/ national/ international level examinations</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>exam,</th>
+                    <th>exam_rollno,</th>
+                    <th>date</th>           
+                </tr>
+                {
+                    exams ? exams.map((r,i)=>{
+                        const {exam,exam_rollno,date,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{exam ? exam : `-`}</td>
+                                <td>{exam_rollno ? exam_rollno : `-`}</td>
+                                <td>{date ? date : `-`}</td> 
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.3 Books Published</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Name of the Book</th>
+                    <th>Publisher</th>
+                    <th>International/National</th>
+                    <th>ISBN No.</th>
+                </tr>
+                {
+                    books_published ? books_published.map((r,i)=>{
+                        const {book,publisher,level,isbn_no,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{book ? book : '-'}</td>
+                                <td>{publisher ? publisher : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{isbn_no ? isbn_no : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.4 Chapters Contributed</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Title of the Book</th>
+                    <th>Title of the Chapter</th>
+                    <th>Editor</th>
+                    <th>Publisher</th>
+                    <th>International/National</th>
+                    <th>ISBN No.</th>
+                </tr>
+                {
+                    chapters_contributed ? chapters_contributed.map((r,i)=>{
+                        const {title,chapter,editor,publisher,level,isbn_no,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{chapter ? chapter : '-'}</td>
+                                <td>{editor ? editor : '-'}</td>
+                                <td>{publisher ? publisher : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{isbn_no ? isbn_no : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.5 Conference Proceeding</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Name of the Conference</th>
+                    <th>Publication in Conference (give details)</th>
+                    <th>International/National</th>
+                    <th>Page No. & ISBN No.</th>
+                </tr>
+                {
+                    conference_proceeding ? conference_proceeding.map((r,i)=>{
+                        const {con,publication,level,isbn_no,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{con ? con : '-'}</td>
+                                <td>{publication ? publication : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{isbn_no ? isbn_no : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.6 Paper Presentation</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Conference / Seminar/ Symposium / Workshops</th>
+                    <th>Title of the Paper</th>
+                    <th>Financial support  from the College  (Rs.)</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                    <th>International / National/State/Regional</th>
+                </tr>
+                {
+                    paper_presentation ? paper_presentation.map((r,i)=>{
+                        const {con,title,financial_support,venue,level,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{con ? con : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{financial_support ? financial_support : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.7 Journal Publications</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Title of the paper</th>
+                    <th>Name of the Journal</th>
+                    <th>ISSN No. & DoI</th>
+                    <th>Volume No. , Issue &  Page No.</th>
+                    <th>SCI/SCIE/Scopus Indexed / UGC Recognized / Others</th>
+                    <th>Impact Factor (as per SCI)</th>
+                    <th>International / National</th>
+                </tr>
+                {
+                    journal_publications ? journal_publications.map((r,i)=>{
+                        const {title,jou,issn_no,volume,sci,impact,level,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{jou ? jou : '-'}</td>
+                                <td>{issn_no ? issn_no : '-'}</td>
+                                <td>{volume ? volume : '-'}</td>
+                                <td>{sci ? sci : '-'}</td>
+                                <td>{impact ? impact : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.8 Conference / Seminar / Symposium / Workshop Attended</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Conference / Seminar/ Symposium / Workshops</th>
+                    <th>Title</th>
+                    <th>International / National/State/Regional</th>
+                    <th>Financial support  from the College  (Rs.)</th>
+                    <th>Programme outcome</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    fconference ? fconference.map((r,i)=>{
+                        const {con,title,venue,level,financial_support,programme_outcome,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{con ? con : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{financial_support ? financial_support : '-'}</td>
+                                <td>{programme_outcome ? programme_outcome : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.9 Resource Person</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Guest lecture/Conference/Seminar/Symposium/Workshop</th>
+                    <th>Topic Presented</th>
+                    <th>Name of the Event</th>
+                    <th>National/International/State/Regional</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    resource_person ? resource_person.map((r,i)=>{
+                        const {sem,topic,event,venue,level,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{sem ? sem : '-'}</td>
+                                <td>{topic ? topic : '-'}</td>
+                                <td>{event ? event : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.10 Financial support</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Name of the professional body for which membership fee is provided</th>
+                    <th>Amount of support (Rs.)</th>
+                </tr>
+                {
+                    financial_support ? financial_support.map((r,i)=>{
+                        const {f,amount_support,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{f ? f : '-'}</td>
+                                <td>{amount_support ? amount_support : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.11 Professional development programmes</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Training/FDP/FIP/orientation Programme </th>
+                    <th>Title of the Programme</th>
+                    <th>Financial support  from the College  (Rs.)</th>
+                    <th>National/International/State/Regional</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                </tr>
+                {
+                    development_programmes ? development_programmes.map((r,i)=>{
+                        const {training,title,venue,financial_support,level,name,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{training ? training : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{financial_support ? financial_support : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.12 Undergone Online-Courses</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Training/FDP/FIP/orientation Programme </th>
+                    <th>Title of the Programme</th>
+                    <th>Duration</th>
+                    <th>Financial support  from the College  (Rs.)</th>
+                    <th>National/International/State/Regional</th>
+                </tr>
+                {
+                    online_courses ? online_courses.map((r,i)=>{
+                        const {training,title,date,financial_support,level,name,duration} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{training ? training : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{duration ? duration : '-'}</td>
+                                <td>{financial_support ? financial_support : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+
+                <h4>5.13 E-content developed</h4>
+                <table>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the faculty</th>
+                    <th>Name of the module</th>
+                    <th>Platform on which module is developed</th>
+                    <th>Date of launching e – content</th>
+                </tr>
+                {
+                    e_content ? e_content.map((r,i)=>{
+                        const {module,platform,date,name} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{name ? name : '-'}</td>
+                                <td>{module ? module : '-'}</td>
+                                <td>{platform ? platform : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
+                </table>
+            </div>
+            </div>
+
             <div className={`about`}>
                 <div className="content">
                     <div className="hdr">
