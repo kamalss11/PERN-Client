@@ -124,6 +124,7 @@ function Projects_services(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         no: values.no,
                                         revenue_generated: values.revenue_generated,
                                         date_sanction: values.date_sanction,

@@ -122,6 +122,7 @@ function Honours(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         award_honour: values.award_honour,
                                         details: values.details,
                                         venue: values.venue,

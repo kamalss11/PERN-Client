@@ -58,6 +58,11 @@ function Dashboard(){
             const datas = await res.json()
             console.log(datas)
             setUdata(datas.user)
+
+            if(datas.user[0].roll === 'Student'){
+                history.push('/student_dashboard')
+            }
+
             Setresearch_projects(datas.research_projects)
             Setpatents(datas.patents)
             Setawards_for_innovation(datas.awards_for_innovation)            
@@ -859,1582 +864,1597 @@ function Dashboard(){
         <>
             <Sidebar />
             <div id="docx" style={{display:'none'}}>
-            <div class="WordSection1">
-                <h1>Name : {uData ? uData[0].name : ''}</h1>
-                <h1>Department : {uData ? uData[0].department : ''}</h1>
-                <h2>RESEARCH </h2>
-                <h4>1.1 Research Projects</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the Faculty Member</th>
-                    <th>Title of Project</th>
-                    <th>Newly sanctioned or Ongoing</th>
-                    <th>Sanctioned Amount(Rs.)</th>
-                    <th>Grant No. / File No.</th>
-                    <th>Amount Received(Rs.)</th>
-                    <th>Funding Agency</th>
-                    <th>Date of Sanction</th>
-                </tr>
-                {
-                    research_projects ? research_projects.map((r,i)=>
-                    { const {name,title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{name ? name : '-'}</td>
-                            <td>{title ? title : '-'}</td>
-                            <td>{no ? no : '-'}</td>
-                            <td>{amount_sanctioned ? amount_sanctioned : '-'}</td>
-                            <td>{fileno ? fileno : '-'}</td>
-                            <td>{amount_received ? amount_received : '-'}</td>
-                            <td>{funding_agency ? funding_agency : '-'}</td>
-                            <td>{date_sanctioned ? date_sanctioned : '-'}</td>
-                        </tr>
-                    )
-                    }):null
-                }
-                </tbody>
-                </table>
-                
-                <h4>1.2 Patents</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the Faculty Member</th>
-                    <th>Title of the Patent  </th>
-                    <th>Patent Field</th>
-                    <th>Patent No. / File No.  </th>
-                    <th>Date of awarded of patent</th>
-                    <th>Royalty Received  </th>
-                    <th>Patent Providing Agency  </th>
-                    <th>India / Abroad(specify country)  </th>
-                </tr>
-                {
-                    patents ? patents.map((r,i)=>{
-                        const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country,name} = r
+                <div class="WordSection1">
+                    <div style={{textAlign: "center"}}>
+                        <h2>PSG COLLEGE OF ARTS & SCIENCE</h2>
+                        <p>An Autonomous College – Affiliated to Bharathiar University
+                        Accredited with A Grade by NAAC (3rd Cycle)
+                        College with Potential for Excellence (Status awarded by UGC)
+                        Star College Status Awarded by DBT-MST
+                        An ISO 9001:2015 Certified Institution
+                        Civil Aerodrome Post, Coimbatore-641 014
+                        Tamil Nadu, INDIA,</p>
+                    </div>
+                    <h1>Name : {uData ? uData[0].name : ''}</h1>
+                    <h1>Department : {uData ? uData[0].department : ''}</h1>
+                    <h2>RESEARCH </h2>
+                    <h4>1.1 Research Projects</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the Faculty Member</th>
+                        <th>Title of Project</th>
+                        <th>Newly sanctioned or Ongoing</th>
+                        <th>Sanctioned Amount(Rs.)</th>
+                        <th>Grant No. / File No.</th>
+                        <th>Amount Received(Rs.)</th>
+                        <th>Funding Agency</th>
+                        <th>Date of Sanction</th>
+                    </tr>
+                    {
+                        research_projects ? research_projects.map((r,i)=>
+                        { const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{field ? field : '-'}</td>
-                                <td>{fileno ? fileno : '-'}</td>
-                                <td>{date_awarded_patent ? date_awarded_patent : '-'}</td>
-                                <td>{royalty_received ? royalty_received : '-'}</td>
-                                <td>{providing_agency ? providing_agency : '-'}</td>
-                                <td>{country ? country : '-'}</td>
-                            </tr>
-                        )
-                    }):null
-                }
-                </tbody>
-                </table>
-
-                <h4>1.3 Awards for Innovation</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the Faculty Member</th>
-                    <th>Title of the innovation</th>
-                    <th>Award Category</th>
-                    <th>Name of the awardee</th>
-                    <th>Designation</th>
-                    <th>Awarding agency (include our College also)</th>
-                    <th>Date</th>
-                    <th>Venue </th>
-                    <th>Regional/State/ National/ International</th>
-                </tr>
-                {
-                    awards_for_innovation ? awards_for_innovation.map((r,i)=>{
-                    const {awardee_name,designation,award_category,title,awarding_agency,venue,level,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{award_category ? award_category : '-'}</td>
-                                <td>{awardee_name ? awardee_name : '-'}</td>
-                                <td>{designation ? designation : '-'}</td>
-                                <td>{awarding_agency ? awarding_agency : '-'}</td>
-                                <td>{date? date : '-'}</td>
-                                <td>{venue? venue : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>     
-
-                <h4>1.4 Ph. D/M. Phil awarded during the period</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the Scholar</th>
-                    <th>Ph. D/M. Phil</th>
-                    <th>Guide’s Name</th>
-                    <th>Title of the Thesis</th>
-                    <th>External Examiner’s Name, Designation and Address</th>
-                    <th>Date</th>
-                    <th>Venue of Viva</th>
-                </tr>
-                {
-                    degree ? degree.map((r,i)=>{
-                        const {deg,guide_name,title,external,venue,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{deg? deg : '-'}</td>
-                                <td>{guide_name ? guide_name : '-'}</td>
-                                <td>{title? title : '-'}</td>
-                                <td>{external ? external : '-'}</td>
-                                <td>{date? date : '-'}</td>
-                                <td>{venue? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>           
-
-                <h4>1.5 National/International Fellowship</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the Faculty Member</th>
-                    <th>National/International Fellowship</th>
-                    <th>Date of Sanction</th>
-                    <th>Funding Agency</th>
-                    <th>Sanctioned Amount </th>
-                </tr>
-                {
-                    fellowship ? fellowship.map((r,i)=>{
-                        const {fellowship,date_sanctioned,funding_agency,sanctioned_amount,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{fellowship? fellowship : '-'}</td>
-                                <td>{date_sanctioned? date_sanctioned : '-'}</td>
-                                <td>{funding_agency ? funding_agency : '-'}</td>
-                                <td>{sanctioned_amount ? sanctioned_amount : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>   
-
-                <h2>COLLABORATIONS</h2>
-
-                <h4>2.1 Number of Collaborative activities</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Nature of Activity</th>
-                    <th>Participant</th>
-                    <th>Source of financial support</th>
-                    <th>Period(from – to)</th>
-                </tr>
-                {
-                    collab_activ ? collab_activ.map((r,i)=>{
-                        const {activity,participant,financial_support,period,name
-                            } = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{activity? activity : '-'}</td>
-                                <td>{participant? participant : '-'}</td>
-                                <td>{financial_support ? financial_support : '-'}</td>
-                                <td>{period ? period : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>  
-
-                <h4>2.2 Linkages</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Nature and Title  of the Linkage</th>
-                    <th>Partnering agency</th>
-                    <th>Period(from – to)</th>
-                </tr>
-                {
-                    linkages ? linkages.map((r,i)=>{
-                        const {title,partnering_agency,period,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{title? title : '-'}</td>
-                                <td>{partnering_agency? partnering_agency : '-'}</td>
-                                <td>{period ? period : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>  
-
-                <h4>2.3 MoU(s) Signed</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Organization</th>
-                    <th>Date Signed</th>
-                    <th>Period(from – to)</th>
-                    <th>Participants</th>
-                    <th>Purpose</th>
-                    <th>Total No. of Beneficiaries</th>
-                </tr>
-                {
-                    mou ? mou.map((r,i)=>{
-                        const {organization,date_signed,period,participants,purpose,total,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{organization? organization : '-'}</td>
-                                <td>{date_signed? date_signed : '-'}</td>
-                                <td>{period ? period : '-'}</td>
-                                <td>{participants ? participants : '-'}</td>
-                                <td>{purpose ? purpose : '-'}</td>
-                                <td>{total ? total : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table> 
-
-                <h2>EVENTS/PROGRAMMES/VISITS ORGANIZED</h2>
-
-                <h4>3.1 Conference / Seminar / Symposium / Workshop organized</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Conference/ Seminar/  Symposium / Workshop</th>
-                    <th>Title</th>
-                    <th>Sponsoring Agency(if applicable)</th>
-                    <th>Resource Person, Designation/Address  </th>
-                    <th>Objective of the event</th>
-                    <th>Outcome of the event</th>
-                    <th>National/International/State/Regional</th>
-                    <th>Total No. of Participants</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    conference ? conference.map((r,i)=>{
-                        const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{con_sem? con_sem : '-'}</td>
-                                <td>{title? title : '-'}</td>
-                                <td>{sponsoring_agency ? sponsoring_agency : '-'}</td>
-                                <td>{resource_person ? resource_person : '-'}</td>
-                                <td>{objective ? objective : '-'}</td>
-                                <td>{outcome ? outcome : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{total ? total : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table> 
-
-                <h4>3.2 Guest Lectures organized</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Name of Resource Person</th>
-                    <th>Designation / Address</th>
-                    <th>Topic</th>
-                    <th>Objective of the event</th>
-                    <th>Outcome of the event</th>
-                    <th>Total No. of Participants</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    guest_lectures ? guest_lectures.map((r,i)=>{
-                        const {resource_person,designation,topic,venue,objective,outcome,total,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{resource_person ? resource_person : '-'}</td>
-                                <td>{designation ? designation : '-'}</td>
-                                <td>{topic ? topic : '-'}</td>
-                                <td>{objective ? objective : '-'}</td>
-                                <td>{outcome ? outcome : '-'}</td>
-                                <td>{total ? total : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>3.3 Extension Activities</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Activities Performed</th>
-                    <th>Collaborating agency if any</th>
-                    <th>Total No. of Students</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    extension_activities ? extension_activities.map((r,i)=>{
-                        const {activities,collaborations,venue,total,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{activities ? activities : '-'}</td>
-                                <td>{collaborations ? collaborations : '-'}</td>
-                                <td>{total ? total : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>3.4 Industrial Visits</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Class</th>
-                    <th>Industry  Visited with address</th>
-                    <th>Total  No. of Beneficiaries</th>
-                    <th>Programme outcome</th>
-                    <th>Date</th>
-                </tr>
-                {
-                    industrial_visits ? industrial_visits.map((r,i)=>{
-                        const {classes,date,address,total,outcome,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{classes ? classes : '-'}</td>
-                                <td>{address ? address : '-'}</td>
-                                <td>{total ? total : '-'}</td>
-                                <td>{outcome ? outcome : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>3.5 Environmental Science (EVS) visit</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Nature of Activity</th>
-                    <th>Place of Visit with Address</th>
-                    <th>Total  No. of Students</th>
-                    <th>Date</th>
-                </tr>
-                {
-                    evs ? evs.map((r,i)=>{
-                        const {date,place,total,activity,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{activity ? activity : '-'}</td>
-                                <td>{place ? place : '-'}</td>
-                                <td>{total ? total : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>3.6 Any other departmental activities</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Name of the Activity</th>
-                    <th>Chief Guest / Resource Person with Designation/Address</th>
-                    <th>Topic</th>
-                    <th>No. of Participants</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    departmental_activities ? departmental_activities.map((r,i)=>{
-                        const {activity,guest,topic,total,venue,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{activity ? activity : '-'}</td>
-                                <td>{guest ? guest : '-'}</td>
-                                <td>{topic ? topic : '-'}</td>
-                                <td>{total ? total : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h2>CONSULTANCY PROJECTS / SERVICES</h2>
-
-                <h4>4.1 Consultancy Projects / Services</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Project Title</th>
-                    <th>New/On going</th>
-                    <th>Revenue Generated</th>
-                    <th>Date of Sanction</th>
-                    <th>Sponsoring / Consultancy Agency</th>
-                </tr>
-                {
-                    projects_services ? projects_services.map((r,i)=>{
-                        const {title,no,revenue_generated,date_sanction,sponsor,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{uData ? uData[0].name : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{no ? no : '-'}</td>
-                                <td>{revenue_generated ? revenue_generated : '-'}</td>
-                                <td>{date_sanction ? date_sanction : '-'}</td>
-                                <td>{sponsor ? sponsor : '-'}</td>
-                                <td>{date ? date : '-'}</td>
+                                <td>{amount_sanctioned ? amount_sanctioned : '-'}</td>
+                                <td>{fileno ? fileno : '-'}</td>
+                                <td>{amount_received ? amount_received : '-'}</td>
+                                <td>{funding_agency ? funding_agency : '-'}</td>
+                                <td>{date_sanctioned ? date_sanctioned : '-'}</td>
                             </tr>
                         )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h2>FACULTY DETAILS </h2>
-
-                <h4>5.1 Honours and Recognitions received by Teachers</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Award /Honour Received </th>
-                    <th>Details</th>
-                    <th>International / National / State/Regional</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    honours ? honours.map((r,i)=>{
-                        const {award_honour,details,venue,level,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{award_honour ? award_honour : '-'}</td>
-                                <td>{details ? details : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.2 Qualifying in state/ national/ international level examinations</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>exam,</th>
-                    <th>exam_rollno,</th>
-                    <th>date</th>           
-                </tr>
-                {
-                    exams ? exams.map((r,i)=>{
-                        const {exam,exam_rollno,date,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{exam ? exam : `-`}</td>
-                                <td>{exam_rollno ? exam_rollno : `-`}</td>
-                                <td>{date ? date : `-`}</td> 
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.3 Books Published</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Name of the Book</th>
-                    <th>Publisher</th>
-                    <th>International/National</th>
-                    <th>ISBN No.</th>
-                </tr>
-                {
-                    books_published ? books_published.map((r,i)=>{
-                        const {book,publisher,level,isbn_no,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{book ? book : '-'}</td>
-                                <td>{publisher ? publisher : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{isbn_no ? isbn_no : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.4 Chapters Contributed</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Title of the Book</th>
-                    <th>Title of the Chapter</th>
-                    <th>Editor</th>
-                    <th>Publisher</th>
-                    <th>International/National</th>
-                    <th>ISBN No.</th>
-                </tr>
-                {
-                    chapters_contributed ? chapters_contributed.map((r,i)=>{
-                        const {title,chapter,editor,publisher,level,isbn_no,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{chapter ? chapter : '-'}</td>
-                                <td>{editor ? editor : '-'}</td>
-                                <td>{publisher ? publisher : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{isbn_no ? isbn_no : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.5 Conference Proceeding</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Name of the Conference</th>
-                    <th>Publication in Conference (give details)</th>
-                    <th>International/National</th>
-                    <th>Page No. & ISBN No.</th>
-                </tr>
-                {
-                    conference_proceeding ? conference_proceeding.map((r,i)=>{
-                        const {con,publication,level,isbn_no,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{con ? con : '-'}</td>
-                                <td>{publication ? publication : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{isbn_no ? isbn_no : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.6 Paper Presentation</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Conference / Seminar/ Symposium / Workshops</th>
-                    <th>Title of the Paper</th>
-                    <th>Financial support  from the College  (Rs.)</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                    <th>International / National/State/Regional</th>
-                </tr>
-                {
-                    paper_presentation ? paper_presentation.map((r,i)=>{
-                        const {con,title,financial_support,venue,level,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{con ? con : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{financial_support ? financial_support : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.7 Journal Publications</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Title of the paper</th>
-                    <th>Name of the Journal</th>
-                    <th>ISSN No. & DoI</th>
-                    <th>Volume No. , Issue &  Page No.</th>
-                    <th>SCI/SCIE/Scopus Indexed / UGC Recognized / Others</th>
-                    <th>Impact Factor (as per SCI)</th>
-                    <th>International / National</th>
-                </tr>
-                {
-                    journal_publications ? journal_publications.map((r,i)=>{
-                        const {title,jou,issn_no,volume,sci,impact,level,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{jou ? jou : '-'}</td>
-                                <td>{issn_no ? issn_no : '-'}</td>
-                                <td>{volume ? volume : '-'}</td>
-                                <td>{sci ? sci : '-'}</td>
-                                <td>{impact ? impact : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.8 Conference / Seminar / Symposium / Workshop Attended</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Conference / Seminar/ Symposium / Workshops</th>
-                    <th>Title</th>
-                    <th>International / National/State/Regional</th>
-                    <th>Financial support  from the College  (Rs.)</th>
-                    <th>Programme outcome</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    fconference ? fconference.map((r,i)=>{
-                        const {con,title,venue,level,financial_support,programme_outcome,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{con ? con : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{financial_support ? financial_support : '-'}</td>
-                                <td>{programme_outcome ? programme_outcome : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.9 Resource Person</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Guest lecture/Conference/Seminar/Symposium/Workshop</th>
-                    <th>Topic Presented</th>
-                    <th>Name of the Event</th>
-                    <th>National/International/State/Regional</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    resource_person ? resource_person.map((r,i)=>{
-                        const {sem,topic,event,venue,level,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{sem ? sem : '-'}</td>
-                                <td>{topic ? topic : '-'}</td>
-                                <td>{event ? event : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.10 Financial support</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Name of the professional body for which membership fee is provided</th>
-                    <th>Amount of support (Rs.)</th>
-                </tr>
-                {
-                    financial_support ? financial_support.map((r,i)=>{
-                        const {f,amount_support,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{f ? f : '-'}</td>
-                                <td>{amount_support ? amount_support : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.11 Professional development programmes</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Training/FDP/FIP/orientation Programme </th>
-                    <th>Title of the Programme</th>
-                    <th>Financial support  from the College  (Rs.)</th>
-                    <th>National/International/State/Regional</th>
-                    <th>Date</th>
-                    <th>Venue</th>
-                </tr>
-                {
-                    development_programmes ? development_programmes.map((r,i)=>{
-                        const {training,title,venue,financial_support,level,name,date} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{training ? training : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{financial_support ? financial_support : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                                <td>{venue ? venue : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.12 Undergone Online-Courses</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Training/FDP/FIP/orientation Programme </th>
-                    <th>Title of the Programme</th>
-                    <th>Duration</th>
-                    <th>Financial support  from the College  (Rs.)</th>
-                    <th>National/International/State/Regional</th>
-                </tr>
-                {
-                    online_courses ? online_courses.map((r,i)=>{
-                        const {training,title,date,financial_support,level,name,duration} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{training ? training : '-'}</td>
-                                <td>{title ? title : '-'}</td>
-                                <td>{duration ? duration : '-'}</td>
-                                <td>{financial_support ? financial_support : '-'}</td>
-                                <td>{level ? level : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-
-                <h4>5.13 E-content developed</h4>
-                <table>
-                <tbody>
-                <tr>
-                    <th>S.No</th>
-                    <th>Name of the faculty</th>
-                    <th>Name of the module</th>
-                    <th>Platform on which module is developed</th>
-                    <th>Date of launching e – content</th>
-                </tr>
-                {
-                    e_content ? e_content.map((r,i)=>{
-                        const {module,platform,date,name} = r
-                        return(
-                            <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
-                                <td>{module ? module : '-'}</td>
-                                <td>{platform ? platform : '-'}</td>
-                                <td>{date ? date : '-'}</td>
-                            </tr>
-                        )
-                    }): null
-                }
-                </tbody>
-                </table>
-            </div>
+                        }):null
+                    }
+                    </tbody>
+                    </table>
+                    
+                    <h4>1.2 Patents</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the Faculty Member</th>
+                        <th>Title of the Patent  </th>
+                        <th>Patent Field</th>
+                        <th>Patent No. / File No.  </th>
+                        <th>Date of awarded of patent</th>
+                        <th>Royalty Received  </th>
+                        <th>Patent Providing Agency  </th>
+                        <th>India / Abroad(specify country)  </th>
+                    </tr>
+                    {
+                        patents ? patents.map((r,i)=>{
+                            const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{field ? field : '-'}</td>
+                                    <td>{fileno ? fileno : '-'}</td>
+                                    <td>{date_awarded_patent ? date_awarded_patent : '-'}</td>
+                                    <td>{royalty_received ? royalty_received : '-'}</td>
+                                    <td>{providing_agency ? providing_agency : '-'}</td>
+                                    <td>{country ? country : '-'}</td>
+                                </tr>
+                            )
+                        }):null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>1.3 Awards for Innovation</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the Faculty Member</th>
+                        <th>Title of the innovation</th>
+                        <th>Award Category</th>
+                        <th>Name of the awardee</th>
+                        <th>Designation</th>
+                        <th>Awarding agency (include our College also)</th>
+                        <th>Date</th>
+                        <th>Venue </th>
+                        <th>Regional/State/ National/ International</th>
+                    </tr>
+                    {
+                        awards_for_innovation ? awards_for_innovation.map((r,i)=>{
+                        const {awardee_name,designation,award_category,title,awarding_agency,venue,level,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{award_category ? award_category : '-'}</td>
+                                    <td>{awardee_name ? awardee_name : '-'}</td>
+                                    <td>{designation ? designation : '-'}</td>
+                                    <td>{awarding_agency ? awarding_agency : '-'}</td>
+                                    <td>{date? date : '-'}</td>
+                                    <td>{venue? venue : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>     
+    
+                    <h4>1.4 Ph. D/M. Phil awarded during the period</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the Scholar</th>
+                        <th>Ph. D/M. Phil</th>
+                        <th>Guide’s Name</th>
+                        <th>Title of the Thesis</th>
+                        <th>External Examiner’s Name, Designation and Address</th>
+                        <th>Date</th>
+                        <th>Venue of Viva</th>
+                    </tr>
+                    {
+                        degree ? degree.map((r,i)=>{
+                            const {deg,guide_name,title,external,venue,name,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{deg? deg : '-'}</td>
+                                    <td>{guide_name ? guide_name : '-'}</td>
+                                    <td>{title? title : '-'}</td>
+                                    <td>{external ? external : '-'}</td>
+                                    <td>{date? date : '-'}</td>
+                                    <td>{venue? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>           
+    
+                    <h4>1.5 National/International Fellowship</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the Faculty Member</th>
+                        <th>National/International Fellowship</th>
+                        <th>Date of Sanction</th>
+                        <th>Funding Agency</th>
+                        <th>Sanctioned Amount </th>
+                    </tr>
+                    {
+                        fellowship ? fellowship.map((r,i)=>{
+                            const {fellowship,date_sanctioned,funding_agency,sanctioned_amount} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{fellowship? fellowship : '-'}</td>
+                                    <td>{date_sanctioned? date_sanctioned : '-'}</td>
+                                    <td>{funding_agency ? funding_agency : '-'}</td>
+                                    <td>{sanctioned_amount ? sanctioned_amount : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>   
+    
+                    <h2>COLLABORATIONS</h2>
+    
+                    <h4>2.1 Number of Collaborative activities</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Nature of Activity</th>
+                        <th>Participant</th>
+                        <th>Source of financial support</th>
+                        <th>Period(from – to)</th>
+                    </tr>
+                    {
+                        collab_activ ? collab_activ.map((r,i)=>{
+                            const {activity,participant,financial_support,period,name
+                                } = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{activity? activity : '-'}</td>
+                                    <td>{participant? participant : '-'}</td>
+                                    <td>{financial_support ? financial_support : '-'}</td>
+                                    <td>{period ? period : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>  
+    
+                    <h4>2.2 Linkages</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Nature and Title  of the Linkage</th>
+                        <th>Partnering agency</th>
+                        <th>Period(from – to)</th>
+                    </tr>
+                    {
+                        linkages ? linkages.map((r,i)=>{
+                            const {title,partnering_agency,period,name} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{title? title : '-'}</td>
+                                    <td>{partnering_agency? partnering_agency : '-'}</td>
+                                    <td>{period ? period : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>  
+    
+                    <h4>2.3 MoU(s) Signed</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Organization</th>
+                        <th>Date Signed</th>
+                        <th>Period(from – to)</th>
+                        <th>Participants</th>
+                        <th>Purpose</th>
+                        <th>Total No. of Beneficiaries</th>
+                    </tr>
+                    {
+                        mou ? mou.map((r,i)=>{
+                            const {organization,date_signed,period,participants,purpose,total,name} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{organization? organization : '-'}</td>
+                                    <td>{date_signed? date_signed : '-'}</td>
+                                    <td>{period ? period : '-'}</td>
+                                    <td>{participants ? participants : '-'}</td>
+                                    <td>{purpose ? purpose : '-'}</td>
+                                    <td>{total ? total : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table> 
+    
+                    <h2>EVENTS/PROGRAMMES/VISITS ORGANIZED</h2>
+    
+                    <h4>3.1 Conference / Seminar / Symposium / Workshop organized</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Conference/ Seminar/  Symposium / Workshop</th>
+                        <th>Title</th>
+                        <th>Sponsoring Agency(if applicable)</th>
+                        <th>Resource Person, Designation/Address  </th>
+                        <th>Objective of the event</th>
+                        <th>Outcome of the event</th>
+                        <th>National/International/State/Regional</th>
+                        <th>Total No. of Participants</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        conference ? conference.map((r,i)=>{
+                            const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{con_sem? con_sem : '-'}</td>
+                                    <td>{title? title : '-'}</td>
+                                    <td>{sponsoring_agency ? sponsoring_agency : '-'}</td>
+                                    <td>{resource_person ? resource_person : '-'}</td>
+                                    <td>{objective ? objective : '-'}</td>
+                                    <td>{outcome ? outcome : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{total ? total : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table> 
+    
+                    <h4>3.2 Guest Lectures organized</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Name of Resource Person</th>
+                        <th>Designation / Address</th>
+                        <th>Topic</th>
+                        <th>Objective of the event</th>
+                        <th>Outcome of the event</th>
+                        <th>Total No. of Participants</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        guest_lectures ? guest_lectures.map((r,i)=>{
+                            const {resource_person,designation,topic,venue,objective,outcome,total,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{resource_person ? resource_person : '-'}</td>
+                                    <td>{designation ? designation : '-'}</td>
+                                    <td>{topic ? topic : '-'}</td>
+                                    <td>{objective ? objective : '-'}</td>
+                                    <td>{outcome ? outcome : '-'}</td>
+                                    <td>{total ? total : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>3.3 Extension Activities</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Activities Performed</th>
+                        <th>Collaborating agency if any</th>
+                        <th>Total No. of Students</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        extension_activities ? extension_activities.map((r,i)=>{
+                            const {activities,collaborations,venue,total,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{activities ? activities : '-'}</td>
+                                    <td>{collaborations ? collaborations : '-'}</td>
+                                    <td>{total ? total : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>3.4 Industrial Visits</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Class</th>
+                        <th>Industry  Visited with address</th>
+                        <th>Total  No. of Beneficiaries</th>
+                        <th>Programme outcome</th>
+                        <th>Date</th>
+                    </tr>
+                    {
+                        industrial_visits ? industrial_visits.map((r,i)=>{
+                            const {classes,date,address,total,outcome} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{classes ? classes : '-'}</td>
+                                    <td>{address ? address : '-'}</td>
+                                    <td>{total ? total : '-'}</td>
+                                    <td>{outcome ? outcome : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>3.5 Environmental Science (EVS) visit</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Nature of Activity</th>
+                        <th>Place of Visit with Address</th>
+                        <th>Total  No. of Students</th>
+                        <th>Date</th>
+                    </tr>
+                    {
+                        evs ? evs.map((r,i)=>{
+                            const {date,place,total,activity} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{activity ? activity : '-'}</td>
+                                    <td>{place ? place : '-'}</td>
+                                    <td>{total ? total : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>3.6 Any other departmental activities</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Name of the Activity</th>
+                        <th>Chief Guest / Resource Person with Designation/Address</th>
+                        <th>Topic</th>
+                        <th>No. of Participants</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        departmental_activities ? departmental_activities.map((r,i)=>{
+                            const {activity,guest,topic,total,venue,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{activity ? activity : '-'}</td>
+                                    <td>{guest ? guest : '-'}</td>
+                                    <td>{topic ? topic : '-'}</td>
+                                    <td>{total ? total : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h2>CONSULTANCY PROJECTS / SERVICES</h2>
+    
+                    <h4>4.1 Consultancy Projects / Services</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Project Title</th>
+                        <th>New/On going</th>
+                        <th>Revenue Generated</th>
+                        <th>Date of Sanction</th>
+                        <th>Sponsoring / Consultancy Agency</th>
+                    </tr>
+                    {
+                        projects_services ? projects_services.map((r,i)=>{
+                            const {title,no,revenue_generated,date_sanction,sponsor,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{no ? no : '-'}</td>
+                                    <td>{revenue_generated ? revenue_generated : '-'}</td>
+                                    <td>{date_sanction ? date_sanction : '-'}</td>
+                                    <td>{sponsor ? sponsor : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h2>FACULTY DETAILS </h2>
+    
+                    <h4>5.1 Honours and Recognitions received by Teachers</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Award /Honour Received </th>
+                        <th>Details</th>
+                        <th>International / National / State/Regional</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        honours ? honours.map((r,i)=>{
+                            const {award_honour,details,venue,level,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{award_honour ? award_honour : '-'}</td>
+                                    <td>{details ? details : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.2 Qualifying in state/ national/ international level examinations</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>exam,</th>
+                        <th>exam_rollno,</th>
+                        <th>date</th>           
+                    </tr>
+                    {
+                        exams ? exams.map((r,i)=>{
+                            const {exam,exam_rollno,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{exam ? exam : `-`}</td>
+                                    <td>{exam_rollno ? exam_rollno : `-`}</td>
+                                    <td>{date ? date : `-`}</td> 
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.3 Books Published</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Name of the Book</th>
+                        <th>Publisher</th>
+                        <th>International/National</th>
+                        <th>ISBN No.</th>
+                    </tr>
+                    {
+                        books_published ? books_published.map((r,i)=>{
+                            const {book,publisher,level,isbn_no,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{book ? book : '-'}</td>
+                                    <td>{publisher ? publisher : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{isbn_no ? isbn_no : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.4 Chapters Contributed</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Title of the Book</th>
+                        <th>Title of the Chapter</th>
+                        <th>Editor</th>
+                        <th>Publisher</th>
+                        <th>International/National</th>
+                        <th>ISBN No.</th>
+                    </tr>
+                    {
+                        chapters_contributed ? chapters_contributed.map((r,i)=>{
+                            const {title,chapter,editor,publisher,level,isbn_no} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{chapter ? chapter : '-'}</td>
+                                    <td>{editor ? editor : '-'}</td>
+                                    <td>{publisher ? publisher : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{isbn_no ? isbn_no : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.5 Conference Proceeding</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Name of the Conference</th>
+                        <th>Publication in Conference (give details)</th>
+                        <th>International/National</th>
+                        <th>Page No. & ISBN No.</th>
+                    </tr>
+                    {
+                        conference_proceeding ? conference_proceeding.map((r,i)=>{
+                            const {con,publication,level,isbn_no} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{con ? con : '-'}</td>
+                                    <td>{publication ? publication : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{isbn_no ? isbn_no : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.6 Paper Presentation</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Conference / Seminar/ Symposium / Workshops</th>
+                        <th>Title of the Paper</th>
+                        <th>Financial support  from the College  (Rs.)</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                        <th>International / National/State/Regional</th>
+                    </tr>
+                    {
+                        paper_presentation ? paper_presentation.map((r,i)=>{
+                            const {con,title,financial_support,venue,level,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{con ? con : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{financial_support ? financial_support : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.7 Journal Publications</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Title of the paper</th>
+                        <th>Name of the Journal</th>
+                        <th>ISSN No. & DoI</th>
+                        <th>Volume No. , Issue &  Page No.</th>
+                        <th>SCI/SCIE/Scopus Indexed / UGC Recognized / Others</th>
+                        <th>Impact Factor (as per SCI)</th>
+                        <th>International / National</th>
+                    </tr>
+                    {
+                        journal_publications ? journal_publications.map((r,i)=>{
+                            const {title,jou,issn_no,volume,sci,impact,level,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{jou ? jou : '-'}</td>
+                                    <td>{issn_no ? issn_no : '-'}</td>
+                                    <td>{volume ? volume : '-'}</td>
+                                    <td>{sci ? sci : '-'}</td>
+                                    <td>{impact ? impact : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.8 Conference / Seminar / Symposium / Workshop Attended</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Conference / Seminar/ Symposium / Workshops</th>
+                        <th>Title</th>
+                        <th>International / National/State/Regional</th>
+                        <th>Financial support  from the College  (Rs.)</th>
+                        <th>Programme outcome</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        fconference ? fconference.map((r,i)=>{
+                            const {con,title,venue,level,financial_support,programme_outcome,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{con ? con : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{financial_support ? financial_support : '-'}</td>
+                                    <td>{programme_outcome ? programme_outcome : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.9 Resource Person</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Guest lecture/Conference/Seminar/Symposium/Workshop</th>
+                        <th>Topic Presented</th>
+                        <th>Name of the Event</th>
+                        <th>National/International/State/Regional</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        resource_person ? resource_person.map((r,i)=>{
+                            const {sem,topic,event,venue,level,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{sem ? sem : '-'}</td>
+                                    <td>{topic ? topic : '-'}</td>
+                                    <td>{event ? event : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.10 Financial support</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Name of the professional body for which membership fee is provided</th>
+                        <th>Amount of support (Rs.)</th>
+                    </tr>
+                    {
+                        financial_support ? financial_support.map((r,i)=>{
+                            const {f,amount_support,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{f ? f : '-'}</td>
+                                    <td>{amount_support ? amount_support : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.11 Professional development programmes</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Training/FDP/FIP/orientation Programme </th>
+                        <th>Title of the Programme</th>
+                        <th>Financial support  from the College  (Rs.)</th>
+                        <th>National/International/State/Regional</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                    </tr>
+                    {
+                        development_programmes ? development_programmes.map((r,i)=>{
+                            const {training,title,venue,financial_support,level,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{training ? training : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{financial_support ? financial_support : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                    <td>{venue ? venue : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.12 Undergone Online-Courses</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Training/FDP/FIP/orientation Programme </th>
+                        <th>Title of the Programme</th>
+                        <th>Duration</th>
+                        <th>Financial support  from the College  (Rs.)</th>
+                        <th>National/International/State/Regional</th>
+                    </tr>
+                    {
+                        online_courses ? online_courses.map((r,i)=>{
+                            const {training,title,date,financial_support,level,duration} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{training ? training : '-'}</td>
+                                    <td>{title ? title : '-'}</td>
+                                    <td>{duration ? duration : '-'}</td>
+                                    <td>{financial_support ? financial_support : '-'}</td>
+                                    <td>{level ? level : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+    
+                    <h4>5.13 E-content developed</h4>
+                    <table>
+                    <tbody>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name of the faculty</th>
+                        <th>Name of the module</th>
+                        <th>Platform on which module is developed</th>
+                        <th>Date of launching e – content</th>
+                    </tr>
+                    {
+                        e_content ? e_content.map((r,i)=>{
+                            const {module,platform,date} = r
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}</td>
+                                    <td>{uData ? uData[0].name : '-'}</td>
+                                    <td>{module ? module : '-'}</td>
+                                    <td>{platform ? platform : '-'}</td>
+                                    <td>{date ? date : '-'}</td>
+                                </tr>
+                            )
+                        }): null
+                    }
+                    </tbody>
+                    </table>
+                </div>
             </div>
 
             <div className={`about`}>
-                <div className="content">
-                    <div className="hdr">
-                        <div className="beg">
-                            <AiOutlineBars />
-                            <h3>Dashboard</h3>
+                    <div className="content">
+                        <div className="hdr">
+                            <div className="beg">
+                                <AiOutlineBars />
+                                <h3>Dashboard</h3>
+                            </div>
+                            <b onClick={()=>setMen(!men)}>
+                                <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
+                                <ul className={men ? "men active" : "men"}>
+                                    <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
+                                    <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
+                                    <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
+                                </ul>
+                            </b>
                         </div>
-                        <b onClick={()=>setMen(!men)}>
-                            <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
-                            <ul className={men ? "men active" : "men"}>
-                                <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
-                                <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
-                                <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
-                            </ul>
-                        </b>
-                    </div>
-
-                    <div className="submitted">
-                        {
-                            uData  ? 
-                                <>
-                                <div className="research">
-                                    <h3>Research</h3>
-
-                                    <h4>1.1 Research Projects</h4>  
-                                    {research_projects ? research_projects.map((r,i)=>{ const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Title of the project :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Newly Sanctioned / Ongoing :</b> {no ? no : 'NIL'}</p>
-                                                <p><b>Sanctioned Amount :</b> {amount_sanctioned ? amount_sanctioned : 'NIL'}</p>
-                                                <p><b>File No./Grant No. :</b> {fileno ? fileno : 'NIL'}</p>
-                                                <p><b>Amount Received :</b> {amount_received ? amount_received : 'NIL'}</p>
-                                                <p><b>Date of Sanction :</b> {date_sanctioned ? date_sanctioned : 'NIL'}</p>
-                                                <p><b>Funding Agency :</b> {funding_agency ? funding_agency : 'NIL'}</p>
-                                                <p><b>Date of Happened :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/research/research_projects/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-
-                                                    <button onClick={e=>Rrp(id)}>Delete</button>
+    
+                        <div className="submitted">
+                            {
+                                uData  ? 
+                                    <>
+                                    {uData[0].roll === "IQAC"  ? 
+                                        <li style={{textAlign: "right"}}><u><Link to="/admin" style={{color: "red"}}>Move to Admin</Link></u></li>
+                                    : null
+                                    }
+                                    <div className="research">
+                                        <h3>Research</h3>
+    
+                                        <h4>1.1 Research Projects</h4>  
+                                        {research_projects ? research_projects.map((r,i)=>{ const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Title of the project :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Newly Sanctioned / Ongoing :</b> {no ? no : 'NIL'}</p>
+                                                    <p><b>Sanctioned Amount :</b> {amount_sanctioned ? amount_sanctioned : 'NIL'}</p>
+                                                    <p><b>File No./Grant No. :</b> {fileno ? fileno : 'NIL'}</p>
+                                                    <p><b>Amount Received :</b> {amount_received ? amount_received : 'NIL'}</p>
+                                                    <p><b>Date of Sanction :</b> {date_sanctioned ? date_sanctioned : 'NIL'}</p>
+                                                    <p><b>Funding Agency :</b> {funding_agency ? funding_agency : 'NIL'}</p>
+                                                    <p><b>Date of Happened :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/research/research_projects/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+    
+                                                        <button onClick={e=>Rrp(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Patents */}
-
-                                    <h4>1.2 Patents</h4>  
-                                    {patents ? patents.map((r,i)=>{
-                                    const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Title of the Patent :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Patent Field :</b> {field ? field : 'NIL'}</p>
-                                                <p><b>Patent No. / File No. :</b> {fileno ? fileno : 'NIL'}</p>
-                                                <p><b>Date of awarded of patent :</b> {date_awarded_patent ? date_awarded_patent : 'NIL'}</p>
-                                                <p><b>Royalty Received :</b> {royalty_received ? royalty_received : 'NIL'}</p>
-                                                <p><b>Providing Agency :</b> {providing_agency ? providing_agency : 'NIL'}</p>
-                                                <p><b>India / Abroad :</b> {country ? country : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/research/patents/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button onClick={e=>Rp(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Patents */}
+    
+                                        <h4>1.2 Patents</h4>  
+                                        {patents ? patents.map((r,i)=>{
+                                        const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Title of the Patent :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Patent Field :</b> {field ? field : 'NIL'}</p>
+                                                    <p><b>Patent No. / File No. :</b> {fileno ? fileno : 'NIL'}</p>
+                                                    <p><b>Date of awarded of patent :</b> {date_awarded_patent ? date_awarded_patent : 'NIL'}</p>
+                                                    <p><b>Royalty Received :</b> {royalty_received ? royalty_received : 'NIL'}</p>
+                                                    <p><b>Providing Agency :</b> {providing_agency ? providing_agency : 'NIL'}</p>
+                                                    <p><b>India / Abroad :</b> {country ? country : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/research/patents/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button onClick={e=>Rp(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Awards for Innovation */}
-
-                                    <h4>1.3 Awards for Innovation</h4>  
-                                    {awards_for_innovation ? awards_for_innovation.map((r,i)=>{
-                                    const {awardee_name,designation,award_category,title,awarding_agency,venue,level,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Title of the innovation :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Award Category :</b> {award_category ? award_category : 'NIL'}</p>
-                                                <p><b>Name of the awardee :</b> {awardee_name ? awardee_name : 'NIL'}</p>
-                                                <p><b>Designation :</b> {designation ? designation : 'NIL'}</p>
-                                                <p><b>Awarding Agency :</b> {awarding_agency ? awarding_agency : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Date :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/research/awards_for_innovation/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button onClick={e=>Rafi(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Awards for Innovation */}
+    
+                                        <h4>1.3 Awards for Innovation</h4>  
+                                        {awards_for_innovation ? awards_for_innovation.map((r,i)=>{
+                                        const {awardee_name,designation,award_category,title,awarding_agency,venue,level,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Title of the innovation :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Award Category :</b> {award_category ? award_category : 'NIL'}</p>
+                                                    <p><b>Name of the awardee :</b> {awardee_name ? awardee_name : 'NIL'}</p>
+                                                    <p><b>Designation :</b> {designation ? designation : 'NIL'}</p>
+                                                    <p><b>Awarding Agency :</b> {awarding_agency ? awarding_agency : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Date :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/research/awards_for_innovation/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button onClick={e=>Rafi(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Ph.D / M.Phil */}
-
-                                    <h4>1.4 Ph.D / M.Phil</h4>  
-                                    {degree ? degree.map((r,i)=>{
-                                    const {deg,guide_name,title,external,venue,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Degree :</b> {deg ? deg : 'NIL'}</p>
-                                                <p><b>Guide's Name :</b> {guide_name ? guide_name : 'NIL'}</p>
-                                                <p><b>Title of the thesis :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>External's Name,Designation and Address :</b> {external ? external : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/research/deg/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button onClick={e=>Rdeg(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Ph.D / M.Phil */}
+    
+                                        <h4>1.4 Ph.D / M.Phil</h4>  
+                                        {degree ? degree.map((r,i)=>{
+                                        const {deg,guide_name,title,external,venue,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Degree :</b> {deg ? deg : 'NIL'}</p>
+                                                    <p><b>Guide's Name :</b> {guide_name ? guide_name : 'NIL'}</p>
+                                                    <p><b>Title of the thesis :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>External's Name,Designation and Address :</b> {external ? external : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/research/deg/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button onClick={e=>Rdeg(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Fellowships */}
-
-                                    <h4>1.5 Fellowship</h4>  
-                                    {fellowship ? fellowship.map((r,i)=>{
-                                    const {fellowship,date_sanctioned,funding_agency,sanctioned_amount,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Fellowship :</b> {fellowship ? fellowship : 'NIL'}</p>
-                                                <p><b>Date of Sanction :</b> {date_sanctioned ? date_sanctioned : 'NIL'}</p>
-                                                <p><b>Funding Agency :</b> {funding_agency ? funding_agency : 'NIL'}</p>
-                                                <p><b>Sanctioned Amount :</b> {sanctioned_amount ? sanctioned_amount : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/research/fellowship/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>Rf(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Fellowships */}
+    
+                                        <h4>1.5 Fellowship</h4>  
+                                        {fellowship ? fellowship.map((r,i)=>{
+                                        const {fellowship,date_sanctioned,funding_agency,sanctioned_amount,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Fellowship :</b> {fellowship ? fellowship : 'NIL'}</p>
+                                                    <p><b>Date of Sanction :</b> {date_sanctioned ? date_sanctioned : 'NIL'}</p>
+                                                    <p><b>Funding Agency :</b> {funding_agency ? funding_agency : 'NIL'}</p>
+                                                    <p><b>Sanctioned Amount :</b> {sanctioned_amount ? sanctioned_amount : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/research/fellowship/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>Rf(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-                                </div>
-
-                                <div className="research">
-                                    <h3>Collaborations</h3>
-
-                                    {/* Collaborative Activities */}
-
-                                    <h4>2.1 Collaborative Activities</h4>  
-                                    {collab_activ ? collab_activ.map((r,i)=>{
-                                    const {activity,participant,financial_support,period,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Name of the activity :</b> {activity ? activity : 'NIL'}</p>
-                                                <p><b>Participant :</b> {participant ? participant : 'NIL'}</p>
-                                                <p><b>Financial Support :</b> {financial_support ? financial_support : 'NIL'}</p>
-                                                <p><b>Period :</b> {period ? period : 'NIL'}</p>
-                                                <p><b>Date :</b> {date ? date : 'NIL'}</p>  
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/collaborations/collaborative_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-
-                                                    <button id={id} onClick={e=>Cca(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+                                    </div>
+    
+                                    <div className="research">
+                                        <h3>Collaborations</h3>
+    
+                                        {/* Collaborative Activities */}
+    
+                                        <h4>2.1 Collaborative Activities</h4>  
+                                        {collab_activ ? collab_activ.map((r,i)=>{
+                                        const {activity,participant,financial_support,period,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Name of the activity :</b> {activity ? activity : 'NIL'}</p>
+                                                    <p><b>Participant :</b> {participant ? participant : 'NIL'}</p>
+                                                    <p><b>Financial Support :</b> {financial_support ? financial_support : 'NIL'}</p>
+                                                    <p><b>Period :</b> {period ? period : 'NIL'}</p>
+                                                    <p><b>Date :</b> {date ? date : 'NIL'}</p>  
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/collaborations/collaborative_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+    
+                                                        <button id={id} onClick={e=>Cca(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Linkages */}
-
-                                    <h4>2.2 Linkages </h4>  
-                                    {linkages ? linkages.map((r,i)=>{
-                                    const {title,partnering_agency,period,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Nature and title of the Linkage :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Partnering Agency :</b> {partnering_agency ? partnering_agency : 'NIL'}</p>
-                                                <p><b>Period :</b> {period ? period : 'NIL'}</p>
-                                                <p><b>Date :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/collaborations/linkages/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>Cl(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Linkages */}
+    
+                                        <h4>2.2 Linkages </h4>  
+                                        {linkages ? linkages.map((r,i)=>{
+                                        const {title,partnering_agency,period,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Nature and title of the Linkage :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Partnering Agency :</b> {partnering_agency ? partnering_agency : 'NIL'}</p>
+                                                    <p><b>Period :</b> {period ? period : 'NIL'}</p>
+                                                    <p><b>Date :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/collaborations/linkages/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>Cl(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* MoU(s) Signed */}
-
-                                    <h4>2.3 MoU(s) Signed </h4>  
-                                    {mou ? mou.map((r,i)=>{
-                                    const {organization,date_signed,period,participants,purpose,total,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Organization :</b> {organization ? organization : 'NIL'}</p>
-                                                <p><b>Date Signed :</b> {date_signed ? date_signed : 'NIL'}</p>
-                                                <p><b>Period :</b> {period ? period : 'NIL'}</p>
-                                                <p><b>Participants (Students and Faculty) :</b> {participants ? participants : 'NIL'}</p>
-                                                <p><b>Purpose :</b> {purpose ? purpose : 'NIL'}</p>
-                                                <p><b>Total No. of Beneficiaries :</b> {total ? total : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/collaborations/mou/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>Cm(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* MoU(s) Signed */}
+    
+                                        <h4>2.3 MoU(s) Signed </h4>  
+                                        {mou ? mou.map((r,i)=>{
+                                        const {organization,date_signed,period,participants,purpose,total,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Organization :</b> {organization ? organization : 'NIL'}</p>
+                                                    <p><b>Date Signed :</b> {date_signed ? date_signed : 'NIL'}</p>
+                                                    <p><b>Period :</b> {period ? period : 'NIL'}</p>
+                                                    <p><b>Participants (Students and Faculty) :</b> {participants ? participants : 'NIL'}</p>
+                                                    <p><b>Purpose :</b> {purpose ? purpose : 'NIL'}</p>
+                                                    <p><b>Total No. of Beneficiaries :</b> {total ? total : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/collaborations/mou/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>Cm(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    }): <p className="no">No datas</p>}
-                                </div>
-
-                                <div className="research">
-                                    <h3>Events/Programmes/Visits Organized</h3>
-
-                                    {/* Conference */}
-
-                                    <h4>3.1 Conference / Seminar / Symposium / Workshop organized</h4> 
-                                    {conference ? conference.map((r,i)=>{
-                                    const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Type :</b> {con_sem ? con_sem : 'NIL'}</p>
-                                                <p><b>Title :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Sponsoring Agency :</b> {sponsoring_agency ? sponsoring_agency : 'NIL'}</p>
-                                                <p><b>Resource Person designation/address  :</b> {resource_person ? resource_person : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Objective of the Event :</b> {objective ? objective : 'NIL'}</p>
-                                                <p><b>Outcome of the Event :</b> {outcome ? outcome : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Total no. of Participants :</b> {total ? total : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/events/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>Ec(id)}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+                                    </div>
+    
+                                    <div className="research">
+                                        <h3>Events/Programmes/Visits Organized</h3>
+    
+                                        {/* Conference */}
+    
+                                        <h4>3.1 Conference / Seminar / Symposium / Workshop organized</h4> 
+                                        {conference ? conference.map((r,i)=>{
+                                        const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Type :</b> {con_sem ? con_sem : 'NIL'}</p>
+                                                    <p><b>Title :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Sponsoring Agency :</b> {sponsoring_agency ? sponsoring_agency : 'NIL'}</p>
+                                                    <p><b>Resource Person designation/address  :</b> {resource_person ? resource_person : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Objective of the Event :</b> {objective ? objective : 'NIL'}</p>
+                                                    <p><b>Outcome of the Event :</b> {outcome ? outcome : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Total no. of Participants :</b> {total ? total : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/events/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>Ec(id)}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Guest Lectures */}
+    
+                                        <h4>3.2 Guest Lectures</h4> 
+                                        {guest_lectures ? guest_lectures.map((r,i)=>{
+                                        const {resource_person,designation,topic,venue,objective,outcome,total,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Name of the Resource Person :</b> {resource_person ? resource_person : 'NIL'}</p>
+                                                    <p><b>Designation / Address :</b> {designation ? designation : 'NIL'}</p>
+                                                    <p><b>Topic :</b> {topic ? topic : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Objective of the Event :</b> {objective ? objective : 'NIL'}</p>
+                                                    <p><b>Outcome of the Event :</b> {outcome ? outcome : 'NIL'}</p>
+                                                    <p><b>Total no. of Participants :</b> {total ? total : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/events/guest_lectures/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>Egl(id)}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Guest Lectures */}
-
-                                    <h4>3.2 Guest Lectures</h4> 
-                                    {guest_lectures ? guest_lectures.map((r,i)=>{
-                                    const {resource_person,designation,topic,venue,objective,outcome,total,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Name of the Resource Person :</b> {resource_person ? resource_person : 'NIL'}</p>
-                                                <p><b>Designation / Address :</b> {designation ? designation : 'NIL'}</p>
-                                                <p><b>Topic :</b> {topic ? topic : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Objective of the Event :</b> {objective ? objective : 'NIL'}</p>
-                                                <p><b>Outcome of the Event :</b> {outcome ? outcome : 'NIL'}</p>
-                                                <p><b>Total no. of Participants :</b> {total ? total : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/events/guest_lectures/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>Egl(id)}>Delete</button>
-                                                </div>
-                                            </div>
-
-                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Extension Activities */}
-
-                                    <h4>3.3 Extension Activities</h4> 
-                                    {extension_activities ? extension_activities.map((r,i)=>{
-                                    const {activities,collaborations,venue,total,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Activities Performed :</b> {activities ? activities : 'NIL'}</p>
-                                                <p><b>Collaborating agency :</b> {collaborations ? collaborations : 'NIL'}</p>
-                                                <p><b>Total no. of Students :</b> {total ? total : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/events/extension_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Eea(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}                                    
-
-                                    {/* Industrial Visits */}
-
-                                    <h4>3.4 Industrial Visits</h4> 
-                                    {industrial_visits ? industrial_visits.map((r,i)=>{
-                                    const {classes,date,address,total,outcome,id} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Class :</b> {classes ? classes : 'NIL'}</p>
-                                                <p><b>Industry visited with Address :</b> {address ? address : 'NIL'}</p>
-                                                <p><b>Total no. of Beneficiaries :</b> {total ? total : 'NIL'}</p>
-                                                <p><b>Programme Outcome :</b> {outcome ? outcome : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/events/industrial_visits/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>Eiv(id)}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Environmental Science (EVS) Visit */}
-
-                                    <h4>3.5 Environmental Science (EVS) Visit</h4> 
-                                    {evs ? evs.map((r,i)=>{
-                                    const {date,place,total,activity,id} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Place of Visit with Address :</b> {place ? place : 'NIL'}</p>
-                                                <p><b>Total no. of Students :</b> {total ? total : 'NIL'}</p>
-                                                <p><b>Nature of Activity :</b> {activity ? activity : 'NIL'}</p>
-                                                <p><b>Date of happen :</b> {date ? date: 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/events/evs/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Eevs(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Other Departmental Activities */}
-
-                                    <h4>3.6 Other Departmental Activities</h4> 
-                                    {departmental_activities ? departmental_activities.map((r,i)=>{
-                                    const {activity,guest,topic,total,venue,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Name of the Activity :</b> {activity ? activity : 'NIL'}</p>
-                                                <p><b>Guest with Designation/Address :</b> {guest ? guest : 'NIL'}</p>
-                                                <p><b>Topic :</b> {topic ? topic : 'NIL'}</p>
-                                                <p><b>No. of Participants :</b> {total ? total : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/events/departmental_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Eda(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-                                </div>
-
-                                <div className="research">
-                                    <h3>Consultancy Projects/Services</h3>
-
-                                    {/* Projects Services */}
-
-                                    <h4>4.1 Projects Services</h4> 
-                                    {projects_services ? projects_services.map((r,i)=>{
-                                    const {title,no,revenue_generated,date_sanction,sponsor,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Project Title :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>New/Ongoing :</b> {no ? no : 'NIL'}</p>
-                                                <p><b>Revenue Generated :</b> {revenue_generated ? revenue_generated : 'NIL'}</p>
-                                                <p><b>Date of Sanction :</b> {date_sanction ? date_sanction : 'NIL'}</p>
-                                                <p><b>Sponsoring / Consultancy Agency :</b> {sponsor ? sponsor : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/consultancy/projects_services/edit`}onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Cps(id)}}>Delete</button>
-                                                </div>
-                                            </div>
-
-                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-                                </div>
-
-                                <div className="research">
-                                    <h3>Faculty Details</h3>
-
-                                    {/* Honours and Recognitions */}
-
-                                    <h4>5.1 Honours and Recognitions</h4> 
-                                    {honours ? honours.map((r,i)=>{
-                                    const {award_honour,details,venue,level,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Award / Honour Received :</b> {award_honour ? award_honour : 'NIL'}</p>
-                                                <p><b>Details :</b> {details ? details : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/honours/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fh(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Exams */}
-
-                                    <h4>5.2 Qualifying in State/ National/ International level examinations</h4> 
-                                    {exams ? exams.map((r,i)=>{
-                                    const {exam,exam_rollno,date,id} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Examination Qualified :</b> {exam ? exam : 'NIL'}</p>
-                                                <p><b>Examination Rollno / Registration Number :</b> {exam_rollno ? exam_rollno : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/exams/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fe(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Books Published */}
-
-                                    <h4>5.3 Books Published</h4> 
-                                    {books_published ? books_published.map((r,i)=>{
-                                    const {book,publisher,level,isbn_no,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Name of the Book :</b> {book ? book : 'NIL'}</p>
-                                                <p><b>Publisher :</b> {publisher ? publisher : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>ISBN No. :</b> {isbn_no ? isbn_no : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/books_published/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fbp(id)}}>Delete</button>
-                                                </div>
-                                            </div>
-
-                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-                                    
-                                    {/* Chapters Contributed */}
-
-                                    <h4>5.4 Chapters Contributed</h4> 
-                                    {chapters_contributed ? chapters_contributed.map((r,i)=>{
-                                    const {title,chapter,editor,publisher,level,isbn_no,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Title of the Book :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Title of the Chapter :</b> {chapter ? chapter : 'NIL'}</p>
-                                                <p><b>Editor :</b> {editor ? editor : 'NIL'}</p>
-                                                <p><b>Publisher :</b> {publisher ? publisher : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>ISBN No. :</b> {isbn_no ? isbn_no : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/chapters_contributed/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fcc(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Conference Proceeding */}
-
-                                    <h4>5.5 Conference Proceeding</h4> 
-                                    {conference_proceeding ? conference_proceeding.map((r,i)=>{
-                                    const {con,publication,level,isbn_no,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Name of the Conference :</b> {con ? con : 'NIL'}</p>
-                                                <p><b>Publication in Conference :</b> {publication ? publication : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>ISBN No. :</b> {isbn_no ? isbn_no : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/conference_proceeding/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fcp(id)}}>Delete</button>
-                                                </div>
-                                            </div>
-
-                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Paper Presentation */}
-
-                                    <h4>5.6 Paper Presentation</h4> 
-                                    {paper_presentation ? paper_presentation.map((r,i)=>{
-                                    const {con,title,financial_support,venue,level,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Type :</b> {con ? con : 'NIL'}</p>
-                                                <p><b>Title of the paper :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Financial Support from college :</b> {financial_support ? financial_support : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/paper_presentation/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fpp(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                           
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Journal Publication */}
-
-                                    <h4>5.7 Journal Publication</h4> 
-                                    {journal_publications ? journal_publications.map((r,i)=>{
-                                    const {title,jou,issn_no,volume,sci,impact,level,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Title of the paper :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Name of the Journal :</b> {jou ? jou : 'NIL'}</p>
-                                                <p><b>ISSN No. and Dol :</b> {issn_no ? issn_no : 'NIL'}</p>
-                                                <p><b>Volume No.,Issue,Page No. :</b> {volume ? volume : 'NIL'}</p>
-                                                <p><b>SCI/SCIE/Scopus Indexed/UGC Recognized :</b> {sci ? sci : 'NIL'}</p>
-                                                <p><b>Impact Factor. :</b> {impact ? impact : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+    
                                                 
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/journal_publications/edit`}><button id={id} onClick={e=>window.localStorage.setItem('edit',id)}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fjp(id)}}>Delete</button>
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Extension Activities */}
+    
+                                        <h4>3.3 Extension Activities</h4> 
+                                        {extension_activities ? extension_activities.map((r,i)=>{
+                                        const {activities,collaborations,venue,total,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Activities Performed :</b> {activities ? activities : 'NIL'}</p>
+                                                    <p><b>Collaborating agency :</b> {collaborations ? collaborations : 'NIL'}</p>
+                                                    <p><b>Total no. of Students :</b> {total ? total : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/events/extension_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Eea(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}                                    
+    
+                                        {/* Industrial Visits */}
+    
+                                        <h4>3.4 Industrial Visits</h4> 
+                                        {industrial_visits ? industrial_visits.map((r,i)=>{
+                                        const {classes,date,address,total,outcome,id} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Class :</b> {classes ? classes : 'NIL'}</p>
+                                                    <p><b>Industry visited with Address :</b> {address ? address : 'NIL'}</p>
+                                                    <p><b>Total no. of Beneficiaries :</b> {total ? total : 'NIL'}</p>
+                                                    <p><b>Programme Outcome :</b> {outcome ? outcome : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/events/industrial_visits/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>Eiv(id)}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Environmental Science (EVS) Visit */}
+    
+                                        <h4>3.5 Environmental Science (EVS) Visit</h4> 
+                                        {evs ? evs.map((r,i)=>{
+                                        const {date,place,total,activity,id} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Place of Visit with Address :</b> {place ? place : 'NIL'}</p>
+                                                    <p><b>Total no. of Students :</b> {total ? total : 'NIL'}</p>
+                                                    <p><b>Nature of Activity :</b> {activity ? activity : 'NIL'}</p>
+                                                    <p><b>Date of happen :</b> {date ? date: 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/events/evs/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Eevs(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Other Departmental Activities */}
+    
+                                        <h4>3.6 Other Departmental Activities</h4> 
+                                        {departmental_activities ? departmental_activities.map((r,i)=>{
+                                        const {activity,guest,topic,total,venue,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Name of the Activity :</b> {activity ? activity : 'NIL'}</p>
+                                                    <p><b>Guest with Designation/Address :</b> {guest ? guest : 'NIL'}</p>
+                                                    <p><b>Topic :</b> {topic ? topic : 'NIL'}</p>
+                                                    <p><b>No. of Participants :</b> {total ? total : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/events/departmental_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Eda(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+                                    </div>
+    
+                                    <div className="research">
+                                        <h3>Consultancy Projects/Services</h3>
+    
+                                        {/* Projects Services */}
+    
+                                        <h4>4.1 Projects Services</h4> 
+                                        {projects_services ? projects_services.map((r,i)=>{
+                                        const {title,no,revenue_generated,date_sanction,sponsor,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Project Title :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>New/Ongoing :</b> {no ? no : 'NIL'}</p>
+                                                    <p><b>Revenue Generated :</b> {revenue_generated ? revenue_generated : 'NIL'}</p>
+                                                    <p><b>Date of Sanction :</b> {date_sanction ? date_sanction : 'NIL'}</p>
+                                                    <p><b>Sponsoring / Consultancy Agency :</b> {sponsor ? sponsor : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/consultancy/projects_services/edit`}onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Cps(id)}}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-
-                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-                                    
-                                    {/* Conference / Seminar / Symposium / Workshop Attended */}
-
-                                    <h4>5.8 Conference / Seminar / Symposium / Workshop Attended</h4> 
-                                    {fconference ? fconference.map((r,i)=>{
-                                    const {con,title,venue,level,financial_support,programme_outcome,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Type :</b> {con ? con : 'NIL'}</p>
-                                                <p><b>Title of the paper :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Financial Support :</b> {financial_support ? financial_support : 'NIL'}</p>
-                                                <p><b>Programme Outcome :</b> {programme_outcome ? programme_outcome : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fcon(id)}}>Delete</button>
+    
+                                                
+                                            )
+                                        }): <p className="no">No datas</p>}
+                                    </div>
+    
+                                    <div className="research">
+                                        <h3>Faculty Details</h3>
+    
+                                        {/* Honours and Recognitions */}
+    
+                                        <h4>5.1 Honours and Recognitions</h4> 
+                                        {honours ? honours.map((r,i)=>{
+                                        const {award_honour,details,venue,level,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Award / Honour Received :</b> {award_honour ? award_honour : 'NIL'}</p>
+                                                    <p><b>Details :</b> {details ? details : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/honours/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fh(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Exams */}
+    
+                                        <h4>5.2 Qualifying in State/ National/ International level examinations</h4> 
+                                        {exams ? exams.map((r,i)=>{
+                                        const {exam,exam_rollno,date,id} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Examination Qualified :</b> {exam ? exam : 'NIL'}</p>
+                                                    <p><b>Examination Rollno / Registration Number :</b> {exam_rollno ? exam_rollno : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/exams/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fe(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Books Published */}
+    
+                                        <h4>5.3 Books Published</h4> 
+                                        {books_published ? books_published.map((r,i)=>{
+                                        const {book,publisher,level,isbn_no,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Name of the Book :</b> {book ? book : 'NIL'}</p>
+                                                    <p><b>Publisher :</b> {publisher ? publisher : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>ISBN No. :</b> {isbn_no ? isbn_no : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/books_published/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fbp(id)}}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* As a Resource Person */}
-
-                                    <h4>5.9 As a Resource Person</h4> 
-                                    {resource_person ? resource_person.map((r,i)=>{
-                                    const {sem,topic,event,venue,level,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Type :</b> {sem ? sem : 'NIL'}</p>
-                                                <p><b>Topic Presented :</b> {topic ? topic : 'NIL'}</p>
-                                                <p><b>Name of the Event :</b> {event ? event : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/resource_person/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Frp(id)}}>Delete</button>
+    
+                                                
+                                            )
+                                        }): <p className="no">No datas</p>}
+                                        
+                                        {/* Chapters Contributed */}
+    
+                                        <h4>5.4 Chapters Contributed</h4> 
+                                        {chapters_contributed ? chapters_contributed.map((r,i)=>{
+                                        const {title,chapter,editor,publisher,level,isbn_no,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Title of the Book :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Title of the Chapter :</b> {chapter ? chapter : 'NIL'}</p>
+                                                    <p><b>Editor :</b> {editor ? editor : 'NIL'}</p>
+                                                    <p><b>Publisher :</b> {publisher ? publisher : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>ISBN No. :</b> {isbn_no ? isbn_no : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/chapters_contributed/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fcc(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Conference Proceeding */}
+    
+                                        <h4>5.5 Conference Proceeding</h4> 
+                                        {conference_proceeding ? conference_proceeding.map((r,i)=>{
+                                        const {con,publication,level,isbn_no,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Name of the Conference :</b> {con ? con : 'NIL'}</p>
+                                                    <p><b>Publication in Conference :</b> {publication ? publication : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>ISBN No. :</b> {isbn_no ? isbn_no : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/conference_proceeding/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fcp(id)}}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Financial Support */}
-
-                                    <h4>5.10 Financial Support</h4> 
-                                    {financial_support ? financial_support.map((r,i)=>{
-                                    const {f,amount_support,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Professional body for membership fee is provided :</b> {f ? f : 'NIL'}</p>
-                                                <p><b>Amount of support :</b> {amount_support ? amount_support : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/financial_support/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+    
+                                                
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Paper Presentation */}
+    
+                                        <h4>5.6 Paper Presentation</h4> 
+                                        {paper_presentation ? paper_presentation.map((r,i)=>{
+                                        const {con,title,financial_support,venue,level,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Type :</b> {con ? con : 'NIL'}</p>
+                                                    <p><b>Title of the paper :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Financial Support from college :</b> {financial_support ? financial_support : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/paper_presentation/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fpp(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                           
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Journal Publication */}
+    
+                                        <h4>5.7 Journal Publication</h4> 
+                                        {journal_publications ? journal_publications.map((r,i)=>{
+                                        const {title,jou,issn_no,volume,sci,impact,level,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Title of the paper :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Name of the Journal :</b> {jou ? jou : 'NIL'}</p>
+                                                    <p><b>ISSN No. and Dol :</b> {issn_no ? issn_no : 'NIL'}</p>
+                                                    <p><b>Volume No.,Issue,Page No. :</b> {volume ? volume : 'NIL'}</p>
+                                                    <p><b>SCI/SCIE/Scopus Indexed/UGC Recognized :</b> {sci ? sci : 'NIL'}</p>
+                                                    <p><b>Impact Factor. :</b> {impact ? impact : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                     
-                                                    <button id={id} onClick={e=>{Ffs(id)}}>Delete</button>
-                                                    
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/journal_publications/edit`}><button id={id} onClick={e=>window.localStorage.setItem('edit',id)}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fjp(id)}}>Delete</button>
+                                                    </div>
                                                 </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Professional Development Programmes */}
-
-                                    <h4>5.11 Professional Development Programmes</h4> 
-                                    {development_programmes ? development_programmes.map((r,i)=>{
-                                    const {training,title,venue,financial_support,level,id,date} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Type :</b> {training ? training : 'NIL'}</p>
-                                                <p><b>Title of the programme :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
-                                                <p><b>Financial Support from College :</b> {financial_support ? financial_support : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/development_programmes/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fdp(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                           
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* Online Courses */}
-
-                                    <h4>5.12 Online Courses</h4> 
-                                    {online_courses ? online_courses.map((r,i)=>{
-                                    const {training,title,date,financial_support,level,id,duration} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Type :</b> {training ? training : 'NIL'}</p>
-                                                <p><b>Title of the programme :</b> {title ? title : 'NIL'}</p>
-                                                <p><b>Duration :</b> {duration ? duration : 'NIL'}</p>
-                                                <p><b>Financial Support from College :</b> {financial_support ? financial_support : 'NIL'}</p>
-                                                <p><b>Level :</b> {level ? level : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/online_courses/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Foc(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-
-                                    {/* E_Content */}
-
-                                    <h4>5.13 E-Content</h4> 
-                                    {e_content ? e_content.map((r,i)=>{
-                                    const {module,platform,date,id} = r
-                                        return(
-                                            <div key={i} className="research_projects">
-                                                <p><b>Name of the module :</b> {module ? module : 'NIL'}</p>
-                                                <p><b>Platform on which module is developed :</b> {platform ? platform : 'NIL'}</p>
-                                                <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
-                                                <div className="btn">
-                                                    <Link className="edit" to={`/forms/faculty/e_content/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
-                                                    
-                                                    <button id={id} onClick={e=>{Fec(id)}}>Delete</button>
-                                                </div>
-                                            </div>                                            
-                                        )
-                                    }): <p className="no">No datas</p>}
-                                </div>
-                                </>
-                            : ''
-                        }
+    
+                                                
+                                            )
+                                        }): <p className="no">No datas</p>}
+                                        
+                                        {/* Conference / Seminar / Symposium / Workshop Attended */}
+    
+                                        <h4>5.8 Conference / Seminar / Symposium / Workshop Attended</h4> 
+                                        {fconference ? fconference.map((r,i)=>{
+                                        const {con,title,venue,level,financial_support,programme_outcome,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Type :</b> {con ? con : 'NIL'}</p>
+                                                    <p><b>Title of the paper :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Financial Support :</b> {financial_support ? financial_support : 'NIL'}</p>
+                                                    <p><b>Programme Outcome :</b> {programme_outcome ? programme_outcome : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fcon(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* As a Resource Person */}
+    
+                                        <h4>5.9 As a Resource Person</h4> 
+                                        {resource_person ? resource_person.map((r,i)=>{
+                                        const {sem,topic,event,venue,level,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Type :</b> {sem ? sem : 'NIL'}</p>
+                                                    <p><b>Topic Presented :</b> {topic ? topic : 'NIL'}</p>
+                                                    <p><b>Name of the Event :</b> {event ? event : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/resource_person/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Frp(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Financial Support */}
+    
+                                        <h4>5.10 Financial Support</h4> 
+                                        {financial_support ? financial_support.map((r,i)=>{
+                                        const {f,amount_support,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Professional body for membership fee is provided :</b> {f ? f : 'NIL'}</p>
+                                                    <p><b>Amount of support :</b> {amount_support ? amount_support : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/financial_support/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Ffs(id)}}>Delete</button>
+                                                        
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Professional Development Programmes */}
+    
+                                        <h4>5.11 Professional Development Programmes</h4> 
+                                        {development_programmes ? development_programmes.map((r,i)=>{
+                                        const {training,title,venue,financial_support,level,id,date} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Type :</b> {training ? training : 'NIL'}</p>
+                                                    <p><b>Title of the programme :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Venue :</b> {venue ? venue : 'NIL'}</p>
+                                                    <p><b>Financial Support from College :</b> {financial_support ? financial_support : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/development_programmes/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fdp(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                           
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* Online Courses */}
+    
+                                        <h4>5.12 Online Courses</h4> 
+                                        {online_courses ? online_courses.map((r,i)=>{
+                                        const {training,title,date,financial_support,level,id,duration} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Type :</b> {training ? training : 'NIL'}</p>
+                                                    <p><b>Title of the programme :</b> {title ? title : 'NIL'}</p>
+                                                    <p><b>Duration :</b> {duration ? duration : 'NIL'}</p>
+                                                    <p><b>Financial Support from College :</b> {financial_support ? financial_support : 'NIL'}</p>
+                                                    <p><b>Level :</b> {level ? level : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/online_courses/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Foc(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+    
+                                        {/* E_Content */}
+    
+                                        <h4>5.13 E-Content</h4> 
+                                        {e_content ? e_content.map((r,i)=>{
+                                        const {module,platform,date,id} = r
+                                            return(
+                                                <div key={i} className="research_projects">
+                                                    <p><b>Name of the module :</b> {module ? module : 'NIL'}</p>
+                                                    <p><b>Platform on which module is developed :</b> {platform ? platform : 'NIL'}</p>
+                                                    <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
+                                                    <div className="btn">
+                                                        <Link className="edit" to={`/forms/faculty/e_content/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
+                                                        
+                                                        <button id={id} onClick={e=>{Fec(id)}}>Delete</button>
+                                                    </div>
+                                                </div>                                            
+                                            )
+                                        }): <p className="no">No datas</p>}
+                                    </div>
+                                    </>
+                                : ''
+                            }
+                        </div>
+    
                     </div>
-
-                </div>
             </div>
         </>
     )

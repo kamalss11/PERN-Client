@@ -126,6 +126,7 @@ function Conference(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         con: values.con,
                                         title: values.title,
                                         venue: values.venue,

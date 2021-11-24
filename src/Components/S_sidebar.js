@@ -1,13 +1,10 @@
 import React, { useContext } from 'react'
 import {Link} from 'react-router-dom'
 import Sbar from '../Datas/S_data'
-import Formdatas from '../Datas/Formdatas'
+import Student_cat from '../Datas/Student_cat'
 import {FaWpforms} from 'react-icons/fa'
-import research from '../Datas/research'
-import callob from '../Datas/callaborations'
-import consultancy from '../Datas/projects_services'
-import events from '../Datas/events'
-import faculty from '../Datas/faculties'
+import publications from '../Datas/publications'
+import achievements from '../Datas/achievements'
 import {AiOutlineLogout} from 'react-icons/ai'
 import AppContext from '../Context/context'
 import {FaFileWord} from 'react-icons/fa'
@@ -26,11 +23,11 @@ function Sidebar(){
         // US Letter use: size:11.0in 8.5in;
         
         css = (
-            '<style>' +
-            '@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}' +
-            'div.WordSection1 {page: WordSection1;}' +
-            'table{width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}'+
-            '</style>'
+          '<style>' +
+          '@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}' +
+          'div.WordSection1 {page: WordSection1;}' +
+          'table{width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}'+
+          '</style>'
         );
         
         html = window.docx.innerHTML;
@@ -74,14 +71,14 @@ function Sidebar(){
 
                 <ul>
                     {
-                        Formdatas.map((fname)=>{
+                        Student_cat.map((fname)=>{
                             const {id,name} = fname
-                            if(name == "Research"){
+                            if(name == "Publications"){
                                 return(
                                     <li key={id}>
                                         <b>{name}</b>
                                         {
-                                            research.map(r=>{
+                                            publications.map(r=>{
                                                 const {id,name,url} = r
                                                 return(
                                                     <Link key={id} to={url}>{name}</Link>
@@ -91,61 +88,13 @@ function Sidebar(){
                                     </li>
                                 )
                             }
-                            else if(name == "Collaborations"){
+                            else if(name == "Achievements"){
                                 return(
                                     <li key={id}>
                                         <b>{name}</b>
                                         {
-                                            callob.map(c=>{
+                                            achievements.map(c=>{
                                                 const {id,name,url} = c
-                                                return(
-                                                    <Link key={id} to={url}>{name}</Link>
-                                                )
-                                            })
-                                        }
-                                    </li>
-                                )
-                            }
-
-                            else if(name == "Events/Programmes/Visits Organized"){
-                                return(
-                                    <li key={id}>
-                                        <b>{name}</b>
-                                        {
-                                            events.map(e=>{
-                                                const {id,name,url} = e
-                                                return(
-                                                    <Link key={id} to={url}>{name}</Link>
-                                                )
-                                            })
-                                        }
-                                    </li>
-                                )
-                            }
-
-                            else if(name == "Consultancy Projects/Services"){
-                                return(
-                                    <li key={id}>
-                                        <b>{name}</b>
-                                        {
-                                            consultancy.map(c=>{
-                                                const {id,name,url} = c
-                                                return(
-                                                    <Link key={id} to={url}>{name}</Link>
-                                                )
-                                            })
-                                        }
-                                    </li>
-                                )
-                            }
-
-                            else if(name == "Faculty Details"){
-                                return(
-                                    <li key={id}>
-                                        <b>{name}</b>
-                                        {
-                                            faculty.map(f=>{
-                                                const {id,name,url} = f
                                                 return(
                                                     <Link key={id} to={url}>{name}</Link>
                                                 )

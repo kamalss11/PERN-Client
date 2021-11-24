@@ -111,6 +111,7 @@ function Mou(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         organization: values.organization,
                                         date_signed: values.date_signed,
                                         period: values.period,

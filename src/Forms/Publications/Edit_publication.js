@@ -7,8 +7,9 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 
-function Online_courses(){
+function Edit_publication(){
     const [uData,setUdata] = useState()
+    const [pub,setPub] = useState()
     const [men,setMen] = useState(false)
     const [csv,setCsv] = useState()
     const [csvArray,setCsvArray] = useState([])
@@ -18,7 +19,7 @@ function Online_courses(){
 
     const callAboutPage = async () => {
         try{
-            const res = await fetch('/dashboard',{
+            const res = await fetch('/dashboard_student',{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -29,6 +30,22 @@ function Online_courses(){
 
             const datas = await res.json()
             setUdata(datas.user)
+
+            if(datas.user[0].roll != 'Student'){
+                history.push('/dashboard')
+            }
+
+            const mo = await fetch(`/forms/publiaction/publications/edit/${window.localStorage.getItem('edit')}`,{
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include'
+            })
+
+            const m = await mo.json()
+            setPub(m)
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -93,44 +110,49 @@ function Online_courses(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
-                            training: '',
-                            title: '',
-                            duration: '',
-                            financial_support: '',
-                            level: '',
-                            date: ''
+                            department: pub ? pub[0].department : '',
+                            name: pub ? pub[0].name : '',
+                            roll_no: pub ? pub[0].roll_no : '',
+                            title: pub ? pub[0].title : '',
+                            journal: pub ? pub[0].journal : '',
+                            issn: pub ? pub[0].issn : '',
+                            volume_sci: pub ? pub[0].volume_sci : '',
+                            link: pub ? pub[0].link : '',
+                            impact: pub ? pub[0].impact : '',
+                            level: pub ? pub[0].level : '',
+                            date : pub ? pub[0].date : ''
                         }}
 
                         enableReinitialize       
 
                         validationSchema = {
-                            Yup.object({     
-                                training: Yup.string()
-                                    .required('Requied'),  
-                                title: Yup.string(),                            
-                                duration: Yup.string(),
-                                financial_support: Yup.string(),  
-                                level: Yup.string(),
-                                date: Yup.date().required('Required')
+                            Yup.object({                                     
+                                department: Yup.string()
+                                    .required('Required'),
+                                name: Yup.string()
                             })
                         }
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/online_courses`,{
-                                    method: "POST",
+                                const res = await fetch(`/forms/publication/publications/edit`,{
+                                    method: "PUT",
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
                                     body: JSON.stringify({
-                                        user_id : uData[0].user_id,
-                                        n : uData[0].name,
-                                        training: values.training,
+                                        id : window.localStorage.getItem('edit'),
+                                        department: values.department,
+                                        name: values.name,
+                                        roll_no: values.roll_no,
                                         title: values.title,
-                                        duration: values.duration,
-                                        financial_support: values.financial_support,
+                                        journal: values.journal,
+                                        issn: values.issn,
+                                        volume_sci: values.volume_sci,
+                                        link: values.link,
+                                        impact: values.impact,
                                         level: values.level,
-                                        date: values.date
+                                        date : values.date
                                     })
                                 })
     
@@ -142,50 +164,98 @@ function Online_courses(){
                                 else{
                                     setSubmitting(false);
                                     resetForm()
-                                    alert("Data Saved")
-                                    history.push("/dashboard")
+                                    alert("Data Updated")
+                                    localStorage.setItem('edit','')
+                                    history.push("/dashboard_student")
                                 }
                             }, 400);
                         }}
                     >
-                        <Form method="POST" className="form">
-                            <h3>Undergone Online-Courses </h3>
+                        <Form method="PUT" className="form">
+                            <h3>Edit Publications</h3>
 
-                            <MySelect name="training" label="Type">
-                                <option value="">--Select--</option>
-                                <option value="Training">Training</option>
-                                <option value="FDP">FDP</option>
-                                <option value="FIP">FIP</option>
-                                <option value="Orientation Programme">Orientation Programme</option>
-                            </MySelect>
+                            <TextInput
+                                id="department"
+                                name="depaertment"
+                                type="text"
+                                label="Name of the Department"
+                            />
+
+                            <TextInput
+                                id="name"
+                                name="name"
+                                type="text"
+                                label="Name of the Student"
+                            />
+
+                            <TextInput
+                                id="roll_no"
+                                name="roll_no"
+                                type="text"
+                                label="Roll No"
+                            />
 
                             <TextInput
                                 id="title"
                                 name="title"
                                 type="text"
-                                label="Title of the programme"
+                                label="Title of the Paper"
                             />
 
                             <TextInput
-                                id="duration"
-                                name="duration"
+                                id="journal"
+                                name="journal"
                                 type="text"
-                                label="Duration (DD/MM/YY)"
+                                label="Name of the Journal"
                             />
 
                             <TextInput
-                                id="financial_support"
-                                name="financial_support"
+                                id="issn"
+                                name="issn"
                                 type="text"
-                                label="Financial Support from College"
+                                label="ISSN No. & DOI"
+                            />
+
+                            <TextInput
+                                id="volume"
+                                name="volume"
+                                type="text"
+                                label="Volume No.,Issue & Page No."
+                            />
+
+                            <TextInput
+                                id="sci"
+                                name="sci"
+                                type="text"
+                                label="SCI/SCIE/Scopus Indexed/UGC Recognized/Others"
+                            />
+
+                            <TextInput
+                                id="link"
+                                name="link"
+                                type="text"
+                                label="Web Link of the Publications"
+                            />
+
+                            <TextInput
+                                id="impact"
+                                name="impact"
+                                type="text"
+                                label="Impact Factor(as per SCI)"
+                            />
+
+                            <TextInput
+                                id="level"
+                                name="level"
+                                type="text"
+                                label="Impact Factor(as per SCI)"
                             />
 
                             <MySelect name="level" label="Level">
                                 <option value="">--Level--</option>
+                                <option value="Regional">Regional</option>
                                 <option value="National">National</option>
                                 <option value="International">International</option>
-                                <option value="Regional">Regional</option>
-                                <option value="State">State</option>
                             </MySelect>
 
                             <TextInput
@@ -246,7 +316,7 @@ function Online_courses(){
                         }}
                     >
                         <Form method="POST" className="form">
-                            <h3>Undergone Online-Courses</h3>
+                            <h3>Consultancy Projects / Services</h3>
                             <p><b>You can upload more than one form at a time<br />
                                 Accepts only CSV format
                             </b></p>
@@ -317,4 +387,4 @@ function Online_courses(){
     )
 }
 
-export default Online_courses
+export default Edit_publication

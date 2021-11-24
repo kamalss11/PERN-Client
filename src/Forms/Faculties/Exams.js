@@ -104,6 +104,7 @@ function Exams(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         exam: values.exam,
                                         exam_rollno: values.exam_rollno,
                                         date: values.date

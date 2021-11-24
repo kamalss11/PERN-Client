@@ -120,6 +120,7 @@ function Linkages(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         title: values.title,
                                         partnering_agency: values.partnering_agency,
                                         period: values.period,

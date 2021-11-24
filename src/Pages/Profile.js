@@ -13,7 +13,7 @@ function Profile(){
     const history = useHistory()
     const callAboutPage = async () => {
         try{
-            const res = await fetch('/dashboard/profile',{
+            const res = await fetch('/dashboard',{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -23,7 +23,7 @@ function Profile(){
             })
 
             const data = await res.json()
-            setUdata(data)
+            setUdata(data.user)
             console.log(data)
 
             if(!res.status === 200){

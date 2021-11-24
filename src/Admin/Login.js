@@ -112,9 +112,12 @@ function Adminlogin(){
             // Research Projects
             let rp =[]
             admin.research_projects.map((e)=>{
-                rp.push(e)
+                e.map((r)=>{
+                    rp.push(r)
+                })
             })
             setRps(rp)
+            console.log(rp)
 
             // // Patents
             let rpa =[]
@@ -450,6 +453,16 @@ function Adminlogin(){
         <div className="iqac">
             <div id="docx" style={{display:'none'}}>
             <div class="WordSection1">
+                <div style={{textAlign: "center"}}>
+                <h2>PSG COLLEGE OF ARTS & SCIENCE</h2>
+                <p>An Autonomous College – Affiliated to Bharathiar University
+                Accredited with A Grade by NAAC (3rd Cycle)
+                College with Potential for Excellence (Status awarded by UGC)
+                Star College Status Awarded by DBT-MST
+                An ISO 9001:2015 Certified Institution
+                Civil Aerodrome Post, Coimbatore-641 014
+                Tamil Nadu, INDIA,</p>
+                </div>
                 <h1>IQAC Report of {data ? data[0].department : ''}</h1>
                 <h2>RESEARCH </h2>
                 <h4>1.1 Research Projects</h4>
@@ -468,11 +481,11 @@ function Adminlogin(){
                 </tr>
                 {
                     rps ? rps.map((r,i)=>
-                    { const {name,title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency} = r
+                    { const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency} = r
                     return(
                         <tr key={i}>
                             <td>{i+1}</td>
-                            <td>{name ? name : '-'}</td>
+                            <td>{data ? data[0].name : '-'}</td>
                             <td>{title ? title : '-'}</td>
                             <td>{no ? no : '-'}</td>
                             <td>{amount_sanctioned ? amount_sanctioned : '-'}</td>
@@ -503,11 +516,11 @@ function Adminlogin(){
                 </tr>
                 {
                     rpat ? rpat.map((r,i)=>{
-                        const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country,name} = r
+                        const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{field ? field : '-'}</td>
                                 <td>{fileno ? fileno : '-'}</td>
@@ -539,11 +552,11 @@ function Adminlogin(){
                 </tr>
                 {
                     rawd ? rawd.map((r,i)=>{
-                    const {awardee_name,designation,award_category,title,awarding_agency,venue,level,name,date} = r
+                    const {awardee_name,designation,award_category,title,awarding_agency,venue,level,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{award_category ? award_category : '-'}</td>
                                 <td>{awardee_name ? awardee_name : '-'}</td>
@@ -574,11 +587,11 @@ function Adminlogin(){
                 </tr>
                 {
                     rdeg ? rdeg.map((r,i)=>{
-                        const {deg,guide_name,title,external,venue,name,date} = r
+                        const {deg,guide_name,title,external,venue,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].user : '-'}</td>
                                 <td>{deg? deg : '-'}</td>
                                 <td>{guide_name ? guide_name : '-'}</td>
                                 <td>{title? title : '-'}</td>
@@ -605,11 +618,11 @@ function Adminlogin(){
                 </tr>
                 {
                     rfel ? rfel.map((r,i)=>{
-                        const {fellowship,date_sanctioned,funding_agency,sanctioned_amount,name,date} = r
+                        const {fellowship,date_sanctioned,funding_agency,sanctioned_amount,name} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{fellowship? fellowship : '-'}</td>
                                 <td>{date_sanctioned? date_sanctioned : '-'}</td>
                                 <td>{funding_agency ? funding_agency : '-'}</td>
@@ -636,12 +649,12 @@ function Adminlogin(){
                 </tr>
                 {
                     ca ? ca.map((r,i)=>{
-                        const {activity,participant,financial_support,period,name
+                        const {activity,participant,financial_support,period
                             } = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{activity? activity : '-'}</td>
                                 <td>{participant? participant : '-'}</td>
                                 <td>{financial_support ? financial_support : '-'}</td>
@@ -665,11 +678,11 @@ function Adminlogin(){
                 </tr>
                 {
                     clink ? clink.map((r,i)=>{
-                        const {title,partnering_agency,period,name} = r
+                        const {title,partnering_agency,period} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{title? title : '-'}</td>
                                 <td>{partnering_agency? partnering_agency : '-'}</td>
                                 <td>{period ? period : '-'}</td>
@@ -695,11 +708,11 @@ function Adminlogin(){
                 </tr>
                 {
                     cmou ? cmou.map((r,i)=>{
-                        const {organization,date_signed,period,participants,purpose,total,name} = r
+                        const {organization,date_signed,period,participants,purpose,total} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{organization? organization : '-'}</td>
                                 <td>{date_signed? date_signed : '-'}</td>
                                 <td>{period ? period : '-'}</td>
@@ -734,11 +747,11 @@ function Adminlogin(){
                 </tr>
                 {
                     econ ? econ.map((r,i)=>{
-                        const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,name,date} = r
+                        const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{con_sem? con_sem : '-'}</td>
                                 <td>{title? title : '-'}</td>
                                 <td>{sponsoring_agency ? sponsoring_agency : '-'}</td>
@@ -773,11 +786,11 @@ function Adminlogin(){
                 </tr>
                 {
                     egl ? egl.map((r,i)=>{
-                        const {resource_person,designation,topic,venue,objective,outcome,total,name,date} = r
+                        const {resource_person,designation,topic,venue,objective,outcome,total,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{resource_person ? resource_person : '-'}</td>
                                 <td>{designation ? designation : '-'}</td>
                                 <td>{topic ? topic : '-'}</td>
@@ -807,11 +820,11 @@ function Adminlogin(){
                 </tr>
                 {
                     eea ? eea.map((r,i)=>{
-                        const {activities,collaborations,venue,total,name,date} = r
+                        const {activities,collaborations,venue,total,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{activities ? activities : '-'}</td>
                                 <td>{collaborations ? collaborations : '-'}</td>
                                 <td>{total ? total : '-'}</td>
@@ -838,11 +851,11 @@ function Adminlogin(){
                 </tr>
                 {
                     eev ? eev.map((r,i)=>{
-                        const {classes,date,address,total,outcome,name} = r
+                        const {classes,date,address,total,outcome} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{classes ? classes : '-'}</td>
                                 <td>{address ? address : '-'}</td>
                                 <td>{total ? total : '-'}</td>
@@ -868,11 +881,11 @@ function Adminlogin(){
                 </tr>
                 {
                     eevs ? eevs.map((r,i)=>{
-                        const {date,place,total,activity,name} = r
+                        const {date,place,total,activity} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{activity ? activity : '-'}</td>
                                 <td>{place ? place : '-'}</td>
                                 <td>{total ? total : '-'}</td>
@@ -899,11 +912,11 @@ function Adminlogin(){
                 </tr>
                 {
                     eda ? eda.map((r,i)=>{
-                        const {activity,guest,topic,total,venue,name,date} = r
+                        const {activity,guest,topic,total,venue,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{activity ? activity : '-'}</td>
                                 <td>{guest ? guest : '-'}</td>
                                 <td>{topic ? topic : '-'}</td>
@@ -933,11 +946,11 @@ function Adminlogin(){
                 </tr>
                 {
                     cps ? cps.map((r,i)=>{
-                        const {title,no,revenue_generated,date_sanction,sponsor,name,date} = r
+                        const {title,no,revenue_generated,date_sanction,sponsor,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{no ? no : '-'}</td>
                                 <td>{revenue_generated ? revenue_generated : '-'}</td>
@@ -967,11 +980,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fhnr ? fhnr.map((r,i)=>{
-                        const {award_honour,details,venue,level,name,date} = r
+                        const {award_honour,details,venue,level,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{award_honour ? award_honour : '-'}</td>
                                 <td>{details ? details : '-'}</td>
                                 <td>{level ? level : '-'}</td>
@@ -996,11 +1009,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fexm ? fexm.map((r,i)=>{
-                        const {exam,exam_rollno,date,name} = r
+                        const {exam,exam_rollno,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{exam ? exam : `-`}</td>
                                 <td>{exam_rollno ? exam_rollno : `-`}</td>
                                 <td>{date ? date : `-`}</td> 
@@ -1024,11 +1037,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fbp ? fbp.map((r,i)=>{
-                        const {book,publisher,level,isbn_no,name,date} = r
+                        const {book,publisher,level,isbn_no,} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{book ? book : '-'}</td>
                                 <td>{publisher ? publisher : '-'}</td>
                                 <td>{level ? level : '-'}</td>
@@ -1055,11 +1068,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fcc ? fcc.map((r,i)=>{
-                        const {title,chapter,editor,publisher,level,isbn_no,name} = r
+                        const {title,chapter,editor,publisher,level,isbn_no} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{chapter ? chapter : '-'}</td>
                                 <td>{editor ? editor : '-'}</td>
@@ -1086,11 +1099,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fcp ? fcp.map((r,i)=>{
-                        const {con,publication,level,isbn_no,name} = r
+                        const {con,publication,level,isbn_no} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{con ? con : '-'}</td>
                                 <td>{publication ? publication : '-'}</td>
                                 <td>{level ? level : '-'}</td>
@@ -1117,11 +1130,11 @@ function Adminlogin(){
                 </tr>
                 {
                    fpp ?fpp.map((r,i)=>{
-                        const {con,title,financial_support,venue,level,name,date} = r
+                        const {con,title,financial_support,venue,level,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{con ? con : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{financial_support ? financial_support : '-'}</td>
@@ -1151,11 +1164,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fjp ? fjp.map((r,i)=>{
-                        const {title,jou,issn_no,volume,sci,impact,level,name,date} = r
+                        const {title,jou,issn_no,volume,sci,impact,level} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{jou ? jou : '-'}</td>
                                 <td>{issn_no ? issn_no : '-'}</td>
@@ -1186,11 +1199,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fcon ? fcon.map((r,i)=>{
-                        const {con,title,venue,level,financial_support,programme_outcome,name,date} = r
+                        const {con,title,venue,level,financial_support,programme_outcome,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{con ? con : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{level ? level : '-'}</td>
@@ -1220,11 +1233,11 @@ function Adminlogin(){
                 </tr>
                 {
                     frp ? frp.map((r,i)=>{
-                        const {sem,topic,event,venue,level,name,date} = r
+                        const {sem,topic,event,venue,level,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{sem ? sem : '-'}</td>
                                 <td>{topic ? topic : '-'}</td>
                                 <td>{event ? event : '-'}</td>
@@ -1249,11 +1262,11 @@ function Adminlogin(){
                 </tr>
                 {
                     ffs ? ffs.map((r,i)=>{
-                        const {f,amount_support,name,date} = r
+                        const {f,amount_support} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{f ? f : '-'}</td>
                                 <td>{amount_support ? amount_support : '-'}</td>
                             </tr>
@@ -1278,11 +1291,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fdp ? fdp.map((r,i)=>{
-                        const {training,title,venue,financial_support,level,name,date} = r
+                        const {training,title,venue,financial_support,date,level} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{training ? training : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{financial_support ? financial_support : '-'}</td>
@@ -1310,11 +1323,11 @@ function Adminlogin(){
                 </tr>
                 {
                     foc ? foc.map((r,i)=>{
-                        const {training,title,date,financial_support,level,name,duration} = r
+                        const {training,title,financial_support,level,duration} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{training ? training : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{duration ? duration : '-'}</td>
@@ -1339,11 +1352,11 @@ function Adminlogin(){
                 </tr>
                 {
                     fe ? fe.map((r,i)=>{
-                        const {module,platform,date,name} = r
+                        const {module,platform,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{name ? name : '-'}</td>
+                                <td>{data ? data[0].name : '-'}</td>
                                 <td>{module ? module : '-'}</td>
                                 <td>{platform ? platform : '-'}</td>
                                 <td>{date ? date : '-'}</td>
@@ -1467,8 +1480,8 @@ function Adminlogin(){
             </Formik>
 
             <div className="tables">
-                <p className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
-
+                <p style={{cursor:'pointer'}} className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
+                <li style={{textAlign: "right"}}><u><Link to="/dashboard" style={{color: "red"}}>Back to Dashboard</Link></u></li>
                 <h3>Research</h3>
                 
                 {/* Research Projects */}
@@ -1481,7 +1494,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field: 'nam',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'no',title:'N/O',filterPlaceholder:'Filter by N/O'},
                             {field:'date_sanctioned',title:'Date Sanctioned',filterPlaceholder:'Filter by Date Sanctioned'},
@@ -1505,7 +1518,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'field',title:'Field',filterPlaceholder:'Filter by Field'},
                             {field:'fileno',title:'File No',filterPlaceholder:'Filter by FileNo Sanctioned'},
@@ -1529,7 +1542,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'award_category',title:'Award Category',filterPlaceholder:'Filter by Award Category'},
                             {field:'awardee_name',title:'Awardee Name',filterPlaceholder:'Filter by Awardee Name'},
@@ -1574,7 +1587,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'fellowship',title:'Fellowship',filterPlaceholder:'Filter by Fellowship'},
                             {field:'date_sanctioned',title:'Date Sanctioned',filterPlaceholder:'Filter by Date Sanctioned'},
                             {field:'funding_agency',title:'Funding Agency',filterPlaceholder:'Filter by Funding Agency'},
@@ -1597,7 +1610,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'activity',title:'Activity',filterPlaceholder:'Filter by Activity'},
                             {field:'participant',title:'Participant',filterPlaceholder:'Filter by Participant'},
                             {field:'financial_support',title:'Financial support',filterPlaceholder:'Filter by Financial support'},
@@ -1618,7 +1631,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'partnering_agency',title:'Partnering Agency',filterPlaceholder:'Filter by Partnering Agency'},
                             {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
@@ -1660,7 +1673,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'con_sem',title:'Type',filterPlaceholder:'Filter by Type'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'sponsoring_agency',title:'Sponsoring Agency',filterPlaceholder:'Filter by Sponsoring Agency'},
@@ -1686,7 +1699,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'resource_person',title:'Resource Person',filterPlaceholder:'Filter by Resource Person'},
                             {field:'designation',title:'Designation',filterPlaceholder:'Filter by Designation'},
                             {field:'topic',title:'Topic',filterPlaceholder:'Filter by Topic'},
@@ -1710,7 +1723,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'activities',title:'Activities Performed',filterPlaceholder:'Filter by Activities Performed'},
                             {field:'collaborations',title:'Collaborating Agency',filterPlaceholder:'Filter by Collaborating Agency'},
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
@@ -1731,7 +1744,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'classes',title:'Class',filterPlaceholder:'Filter by Class'},
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
                             {field:'outcome',title:'Outcome',filterPlaceholder:'Filter by Outcome'},
@@ -1751,7 +1764,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'place',title:'Place of visit',filterPlaceholder:'Filter by place'},
                             {field:'total',title:'Total no. Students',filterPlaceholder:'Filter by Total'},
                             {field:'activity',title:'Nature of activity',filterPlaceholder:'Filter by activity'},
@@ -1771,7 +1784,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'activity',title:'Activity',filterPlaceholder:'Filter by Activity'},
                             {field:'guest',title:'Guest',filterPlaceholder:'Filter by Guest'},
                             {field:'topic',title:'Topic',filterPlaceholder:'Filter by Topic'},
@@ -1795,7 +1808,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'title',title:'Project Title',filterPlaceholder:'Filter by Project Title'},
                             {field:'no',title:'New/Ongoing',filterPlaceholder:'Filter by New/Ongoing'},
                             {field:'revenue_generated',title:'Revenue Generated',filterPlaceholder:'Filter by Revenue Generated'},
@@ -1819,7 +1832,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'award_honour',title:'Award Honour ',filterPlaceholder:'Filter by Award Honour'},
                             {field:'details',title:'Details',filterPlaceholder:'Filter by Details'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
@@ -1840,7 +1853,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'exam',title:'Exam ',filterPlaceholder:'Filter by Exam'},
                             {field:'exam_rollno',title:'Exam Rollno',filterPlaceholder:'Filter by Exam Rollno'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
@@ -1859,7 +1872,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'book',title:'Book ',filterPlaceholder:'Filter by Book'},
                             {field:'publisher',title:'Publisher',filterPlaceholder:'Filter by Publisher'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
@@ -1880,7 +1893,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'title',title:'Title ',filterPlaceholder:'Filter by Title'},
                             {field:'chapter',title:'Chapter',filterPlaceholder:'Filter by Chapter'},
                             {field:'editor',title:'Editor',filterPlaceholder:'Filter by Editor'},
@@ -1903,7 +1916,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'con',title:'Type ',filterPlaceholder:'Filter by Type'},
                             {field:'publication',title:'Publication',filterPlaceholder:'Filter by Publication'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
@@ -1924,7 +1937,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'con',title:'Type ',filterPlaceholder:'Filter by Type'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
@@ -1946,7 +1959,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'jou',title:'Journal',filterPlaceholder:'Filter by Journal'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'issn_no',title:'Issn No',filterPlaceholder:'Filter by Issn No'},
@@ -1970,7 +1983,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'con',title:'Type',filterPlaceholder:'Filter by Type'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
@@ -1993,7 +2006,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'sem',title:'Type',filterPlaceholder:'Filter by Type'},
                             {field:'topic',title:'Topic',filterPlaceholder:'Filter by Topic'},
                             {field:'event',title:'Event',filterPlaceholder:'Filter by Event'},
@@ -2015,7 +2028,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'f',title:'C',filterPlaceholder:'Filter by C'},
                             {field:'amount_support',title:'Amount Support',filterPlaceholder:'Filter by Amount Support'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
@@ -2034,7 +2047,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'training',title:'Training',filterPlaceholder:'Filter by Training'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
@@ -2056,7 +2069,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'training',title:'Type',filterPlaceholder:'Filter by Type'},
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'duration',title:'Duration',filterPlaceholder:'Filter by Duration'},
@@ -2078,7 +2091,7 @@ function Adminlogin(){
                             backgroundColor: '#039be5',
                             color: '#fff'
                         }}} columns={[
-                            {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
+                            {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'platform',title:'Platform',filterPlaceholder:'Filter by Platform'},
                             {field:'module',title:'Module',filterPlaceholder:'Filter by Module'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}

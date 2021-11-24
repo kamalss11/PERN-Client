@@ -125,6 +125,7 @@ function Researchprojects(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {    
+                                console.log(uData[0].name)
                                 const res = await fetch(`/forms/research/research_projects`,{
                                     method: "POST",
                                     headers: {
@@ -132,6 +133,7 @@ function Researchprojects(){
                                     },
                                     body: JSON.stringify({
                                         user_id : `${uData[0].user_id}`,
+                                        n : uData[0].name,
                                         title: values.title,
                                         no: values.no,
                                         amount_sanctioned: values.amount_sanctioned,

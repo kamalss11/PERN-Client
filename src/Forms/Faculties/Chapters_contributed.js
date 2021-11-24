@@ -126,6 +126,7 @@ function Chapters_contributed(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         title: values.title,
                                         chapter: values.chapter,
                                         editor: values.editor,

@@ -107,6 +107,7 @@ function Extension(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         activities: values.activities,
                                         collaborations: values.collaborations,
                                         venue: values.venue,

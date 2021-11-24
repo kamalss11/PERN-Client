@@ -124,6 +124,7 @@ function Phd(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         deg: values.deg,
                                         guide_name: values.guide_name,
                                         title: values.title,

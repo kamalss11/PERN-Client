@@ -107,6 +107,7 @@ function Activities(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         activity: values.activity,
                                         participant: values.participant,
                                         financial_support: values.financial_support,

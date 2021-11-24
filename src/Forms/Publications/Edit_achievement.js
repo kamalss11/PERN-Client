@@ -7,8 +7,9 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 
-function Online_courses(){
+function Edit_achievement(){
     const [uData,setUdata] = useState()
+    const [ach,setAch] = useState()
     const [men,setMen] = useState(false)
     const [csv,setCsv] = useState()
     const [csvArray,setCsvArray] = useState([])
@@ -18,7 +19,7 @@ function Online_courses(){
 
     const callAboutPage = async () => {
         try{
-            const res = await fetch('/dashboard',{
+            const res = await fetch('/dashboard_student',{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -29,6 +30,22 @@ function Online_courses(){
 
             const datas = await res.json()
             setUdata(datas.user)
+
+            if(datas.user[0].roll != 'Student'){
+                history.push('/dashboard')
+            }
+
+            const mo = await fetch(`/forms/achievement/achievements/edit/${window.localStorage.getItem('edit')}`,{
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include'
+            })
+
+            const m = await mo.json()
+            setAch(m)
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -93,44 +110,43 @@ function Online_courses(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
-                            training: '',
-                            title: '',
-                            duration: '',
-                            financial_support: '',
-                            level: '',
-                            date: ''
+                            department : ach ? ach[0].department : '',
+                            name : ach ? ach[0].name : '',
+                            roll_no : ach ? ach[0].roll_no : '',
+                            achievement : ach ? ach[0].achievement : '',
+                            event : ach ? ach[0].event : '',
+                            date : ach ? ach[0].date : '',
+                            venue : ach ? ach[0].venue : '',
+                            level : ach ? ach[0].level : '',
                         }}
 
                         enableReinitialize       
 
                         validationSchema = {
-                            Yup.object({     
-                                training: Yup.string()
-                                    .required('Requied'),  
-                                title: Yup.string(),                            
-                                duration: Yup.string(),
-                                financial_support: Yup.string(),  
-                                level: Yup.string(),
-                                date: Yup.date().required('Required')
+                            Yup.object({                                     
+                                department: Yup.string()
+                                    .required('Required'),
+                                name: Yup.string()
                             })
                         }
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/online_courses`,{
+                                const res = await fetch(`/forms/achievement/achievements/edit`,{
                                     method: "POST",
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
                                     body: JSON.stringify({
-                                        user_id : uData[0].user_id,
-                                        n : uData[0].name,
-                                        training: values.training,
-                                        title: values.title,
-                                        duration: values.duration,
-                                        financial_support: values.financial_support,
-                                        level: values.level,
-                                        date: values.date
+                                        id : window.localStorage.setItem('edit'),
+                                        department: values.department,
+                                        name: values.name,
+                                        roll_no: values.roll_no,
+                                        achievement: values.achievement,
+                                        event: values.event,
+                                        date: values.date,
+                                        venue: values.venue,
+                                        level: values.level
                                     })
                                 })
     
@@ -142,50 +158,63 @@ function Online_courses(){
                                 else{
                                     setSubmitting(false);
                                     resetForm()
-                                    alert("Data Saved")
-                                    history.push("/dashboard")
+                                    alert("Data Updated")
+                                    window.localStorage.setItem('edit','')
+                                    history.push("/dashboard_student")
                                 }
                             }, 400);
                         }}
                     >
                         <Form method="POST" className="form">
-                            <h3>Undergone Online-Courses </h3>
-
-                            <MySelect name="training" label="Type">
-                                <option value="">--Select--</option>
-                                <option value="Training">Training</option>
-                                <option value="FDP">FDP</option>
-                                <option value="FIP">FIP</option>
-                                <option value="Orientation Programme">Orientation Programme</option>
-                            </MySelect>
+                            <h3>Edit Achievement</h3>
 
                             <TextInput
-                                id="title"
-                                name="title"
+                                id="department"
+                                name="depaertment"
                                 type="text"
-                                label="Title of the programme"
+                                label="Name of the Department"
                             />
 
                             <TextInput
-                                id="duration"
-                                name="duration"
+                                id="name"
+                                name="name"
                                 type="text"
-                                label="Duration (DD/MM/YY)"
+                                label="Name of the Student"
                             />
 
                             <TextInput
-                                id="financial_support"
-                                name="financial_support"
+                                id="roll_no"
+                                name="roll_no"
                                 type="text"
-                                label="Financial Support from College"
+                                label="Roll No"
+                            />
+
+                            <TextInput
+                                id="achievement"
+                                name="achievement"
+                                type="text"
+                                label="Prize / Achievement"
+                            />
+
+                            <TextInput
+                                id="event"
+                                name="event"
+                                type="text"
+                                label="Event"
+                            />
+
+                            <TextInput
+                                id="venue"
+                                name="venue"
+                                type="text"
+                                label="Venue"
                             />
 
                             <MySelect name="level" label="Level">
                                 <option value="">--Level--</option>
+                                <option value="Regional">Regional</option>
                                 <option value="National">National</option>
                                 <option value="International">International</option>
-                                <option value="Regional">Regional</option>
-                                <option value="State">State</option>
                             </MySelect>
 
                             <TextInput
@@ -246,7 +275,7 @@ function Online_courses(){
                         }}
                     >
                         <Form method="POST" className="form">
-                            <h3>Undergone Online-Courses</h3>
+                            <h3>Consultancy Projects / Services</h3>
                             <p><b>You can upload more than one form at a time<br />
                                 Accepts only CSV format
                             </b></p>
@@ -317,4 +346,4 @@ function Online_courses(){
     )
 }
 
-export default Online_courses
+export default Edit_achievement

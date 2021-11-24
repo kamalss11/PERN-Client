@@ -122,9 +122,10 @@ function Fellowship(){
                                         'Content-Type': 'application/json'
                                     },
                                     body: JSON.stringify({
-                                        user_id : uData[0].user_id,
+                                        user_id : `${uData[0].user_id}`,
+                                        n : uData[0].name,
                                         fellowship: values.fellowship,
-                                        date_sanctioned: values.date,
+                                        date_sanctioned: values.date_sanctioned,
                                         funding_agency: values.funding_agency,
                                         sanctioned_amount: values.sanctioned_amount,
                                         date: values.date

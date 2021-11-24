@@ -122,6 +122,7 @@ function Books_published(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         name: values.name,
                                         publisher: values.publisher,
                                         level: values.level,

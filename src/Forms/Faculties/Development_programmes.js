@@ -124,6 +124,7 @@ function Development_programmes(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         training: values.training,
                                         title: values.title,
                                         venue: values.venue,

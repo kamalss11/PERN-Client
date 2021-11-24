@@ -104,6 +104,7 @@ function Financial_support(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         f: values.f,
                                         amount_support: values.amount_support,
                                         date: values.date

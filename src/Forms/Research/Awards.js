@@ -129,6 +129,7 @@ function Patent(){
                                     },
                                     body: JSON.stringify({
                                         user_id : `${uData[0].user_id}`,
+                                        n : uData[0].name,
                                         awardee_name: values.awardee_name,
                                         designation: values.designation,
                                         award_category: values.award_category,

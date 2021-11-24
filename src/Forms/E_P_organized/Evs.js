@@ -106,6 +106,7 @@ function Evs(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         date: values.date,
                                         place: values.place,
                                         total: values.total,

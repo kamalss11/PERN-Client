@@ -124,6 +124,7 @@ function Resource_person(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         sem: values.sem,
                                         topic: values.topic,
                                         event: values.event,

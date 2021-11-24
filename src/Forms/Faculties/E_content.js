@@ -104,6 +104,7 @@ function Edit_econtent(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         module: values.module,
                                         platform: values.platform,
                                         date: values.date

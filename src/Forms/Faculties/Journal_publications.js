@@ -128,6 +128,7 @@ function Journal_publications(){
                                     },
                                     body: JSON.stringify({
                                         user_id : uData[0].user_id,
+                                        n : uData[0].name,
                                         jou: values.jou,
                                         issn_no: values.issn_no,
                                         volume: values.volume,
