@@ -122,28 +122,36 @@ function Adminlogin(){
             // // Patents
             let rpa =[]
             admin.patents.map((e)=>{
-                rpa.push(e)
+                e.map((r)=>{
+                    rpa.push(r)
+                })
             })
             setRpat(rpa)
 
             // // Awards for Innovation
             let raw =[]
             admin.awards_for_innovation.map((e)=>{
-                raw.push(e)
+                e.map((r)=>{
+                    raw.push(r)
+                })
             })
             setRawd(raw)
 
             // // Degree
             let rde =[]
             admin.degree.map((e)=>{
-                rde.push(e)
+                e.map((r)=>{                    
+                    rde.push(r)
+                })
             })
             setRdeg(rde)
 
             // // Fellowship
             let rf =[]
             admin.fellowship.map((e)=>{
-                rf.push(e)
+                e.map((r)=>{
+                    rf.push(r)
+                })
             })
             setRfel(rf)
 
@@ -320,113 +328,101 @@ function Adminlogin(){
     const qur = (year,mn1,mn2,mn3)=>{
         //Research Projects
         let rpss = []
-        data.map((e)=>{
-            e.forms.research.research_projects.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    rpss.push(e)
-                }
-            })
+        rps.map((e)=>{
+            var date = e.date.split('-')
+            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+                rpss.push(e)
+            }
         })
         setRps(rpss)
 
         //Patents
         let rpa = []
-        data.map((e)=>{
-            e.forms.research.patents.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    rpa.push(e)
-                }
-            })
+        rpat.map((e)=>{
+            var date = e.date.split('-')
+            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+                rpa.push(e)
+            }
         })
         setRpat(rpa)
 
         //Awards for Innovation
         let raw = []
-        data.map((e)=>{
-            e.forms.research.awards_for_innovation.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    raw.push(e)
-                }
-            })
+        rawd.map((e)=>{
+            var date = e.date.split('-')
+            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+                raw.push(e)
+            }
         })
         setRawd(raw)
 
         //Degree
         let d = []
-        data.map((e)=>{
-            e.forms.research.deg.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    d.push(e)
-                }
-            })
+        rdeg.map((e)=>{
+            var date = e.date.split('-')
+            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+                d.push(e)
+            }
         })
         setRdeg(d)
 
         //Fellowship
         let fe = []
-        data.map((e)=>{
-            e.forms.research.fellowship.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    fe.push(e)
-                }
-            })
+        rfel.map((e)=>{
+            var date = e.date.split('-')
+            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+                fe.push(e)
+            }
         })
         setRfel(fe)
 
         //Collaborative Activities
-        let ca = []
-        data.map((e)=>{
-            e.forms.collaboration.collaborative_activities.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    ca.push(e)
-                }
-            })
-        })
-        setCca(ca)
+        // let ca = []
+        // data.map((e)=>{
+        //     e.forms.collaboration.collaborative_activities.map((e)=>{
+        //         var date = e.date.split('-')
+        //         if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+        //             ca.push(e)
+        //         }
+        //     })
+        // })
+        // setCca(ca)
 
-        //Linkages
-        let lin = []
-        data.map((e)=>{
-            e.forms.collaboration.linkages.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    lin.push(e)
-                }
-            })
-        })
-        setClink(lin)
+        // //Linkages
+        // let lin = []
+        // data.map((e)=>{
+        //     e.forms.collaboration.linkages.map((e)=>{
+        //         var date = e.date.split('-')
+        //         if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+        //             lin.push(e)
+        //         }
+        //     })
+        // })
+        // setClink(lin)
 
-        //Mou
-        let mou = []
-        data.map((e)=>{
-            e.forms.collaboration.mou.map((e)=>{
-                var date = e.date.split('-')
-                if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                    mou.push(e)
-                }
-            })
-        })
-        setCmou(mou)
+        // //Mou
+        // let mou = []
+        // data.map((e)=>{
+        //     e.forms.collaboration.mou.map((e)=>{
+        //         var date = e.date.split('-')
+        //         if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
+        //             mou.push(e)
+        //         }
+        //     })
+        // })
+        // setCmou(mou)
 
     }
 
     const prd = (year,mnf,mnt)=>{
         let rpss = []
-        data.map((e)=>{
-            e.forms.research.research_projects.map((e)=>{
-                var date = e.date.split('-')
-                for(let i=mnf;i<=mnt;i++){
-                    if((date[0]==year) && (date[1]== i)){
-                        rpss.push(e)
-                    }
+        rps.map((e)=>{
+            var date = e.date.split('-')
+            for(let i=mnf;i<=mnt;i++){
+                if((date[0]==year) && (date[1]== i)){
+                    rpss.push(e)
                 }
-            })
+            }
         })
         setRps(rpss)
     }
