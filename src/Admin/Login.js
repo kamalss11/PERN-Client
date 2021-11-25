@@ -335,6 +335,7 @@ function Adminlogin(){
             }
         })
         setRps(rpss)
+        console.log(rpss)
 
         //Patents
         let rpa = []
