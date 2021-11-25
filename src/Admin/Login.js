@@ -1367,7 +1367,7 @@ function Adminlogin(){
             </div>
             {/* Quaterly */}
 
-            <Formik
+            {/* <Formik
                 initialValues = {{
                     from: '',
                 }}
@@ -1407,7 +1407,7 @@ function Adminlogin(){
             </Formik>
 
             {/* Periodic */}
-            <Formik
+            {/*<Formik
                 initialValues = {{
                     year: '',
                     from: '',
@@ -1474,7 +1474,7 @@ function Adminlogin(){
                         <button type="submit">Filter</button>
                     </div>
                 </Form>
-            </Formik>
+            </Formik> */}
 
             <div className="tables">
                 <p style={{cursor:'pointer'}} className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
