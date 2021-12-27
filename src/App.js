@@ -66,6 +66,11 @@ import Edit_onlinecourses from './Forms/Faculties/Edit_onlinecourses';
 import Edit_econtent from './Forms/Faculties/Edit_econtent';
 import AppContext from './Context/context';
 import Adminlogin from './Admin/Login';
+import Student_dashboard from './Pages/Student_dashboard';
+import Edit_publication from './Forms/Publications/Edit_publication';
+import Publication from './Forms/Publications/publication';
+import Achievement from './Forms/Publications/achievement';
+import Edit_achievement from './Forms/Publications/Edit_achievement';
 
 function App() {
   const Routing = ()=>{
@@ -82,6 +87,10 @@ function App() {
 
           <Route exact path="/dashboard">
             <Dashboard />
+          </Route>
+
+          <Route exact path="/student_dashboard">
+            <Student_dashboard />
           </Route>
 
           <Route path="/dashboard/profile">
@@ -324,6 +333,22 @@ function App() {
 
           <Route path="/forms/faculty/e_content/edit">
             <Edit_econtent />
+          </Route>
+
+          <Route path="/forms/publication/publications">
+            <Publication />
+          </Route>
+
+          <Route path="/forms/publication/publications/edit">
+            <Edit_publication />
+          </Route>
+
+          <Route path="/forms/achievement/achievements">
+            <Achievement />
+          </Route>
+
+          <Route path="/forms/achievement/achievements/edit">
+            <Edit_achievement />
           </Route>
 
           <Route exact path="/admin">

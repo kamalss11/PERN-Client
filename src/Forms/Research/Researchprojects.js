@@ -6,10 +6,12 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Researchprojects(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
+    const [img,setimg] = useState()
     const [csvArray, setCsvArray] = useState([]);
     const [csv,setCsv] = useState()
     const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
@@ -95,6 +97,7 @@ function Researchprojects(){
                         initialValues = {{
                             title: '',
                             no: '',
+                            image: '',
                             amount_sanctioned: '',
                             fileno: '',
                             amount_received: '',
@@ -114,11 +117,11 @@ function Researchprojects(){
                                     ['Newly Sanctioned','Ongoing'],
                                     'Invalid'
                                     ),
-                                amount_sanctioned: Yup.string(),
-                                fileno: Yup.string(),
-                                amount_received: Yup.string(),
-                                date_sanctioned: Yup.string(),
-                                funding_agency: Yup.string(),
+                                // amount_sanctioned: Yup.string(),
+                                // fileno: Yup.string(),
+                                // amount_received: Yup.string(),
+                                // date_sanctioned: Yup.string(),
+                                // funding_agency: Yup.string(),
                                 date: Yup.date().required('Required')
                             })
                         }
@@ -126,40 +129,66 @@ function Researchprojects(){
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {    
                                 console.log(uData[0].name)
-                                const res = await fetch(`/forms/research/research_projects`,{
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        user_id : `${uData[0].user_id}`,
-                                        n : uData[0].name,
-                                        title: values.title,
-                                        no: values.no,
-                                        amount_sanctioned: values.amount_sanctioned,
-                                        fileno: values.fileno,
-                                        amount_received: values.amount_received,
-                                        date_sanctioned: values.date_sanctioned,
-                                        funding_agency: values.funding_agency,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    history.push("/dashboard")
-                                }
-                            }, 600);
+                                console.log(img)
+                                let dat = new FormData()
+                                dat.append('image',img)
+                                dat.append('user_id',uData[0].user_id)
+                                dat.append('n',uData[0].name)
+                                dat.append('title',values.title)
+                                dat.append('no',values.no)
+                                dat.append('amount_sanctioned',values.amount_sanctioned)
+                                dat.append('fileno',values.fileno)
+                                dat.append('amount_received',values.amount_received)
+                                dat.append('date_sanctioned',values.date_sanctioned)
+                                dat.append('funding_agency',values.funding_agency)
+                                dat.append('date',values.date)
+
+                                Axios.post('http://localhost:3000/forms/research/research_projects',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard"))
+                                .catch(err => console.log(err))
+                            },600)
                         }}
+
+                        // onSubmit={(values, { setSubmitting,resetForm }) => {
+                        //     setTimeout(async () => {    
+                        //         console.log(uData[0].name)
+                        //         const res = await fetch(`/forms/research/research_projects`,{
+                        //             method: "POST",
+                        //             headers: {
+                        //                 'Content-Type': 'application/json'
+                        //             },
+                        //             body: JSON.stringify({
+                        //                 user_id : `${uData[0].user_id}`,
+                        //                 n : uData[0].name,
+                        //                 title: values.title,
+                        //                 no: values.no,
+                        //                 amount_sanctioned: values.amount_sanctioned,
+                        //                 fileno: values.fileno,
+                        //                 amount_received: values.amount_received,
+                        //                 date_sanctioned: values.date_sanctioned,
+                        //                 funding_agency: values.funding_agency,
+                        //                 date: values.date
+                        //             })
+                        //         })
+    
+                        //         const data = await res.json()
+                        //         console.log(data)
+                        //         if(res.status === 422 || !data){
+                        //             window.alert(`${data.error}`)
+                        //         }
+                        //         else{
+                        //             setSubmitting(false);
+                        //             resetForm()
+                        //             alert("Data Updated")
+                        //             history.push("/dashboard")
+                        //         }
+                        //     }, 600);
+                        // }}
                     >
-                        <Form method="POST" className="form">
+                        <Form method="POST" encType='multipart/form-data' className="form">
                             <h3>Research Projects</h3>
                             
                             <TextInput
@@ -168,6 +197,8 @@ function Researchprojects(){
                                 type="text"
                                 label="Title of the project"
                             />
+
+                            <input type="file" name='image' onChange={e=>setimg(e.target.files[0])}/>
     
                             <MySelect name="no" label="Newly Sanctioned / Ongoing">
                                 <option value="">--Newly Sanctioned / Ongoing--</option>

@@ -1812,7 +1812,8 @@ function Dashboard(){
                                         <h3>Research</h3>
     
                                         <h4>1.1 Research Projects</h4>  
-                                        {research_projects ? research_projects.map((r,i)=>{ const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,id,date} = r
+                                        {research_projects ? research_projects.map((r,i)=>
+                                        { const {title,no,image,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,id,date} = r
                                             return(
                                                 <div key={i} className="research_projects">
                                                     <p><b>Title of the project :</b> {title ? title : 'NIL'}</p>
@@ -1823,6 +1824,8 @@ function Dashboard(){
                                                     <p><b>Date of Sanction :</b> {date_sanctioned ? date_sanctioned : 'NIL'}</p>
                                                     <p><b>Funding Agency :</b> {funding_agency ? funding_agency : 'NIL'}</p>
                                                     <p><b>Date of Happened :</b> {date ? date : 'NIL'}</p>
+                                                    <img src={`/Uploads/${image ? image : null}`} />
+                                                    <a href={`/Uploads/${image}`} target='_blank' type='application/pdf'>{image}</a>
                                                     <div className="btn">
                                                         <Link className="edit" to={`/forms/research/research_projects/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
     
