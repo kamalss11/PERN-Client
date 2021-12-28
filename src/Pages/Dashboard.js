@@ -1,7 +1,10 @@
 import React,{ useContext, useEffect, useState} from 'react'
 import {Link, useHistory} from 'react-router-dom'
+import { Formik,Form,useField } from 'formik'
+import Axios from 'axios'
 import '../CSS/About.css'
 import Sidebar from '../Components/Sidebar'
+import * as Yup from 'yup'
 import {FaWpforms} from 'react-icons/fa'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiFillEdit,AiOutlineLogout} from 'react-icons/ai'
@@ -102,6 +105,58 @@ function Dashboard(){
         }
     }
 
+    const call_period = async (prd) => {
+        try{
+            const res = await fetch(`/period/${prd}`,{
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include'
+            })
+
+            const datas = await res.json()
+            console.log(datas)
+
+            Setresearch_projects(datas.research_projects)
+            Setpatents(datas.patents)
+            Setawards_for_innovation(datas.awards_for_innovation)            
+            Setdegree(datas.degree)
+            Setfellowship(datas.fellowship)
+            Setcollab_activ(datas.collab_activ)
+            Setlinkages(datas.linkages)
+            Setmou(datas.mou)
+            Setconference(datas.conference)
+            Setguest_lectures(datas.guest_lectures)
+            Setextension_activities(datas.extension_activities)
+            Setindustrial_visits(datas.industrial_visits)
+            Setevs(datas.evs)
+            Setdepartmental_activities(datas.departmental_activities)
+            Setprojects_services(datas.projects_services)
+            Sethonours(datas.honours)
+            Setexams(datas.exams)
+            Setbooks_published(datas.books_published)
+            Setchapters_contributed(datas.chapters_contributed)
+            Setconference_proceeding(datas.conference_proceeding)
+            Setpaper_presentation(datas.paper_presentation)
+            Setjournal_publications(datas.journal_publications)
+            Setfconference(datas.fconference)
+            Setresource_person(datas.resource_person)
+            Setfinancial_support(datas.financial_support)
+            Setdevelopment_programmes(datas.development_programmes)
+            Setonline_courses(datas.online_courses)
+            Sete_content(datas.e_content)
+
+            if(!res.status === 200){
+                const error = new Error(res.error)
+                throw error
+            }
+        }catch(err){
+            console.log(err)
+            history.push('/signin')
+        }
+    }
     // Delete Research Projects
     const Rrp = async(id)=>{
         console.log(id)
@@ -855,6 +910,21 @@ function Dashboard(){
         }catch(err){
             console.log(err)
         }
+    }
+
+    const MySelect = ({ label, ...props }) => {
+        const [field, meta] = useField(props);
+        return (
+          <div className="fields">
+            <label htmlFor={props.id || props.name}>{label}</label>
+            <select {...field} {...props} />
+            {
+                meta.touched && meta.error ?(
+                    <p className="error">{meta.error}</p>
+                ):null
+            }
+          </div>
+        )
     }
 
     useEffect(() => {
@@ -1808,6 +1878,54 @@ function Dashboard(){
                                         <li style={{textAlign: "right"}}><u><Link to="/admin" style={{color: "red"}}>Move to Admin</Link></u></li>
                                     : null
                                     }
+
+                                    <Formik
+                                        initialValues={{
+                                            period : ''
+                                        }}
+
+                                        enableReinitialize
+
+                                        validationSchema={
+                                            Yup.object({
+                                                period: Yup.string().required('Required')
+                                            })
+                                        }
+
+                                        onSubmit={(values, { setSubmitting,resetForm }) => {
+                                            setTimeout(async () => {    
+                                                console.log(uData[0].name)
+                                                await call_period(values.period)
+                                                // setSubmitting(false),resetForm() 
+                                            },600)
+                                        }}
+                                    >
+                                        <Form>
+                                            <MySelect name="period">
+                                                <option value=''>Filter by Period</option>
+                                                <option value={`'2019-07-01' and '2019-09-30'`}>July - September(2019)</option>
+                                                <option value={`'2019-10-01' and '2019-12-31'`}>October - December(2019)</option>
+                                                <option value={`'2020-01-01' and '2020-03-31'`}>January - March(2020)</option>
+                                                <option value={`'2020-04-01' and '2020-06-30'`}>April - June(2020)</option>
+
+                                                <option value={`'2020-07-01' and '2020-09-30'`}>July - September(2020)</option>
+                                                <option value={`'2020-10-01' and '2020-12-31'`}>October - December(2020)</option>
+                                                <option value={`'2021-01-01' and '2021-03-31'`}>January - March(2021)</option>
+                                                <option value={`'2021-04-01' and '2021-06-30'`}>April - June(2021)</option>
+
+                                                <option value={`'2021-07-01' and '2021-09-30'`}>July - September(2021)</option>
+                                                <option value={`'2021-10-01' and '2021-12-31'`}>October - December(2021)</option>
+                                                <option value={`'2022-01-01' and '2022-03-31'`}>January - March(2022)</option>
+                                                <option value={`'2022-04-01' and '2022-06-30'`}>April - June(2022)</option>
+                                            </MySelect>
+
+                                            <div className="btn">
+                                                {/* <button type="reset">Reset</button> */}
+                                                <button type="submit">Submit</button>
+                                            </div>
+                                        </Form>
+                                    </Formik>
+
                                     <div className="research">
                                         <h3>Research</h3>
     
@@ -1824,7 +1942,6 @@ function Dashboard(){
                                                     <p><b>Date of Sanction :</b> {date_sanctioned ? date_sanctioned : 'NIL'}</p>
                                                     <p><b>Funding Agency :</b> {funding_agency ? funding_agency : 'NIL'}</p>
                                                     <p><b>Date of Happened :</b> {date ? date : 'NIL'}</p>
-                                                    <img src={`/Uploads/${image ? image : null}`} />
                                                     <a href={`/Uploads/${image}`} target='_blank' type='application/pdf'>{image}</a>
                                                     <div className="btn">
                                                         <Link className="edit" to={`/forms/research/research_projects/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}>Edit</button></Link>
