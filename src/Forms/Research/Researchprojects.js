@@ -12,8 +12,6 @@ function Researchprojects(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [img,setimg] = useState()
-    const [csvArray, setCsvArray] = useState([]);
-    const [csv,setCsv] = useState()
     const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
     console.log(uData)
     const history = useHistory()
