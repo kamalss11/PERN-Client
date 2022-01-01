@@ -1,12 +1,13 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { Formik,Form,useField } from 'formik'
 import * as Yup from 'yup'
 import { Link,useHistory } from 'react-router-dom'
 import '../CSS/LS.css'
 import Navbar from '../Components/Navbar'
 
-function Signin(){
+function Reset_password(){
     const history = useHistory()
+    const [uData,setUdata] = useState()
 
     const callAboutPage = async () => {
         try{
@@ -21,14 +22,14 @@ function Signin(){
 
             const datas = await res.json()
             console.log(datas)
+            setUdata(datas.user)
 
             if(!res.status === 200){
                 const error = new Error(res.error)
                 throw error
             }
-
-            history.push('/dashboard')
         }catch(err){
+            history.push('/dashboard')
             console.log(err)
         }
     }
@@ -57,70 +58,74 @@ function Signin(){
             <div className="signUp">
                 <Formik
                     initialValues = {{
-                        email: '',
-                        password: ''
+                        npassword : '',
+                        confirm_Password : ''
                     }}
                     
                     validationSchema = {
                         Yup.object({
-                            email: Yup.string()
-                                .email('Invalid Email')
-                                .required('Required'),
-                            password: Yup.string()
+                            npassword: Yup.string()
                                 .min(4,'Password must be greater than 4 characters')
-                                .required('Required')
+                                .required('Required'),
+                            confirm_Password: Yup.string()
+                                .oneOf(
+                                [Yup.ref('npassword')],
+                                'Both password needs to be same'
+                                )
                         })
                     }
 
+                    enableReinitialize
+
                     onSubmit={(values, { setSubmitting,resetForm }) => {
                         setTimeout(async () => {
-                            const res = await fetch('/signin',{
-                                method: "POST",
+                            const res = await fetch('/reset_password',{
+                                method: "PUT",
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify({
-                                    email : values.email,
-                                    password : values.password
+                                    email : window.localStorage.getItem('email'),
+                                    pass : values.npassword,
+                                    cpass : values.confirm_Password
                                 })
                             })
 
                             const data = await res.json()
-                            console.log(data,'Signin')
+                            console.log(data)
                             if(res.status === 400 || !data){
                                 window.alert(`${data.error}`)
                             }
                             else{
-                                window.alert("Logged in Successfull")
+                                window.localStorage.setItem('email','')
                                 setSubmitting(false);
                                 resetForm()
-                                // dispatch({type:'USER',payload:data})
-                                history.push('/dashboard')
+                                // history.push('/signin')
                             }
                         }, 400);
                     }}
                 >
-                    <Form method="POST" className="form">
-                        <h3>SignIn</h3>
+                    <Form method="PUT" className="form">
+                        <h3>Forget Password</h3>
 
                         <TextInput
-                            name="email"
-                            type="text"
-                            placeholder="Enter your Email"
+                            name="npassword"
+                            type="password"
+                            placeholder="Enter New Password"
                         />
 
                         <TextInput
-                            name="password"
+                            name="confirm_Password"
                             type="password"
-                            placeholder="Enter Password"
+                            placeholder="Confirm Password"
                         />
 
                         <div className="btn">
-                            <button type="submit">SignIn</button>
+                            <button type="submit">Submit</button>
                         </div>
 
-                        <p className="ls">Don't have an account ? <Link to="/">Register</Link></p>
-                        <p className="ls"><Link to="/forget_password">Forget Password ?</Link></p>
+                        <p className="ls"><Link to="/signin">Login ?</Link></p>
+                        <p className="ls"><Link to="/">Register ?</Link></p>
                     </Form>
                 </Formik>                                    
             </div>
@@ -128,4 +133,4 @@ function Signin(){
     )
 }
 
-export default Signin
+export default Reset_password

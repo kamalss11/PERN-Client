@@ -1,11 +1,11 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { Formik,Form,useField } from 'formik'
 import * as Yup from 'yup'
 import { Link,useHistory } from 'react-router-dom'
 import '../CSS/LS.css'
 import Navbar from '../Components/Navbar'
 
-function Signin(){
+function Forget_Password(){
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -57,31 +57,27 @@ function Signin(){
             <div className="signUp">
                 <Formik
                     initialValues = {{
-                        email: '',
-                        password: ''
+                        email: ''
                     }}
                     
                     validationSchema = {
                         Yup.object({
                             email: Yup.string()
                                 .email('Invalid Email')
-                                .required('Required'),
-                            password: Yup.string()
-                                .min(4,'Password must be greater than 4 characters')
                                 .required('Required')
                         })
                     }
 
                     onSubmit={(values, { setSubmitting,resetForm }) => {
+                        localStorage.setItem('email',values.email)
                         setTimeout(async () => {
-                            const res = await fetch('/signin',{
+                            const res = await fetch('/forget_password',{
                                 method: "POST",
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify({
-                                    email : values.email,
-                                    password : values.password
+                                    email : values.email
                                 })
                             })
 
@@ -91,17 +87,15 @@ function Signin(){
                                 window.alert(`${data.error}`)
                             }
                             else{
-                                window.alert("Logged in Successfull")
+                                window.alert("Mail sent.Check your mail")
                                 setSubmitting(false);
                                 resetForm()
-                                // dispatch({type:'USER',payload:data})
-                                history.push('/dashboard')
                             }
                         }, 400);
                     }}
                 >
                     <Form method="POST" className="form">
-                        <h3>SignIn</h3>
+                        <h3>Forget Password</h3>
 
                         <TextInput
                             name="email"
@@ -109,18 +103,24 @@ function Signin(){
                             placeholder="Enter your Email"
                         />
 
-                        <TextInput
+                        {/* <TextInput
                             name="password"
                             type="password"
                             placeholder="Enter Password"
                         />
 
+                        <TextInput
+                            name="cpassword"
+                            type="cpassword"
+                            placeholder="Confirm Password"
+                        /> */}
+
                         <div className="btn">
-                            <button type="submit">SignIn</button>
+                            <button type="submit">Next</button>
                         </div>
 
-                        <p className="ls">Don't have an account ? <Link to="/">Register</Link></p>
-                        <p className="ls"><Link to="/forget_password">Forget Password ?</Link></p>
+                        <p className="ls"><Link to="/signin">Login ?</Link></p>
+                        <p className="ls"><Link to="/">Register ?</Link></p>
                     </Form>
                 </Formik>                                    
             </div>
@@ -128,4 +128,4 @@ function Signin(){
     )
 }
 
-export default Signin
+export default Forget_Password
