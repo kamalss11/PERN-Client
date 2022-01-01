@@ -71,6 +71,8 @@ import Edit_publication from './Forms/Publications/Edit_publication';
 import Publication from './Forms/Publications/publication';
 import Achievement from './Forms/Publications/achievement';
 import Edit_achievement from './Forms/Publications/Edit_achievement';
+import Forget_Password from './Pages/Forget_password';
+import Reset_password from './Pages/Reset_password';
 
 function App() {
   const Routing = ()=>{
@@ -87,6 +89,14 @@ function App() {
 
           <Route exact path="/dashboard">
             <Dashboard />
+          </Route>
+
+          <Route exact path="/forget_password">
+            <Forget_Password />
+          </Route>
+
+          <Route path="/reset_password">
+            <Reset_password />
           </Route>
 
           <Route exact path="/student_dashboard">
