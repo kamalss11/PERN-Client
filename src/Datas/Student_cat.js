@@ -1,10 +1,7 @@
 const Student_cat = [
     {
         id: 'I',
-        name: 'Publications'
-    },{
-        id: 'II',
-        name: 'Achievements'
+        name: 'Student Details'
     }
 ]
 

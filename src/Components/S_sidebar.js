@@ -1,15 +1,13 @@
 import React, { useContext } from 'react'
 import {Link} from 'react-router-dom'
 import Sbar from '../Datas/S_data'
-import Student_cat from '../Datas/Student_cat'
+import Student_details from '../Datas/student_details'
 import {FaWpforms} from 'react-icons/fa'
-import publications from '../Datas/publications'
-import achievements from '../Datas/achievements'
 import {AiOutlineLogout} from 'react-icons/ai'
 import AppContext from '../Context/context'
 import {FaFileWord} from 'react-icons/fa'
 
-function Sidebar(){
+function S_sidebar(){
     const {bar} = useContext(AppContext)
     const export_all = ()=>{
         if (!window.Blob) {
@@ -70,39 +68,15 @@ function Sidebar(){
                 </li>
 
                 <ul>
+                    <li>Student Details</li>
                     {
-                        Student_cat.map((fname)=>{
-                            const {id,name} = fname
-                            if(name == "Publications"){
-                                return(
-                                    <li key={id}>
-                                        <b>{name}</b>
-                                        {
-                                            publications.map(r=>{
-                                                const {id,name,url} = r
-                                                return(
-                                                    <Link key={id} to={url}>{name}</Link>
-                                                )
-                                            })
-                                        }
-                                    </li>
-                                )
-                            }
-                            else if(name == "Achievements"){
-                                return(
-                                    <li key={id}>
-                                        <b>{name}</b>
-                                        {
-                                            achievements.map(c=>{
-                                                const {id,name,url} = c
-                                                return(
-                                                    <Link key={id} to={url}>{name}</Link>
-                                                )
-                                            })
-                                        }
-                                    </li>
-                                )
-                            }
+                        Student_details.map((fname)=>{
+                            const {id,name,url} = fname
+                            return(
+                                <li key={id}>
+                                    <Link key={id} to={url}>{name}</Link>
+                                </li>
+                            )
                         })
                     }
                 </ul>
@@ -115,4 +89,4 @@ function Sidebar(){
     )
 }
 
-export default Sidebar
+export default S_sidebar

@@ -6,6 +6,7 @@ import '../CSS/LS.css'
 import Navbar from '../Components/Navbar'
 
 function Forget_Password(){
+    const [msg,setMsg] = useState()
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -82,12 +83,12 @@ function Forget_Password(){
                             })
 
                             const data = await res.json()
+                            setMsg(data)
                             console.log(data,'Signin')
                             if(res.status === 400 || !data){
                                 window.alert(`${data.error}`)
                             }
                             else{
-                                window.alert("Mail sent.Check your mail")
                                 setSubmitting(false);
                                 resetForm()
                             }

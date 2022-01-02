@@ -26,11 +26,7 @@ function Sidebar(){
         // US Letter use: size:11.0in 8.5in;
         
         css = (
-            '<style>' +
-            '@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}' +
-            'div.WordSection1 {page: WordSection1;}' +
-            'table{width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}'+
-            '</style>'
+            `<style>@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}div.WordSection1 {page: WordSection1;}table{font-family:Montserrat,sans-serif;width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}p{font-size:14px}.flx{display:flex;}.flx .img{wrap-text:square;}.flx .img2{wrap-text:square;}</style>`
         );
         
         html = window.docx.innerHTML;

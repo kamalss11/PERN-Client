@@ -325,109 +325,6 @@ function Adminlogin(){
         }
     }
 
-    const qur = (year,mn1,mn2,mn3)=>{
-        //Research Projects
-        let rpss = []
-        rps.map((e)=>{
-            var date = e.date.split('-')
-            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                rpss.push(e)
-            }
-        })
-        setRps(rpss)
-        console.log(rpss)
-
-        //Patents
-        let rpa = []
-        rpat.map((e)=>{
-            var date = e.date.split('-')
-            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                rpa.push(e)
-            }
-        })
-        setRpat(rpa)
-
-        //Awards for Innovation
-        let raw = []
-        rawd.map((e)=>{
-            var date = e.date.split('-')
-            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                raw.push(e)
-            }
-        })
-        setRawd(raw)
-
-        //Degree
-        let d = []
-        rdeg.map((e)=>{
-            var date = e.date.split('-')
-            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                d.push(e)
-            }
-        })
-        setRdeg(d)
-
-        //Fellowship
-        let fe = []
-        rfel.map((e)=>{
-            var date = e.date.split('-')
-            if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-                fe.push(e)
-            }
-        })
-        setRfel(fe)
-
-        //Collaborative Activities
-        // let ca = []
-        // data.map((e)=>{
-        //     e.forms.collaboration.collaborative_activities.map((e)=>{
-        //         var date = e.date.split('-')
-        //         if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-        //             ca.push(e)
-        //         }
-        //     })
-        // })
-        // setCca(ca)
-
-        // //Linkages
-        // let lin = []
-        // data.map((e)=>{
-        //     e.forms.collaboration.linkages.map((e)=>{
-        //         var date = e.date.split('-')
-        //         if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-        //             lin.push(e)
-        //         }
-        //     })
-        // })
-        // setClink(lin)
-
-        // //Mou
-        // let mou = []
-        // data.map((e)=>{
-        //     e.forms.collaboration.mou.map((e)=>{
-        //         var date = e.date.split('-')
-        //         if((date[0]==year) && (date[1]== mn1|| date[1]==mn2 || date[1]==mn3)){
-        //             mou.push(e)
-        //         }
-        //     })
-        // })
-        // setCmou(mou)
-
-    }
-
-    const prd = (year,mnf,mnt)=>{
-        let rpss = []
-        rps.map((e)=>{
-            var date = e.date.split('-')
-            for(let i=mnf;i<=mnt;i++){
-                if((date[0]==year) && (date[1]== i)){
-                    rpss.push(e)
-                }
-            }
-        })
-        setRps(rpss)
-    }
-
     const MySelect = ({ label, ...props }) => {
         const [field, meta] = useField(props);
         return (
@@ -449,7 +346,7 @@ function Adminlogin(){
     return(
         <div className="iqac">
             <div id="docx" style={{display:'none'}}>
-            <div class="WordSection1">
+            <div className="WordSection1">
                 <div style={{textAlign: "center"}}>
                 <h2>PSG COLLEGE OF ARTS & SCIENCE</h2>
                 <p>An Autonomous College – Affiliated to Bharathiar University
