@@ -371,60 +371,60 @@ function Student_dashboard(){
                                                 if(e.target.value === 'All'){
                                                     setMsg('All')
                                                 }
-                                                else if(e.target.value === `'2019-07-01' and '2019-09-30'`){
-                                                    setMsg('July (01/07/2019) to September (30/09/2019)')
+                                                else if(e.target.value === `'${uData[0].admission}-07-01' and '${uData[0].admission}-09-30'`){
+                                                    setMsg(`July (01/07/${uData[0].admission}) to September (30/09/${uData[0].admission})`)
                                                 }
-                                                else if(e.target.value === `'2019-10-01' and '2019-12-31'`){
-                                                    setMsg('October (01/10/2019) to December (30/12/2019)')
+                                                else if(e.target.value === `'${uData[0].admission}-10-01' and '${uData[0].admission}-12-31'`){
+                                                    setMsg(`October (01/10/${uData[0].admission}) to December (30/12/${uData[0].admission})`)
                                                 }
-                                                else if(e.target.value === `'2020-01-01' and '2020-03-31'`){
-                                                    setMsg('January (01/01/2020) to March (31/03/2020)')
+                                                else if(e.target.value === `'${uData[0].admission + 1}-01-01' and '${uData[0].admission + 1}-03-31'`){
+                                                    setMsg(`January (01/01/${uData[0].admission + 1}) to March (31/03/${uData[0].admission + 1})`)
                                                 }
-                                                else if(e.target.value === `'2020-04-01' and '2020-06-31'`){
-                                                    setMsg('April (01/04/2020) to June (30/06/2020)')
-                                                }
-
-                                                else if(e.target.value === `'2020-07-01' and '2020-09-30'`){
-                                                    setMsg('July (01/07/2020) to September (30/09/2020)')
-                                                }
-                                                else if(e.target.value === `'2020-10-01' and '2020-12-31'`){
-                                                    setMsg('October (01/10/2020) to December (30/12/2020)')
-                                                }
-                                                else if(e.target.value === `'2021-01-01' and '2021-03-31'`){
-                                                    setMsg('January (01/01/2021) to March (31/03/2021)')
-                                                }
-                                                else if(e.target.value === `'2021-04-01' and '2021-06-31'`){
-                                                    setMsg('April (01/04/2021) to June (30/06/2021)')
+                                                else if(e.target.value === `'${uData[0].admission + 1}-04-01' and '${uData[0].admission + 1}-06-30'`){
+                                                    setMsg(`April (01/04/${uData[0].admission + 1}) to June (30/06/${uData[0].admission + 1})`)
                                                 }
 
-                                                else if(e.target.value === `'2021-07-01' and '2021-09-30'`){
-                                                    setMsg('July (01/07/2021) to September (30/09/2021)')
+                                                else if(e.target.value === `'${uData[0].admission + 1}-07-01' and '${uData[0].admission + 1}-09-30'`){
+                                                    setMsg(`July (01/07/${uData[0].admission + 1}) to September (30/09/${uData[0].admission + 1})`)
                                                 }
-                                                else if(e.target.value === `'2021-10-01' and '2021-12-31'`){
-                                                    setMsg('October (01/10/2021) to December (30/12/2021)')
+                                                else if(e.target.value === `'${uData[0].admission + 1}-10-01' and '${uData[0].admission + 1}-12-31'`){
+                                                    setMsg(`October (01/10/${uData[0].admission + 1}) to December (30/12/${uData[0].admission + 1})`)
                                                 }
-                                                else if(e.target.value === `'2022-01-01' and '2022-03-31'`){
-                                                    setMsg('January (01/01/2022) to March (31/03/2022)')
+                                                else if(e.target.value === `'${uData[0].admission + 2}-01-01' and '${uData[0].admission + 2}-03-31'`){
+                                                    setMsg(`January (01/01/${uData[0].admission + 2}) to March (31/03/${uData[0].admission + 2})`)
                                                 }
-                                                else if(e.target.value === `'2022-04-01' and '2022-06-31'`){
-                                                    setMsg('April (01/04/2022) to June (30/06/2022)')
+                                                else if(e.target.value === `'${uData[0].admission + 2}-04-01' and '${uData[0].admission + 2}-06-30'`){
+                                                    setMsg(`April (01/04/${uData[0].admission + 2}) to June (30/06/${uData[0].admission + 2})`)
+                                                }
+
+                                                else if(e.target.value === `'${uData[0].admission + 2}-07-01' and '${uData[0].admission + 2}-09-30'`){
+                                                    setMsg(`July (01/07/${uData[0].admission + 2}) to September (30/09/${uData[0].admission + 2})`)
+                                                }
+                                                else if(e.target.value === `'${uData[0].admission + 2}-10-01' and '${uData[0].admission + 2}-12-31'`){
+                                                    setMsg(`October (01/10/${uData[0].admission + 2}) to December (30/12/${uData[0].admission + 2})`)
+                                                }
+                                                else if(e.target.value === `'${uData[0].admission + 3}-01-01' and '${uData[0].admission + 3}-03-31'`){
+                                                    setMsg(`January (01/01/${uData[0].admission + 3}) to March (31/03/${uData[0].admission + 3})`)
+                                                }
+                                                else if(e.target.value === `'${uData[0].admission + 3}-04-01' and '${uData[0].admission + 3}-06-30'`){
+                                                    setMsg(`April (01/04/${uData[0].admission + 3}) to June (30/06/${uData[0].admission + 3})`)
                                                 }
                                             }} name="period" label="Filter By Period">
                                                 <option selected value='All'>All</option>
-                                                <option value={`'2019-07-01' and '2019-09-30'`}>July - September(2019)</option>
-                                                <option value={`'2019-10-01' and '2019-12-31'`}>October - December(2019)</option>
-                                                <option value={`'2020-01-01' and '2020-03-31'`}>January - March(2020)</option>
-                                                <option value={`'2020-04-01' and '2020-06-30'`}>April - June(2020)</option>
+                                                <option value={`'${uData ?  uData[0].admission : null}-07-01' and '${uData ?  uData[0].admission : null}-09-30'`}>July - September({uData ?  uData[0].admission : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission : null}-10-01' and '${uData ?  uData[0].admission : null}-12-31'`}>October - December({uData[0].admission})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 1 : null}-01-01' and '${uData ?  uData[0].admission + 1 : null}-03-31'`}>January - March({uData ?  uData[0].admission + 1 : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 1 : null}-04-01' and '${uData ?  uData[0].admission + 1 : null}-06-30'`}>April - June({uData ?  uData[0].admission + 1 : null})</option>
 
-                                                <option value={`'2020-07-01' and '2020-09-30'`}>July - September(2020)</option>
-                                                <option value={`'2020-10-01' and '2020-12-31'`}>October - December(2020)</option>
-                                                <option value={`'2021-01-01' and '2021-03-31'`}>January - March(2021)</option>
-                                                <option value={`'2021-04-01' and '2021-06-30'`}>April - June(2021)</option>
+                                                <option value={`'${uData ?  uData[0].admission + 1 : null}-07-01' and '${uData ?  uData[0].admission + 1 : null}-09-30'`}>July - September({uData ?  uData[0].admission + 1 : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 1 : null}-10-01' and '${uData ?  uData[0].admission + 1 : null}-12-31'`}>October - December({uData ?  uData[0].admission + 1 : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 2 : null}-01-01' and '${uData ?  uData[0].admission + 2 : null}-03-31'`}>January - March({uData ?  uData[0].admission + 2 : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 2 : null}-04-01' and '${uData ?  uData[0].admission + 2 : null}-06-30'`}>April - June({uData ?  uData[0].admission + 2 : null})</option>
 
-                                                <option value={`'2021-07-01' and '2021-09-30'`}>July - September(2021)</option>
-                                                <option value={`'2021-10-01' and '2021-12-31'`}>October - December(2021)</option>
-                                                <option value={`'2022-01-01' and '2022-03-31'`}>January - March(2022)</option>
-                                                <option value={`'2022-04-01' and '2022-06-30'`}>April - June(2022)</option>
+                                                <option value={`'${uData ?  uData[0].admission + 2 : null}-07-01' and '${uData ?  uData[0].admission + 2 : null}-09-30'`}>July - September({uData ?  uData[0].admission + 2 : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 2 : null}-10-01' and '${uData ?  uData[0].admission + 2 : null}-12-31'`}>October - December({uData ?  uData[0].admission + 2 : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 3 : null}-01-01' and '${uData ?  uData[0].admission + 3 : null}-03-31'`}>January - March({uData ?  uData[0].admission + 3 : null})</option>
+                                                <option value={`'${uData ?  uData[0].admission + 3 : null}-04-01' and '${uData ?  uData[0].admission + 3 : null}-06-30'`}>April - June({uData ?  uData[0].admission + 3 : null})</option>
                                             </select><br />
                                             
                                             {uData[0].roll === "IQAC"  ? 
