@@ -7,46 +7,8 @@ import MaterialTable from 'material-table'
 import {FaFileWord} from 'react-icons/fa'
 import { RiAdminFill } from 'react-icons/ri'
 
-function Adminlogin(){
-
-    const export_all = ()=>{
-        if (!window.Blob) {
-            alert('Your legacy browser does not support this action.');
-            return;
-        }
-      
-        var html, link, blob, url, css;
-        
-        // EU A4 use: size: 841.95pt 595.35pt;
-        // US Letter use: size:11.0in 8.5in;
-        
-        css = (
-          '<style>' +
-          '@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}' +
-          'div.WordSection1 {page: WordSection1;}' +
-          'table{width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}'+
-          '</style>'
-        );
-        
-        html = window.docx.innerHTML;
-        blob = new Blob(['\ufeff', css + html], {
-          type: 'application/msword'
-        });
-        url = URL.createObjectURL(blob);
-        link = document.createElement('A');
-        link.href = url;
-        // Set default file name. 
-        // Word will append file extension - do not add an extension here.
-        link.download = 'Document';   
-        document.body.appendChild(link);
-        if (navigator.msSaveOrOpenBlob ) navigator.msSaveOrOpenBlob( blob, 'Document.doc'); // IE10-11
-        else link.click();  // other browsers
-        document.body.removeChild(link);
-    }
-
-    const [msg,setMsg] = useState('All')
+function Staffs(){
     const [data,setData] = useState()
-    const editprofile = `/dashboard/editprofile/${data ? data[0].user_id : ''}`
     const [rps,setRps] = useState([])
     const [rpat,setRpat] = useState([])
     const [rawd,setRawd] = useState([])
@@ -76,74 +38,38 @@ function Adminlogin(){
     const [foc,setFoc] = useState([])
     const [fe,setFe] = useState([])
     const history = useHistory()
+    const [msg,setMsg] = useState('All')
     console.log(data)
 
-
-    const callAboutPage = async () => {
-        try{
-            const res = await fetch('/dashboard',{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-            })
-
-            const datas = await res.json()
-            console.log(datas)
-            setData(datas.user)
-
-            if(datas.user[0].roll != 'SuperAdmin'){
-                const ad = await fetch(`/admin/${datas.user[0].department}`,{
-                    method: "GET",
-                    headers: {
-                        Accept: 'application/json',
-                        "Content-Type": "application/json"
-                    },
-                    credentials: 'include',
-                })
-    
-                const s_admin = await ad.json()
-                console.log(s_admin)
-
-                setRps(s_admin.research_projects)
-                setRpat(s_admin.patents)
-                setRawd(s_admin.awards_for_innovation)
-                setRdeg(s_admin.degree)
-                setRfel(s_admin.fellowship)
-                setCca(s_admin.collab_activ)
-                setClink(s_admin.linkages)
-                setCmou(s_admin.mou)
-                setEcon(s_admin.conference)
-                setEgl(s_admin.guest_lectures)
-                setEea(s_admin.extension_activities)
-                setEev(s_admin.industrial_visits)
-                setEevs(s_admin.evs)
-                setEda(s_admin.departmental_activities)
-                setCps(s_admin.project_services)
-                setFhnr(s_admin.honours)
-                setFexm(s_admin.exams)
-                setFbp(s_admin.books_published)
-                setFcc(s_admin.chapters_contributed)
-                setFcp(s_admin.conference_proceeding)
-                setFpp(s_admin.paper_presentation)
-                setFjp(s_admin.journal_publications)
-                setFcon(s_admin.fconference)
-                setFrp(s_admin.resource_person)
-                setFfs(s_admin.financial_support)
-                setFdp(s_admin.development_programmes)
-                setFoc(s_admin.online_courses)
-                setFe(s_admin.e_content)
-            }
-            
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
+    const export_all = ()=>{
+        if (!window.Blob) {
+            alert('Your legacy browser does not support this action.');
+            return;
         }
+      
+        var html, link, blob, url, css;
+        
+        // EU A4 use: size: 841.95pt 595.35pt;
+        // US Letter use: size:11.0in 8.5in;
+        
+        css = (
+            `<style>@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}div.WordSection1 {page: WordSection1;}table{font-family:Montserrat,sans-serif;width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}p{font-size:14px}.flx{display:flex;}.flx .img{wrap-text:square;}.flx .img2{wrap-text:square;}</style>`
+        );
+        
+        html = window.docx.innerHTML;
+        blob = new Blob(['\ufeff', css + html], {
+          type: 'application/msword'
+        });
+        url = URL.createObjectURL(blob);
+        link = document.createElement('A');
+        link.href = url;
+        // Set default file name. 
+        // Word will append file extension - do not add an extension here.
+        link.download = `${window.localStorage.getItem('dprt')}`;   
+        document.body.appendChild(link);
+        if (navigator.msSaveOrOpenBlob ) navigator.msSaveOrOpenBlob( blob, `${window.localStorage.getItem('dprt')}.doc`); // IE10-11
+        else link.click();  // other browsers
+        document.body.removeChild(link);
     }
 
     const call_period = async (prd) => {
@@ -199,6 +125,76 @@ function Adminlogin(){
         }
     }
 
+    const callAboutPage = async () => {
+        try{
+            const res = await fetch('/dashboard',{
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
+            })
+
+            const datas = await res.json()
+            console.log(datas)
+            setData(datas.user)
+
+            // if(datas.user[0].roll != 'SuperAdmin'){
+            //     history.push('/signin')
+            // }
+            // else{
+                const ad = await fetch(`/super_admin/departments/staffs/${window.localStorage.getItem('dprt')}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include',
+                })
+    
+                const s_admin = await ad.json()
+                console.log(s_admin)
+
+                setRps(s_admin.research_projects)
+                setRpat(s_admin.patents)
+                setRawd(s_admin.awards_for_innovation)
+                setRdeg(s_admin.degree)
+                setRfel(s_admin.fellowship)
+                setCca(s_admin.collab_activ)
+                setClink(s_admin.linkages)
+                setCmou(s_admin.mou)
+                setEcon(s_admin.conference)
+                setEgl(s_admin.guest_lectures)
+                setEea(s_admin.extension_activities)
+                setEev(s_admin.industrial_visits)
+                setEevs(s_admin.evs)
+                setEda(s_admin.departmental_activities)
+                setCps(s_admin.project_services)
+                setFhnr(s_admin.honours)
+                setFexm(s_admin.exams)
+                setFbp(s_admin.books_published)
+                setFcc(s_admin.chapters_contributed)
+                setFcp(s_admin.conference_proceeding)
+                setFpp(s_admin.paper_presentation)
+                setFjp(s_admin.journal_publications)
+                setFcon(s_admin.fconference)
+                setFrp(s_admin.resource_person)
+                setFfs(s_admin.financial_support)
+                setFdp(s_admin.development_programmes)
+                setFoc(s_admin.online_courses)
+                setFe(s_admin.e_content)
+            // }
+            
+            if(!res.status === 200){
+                const error = new Error(res.error)
+                throw error
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     const MySelect = ({ label, ...props }) => {
         const [field, meta] = useField(props);
         return (
@@ -231,7 +227,21 @@ function Adminlogin(){
                 Civil Aerodrome Post, Coimbatore-641 014
                 Tamil Nadu, INDIA,</p>
                 </div>
-                <h1>IQAC Report of {data ? data[0].department : ''}</h1>
+                <div style={{textAlign: 'center'}}>
+                    <h2>Internal Quality Assurance Cell (IQAC)</h2>
+                    <h2>Department of {window.localStorage.getItem('dprt')} - </h2>
+                    {
+                        msg ? 
+                        <>
+                            {msg === 'All' ? 
+                                <h2>Reports</h2> : <>
+                                    <h2>Quaterly Report - Staffs</h2>
+                                    <h2>{msg ? msg : null}</h2>
+                                </>
+                            }
+                        </> : null
+                    }
+                </div>
                 <h2>RESEARCH </h2>
                 <h4>1.1 Research Projects</h4>
                 <table>
@@ -246,10 +256,11 @@ function Adminlogin(){
                     <th>Amount Received(Rs.)</th>
                     <th>Funding Agency</th>
                     <th>Date of Sanction</th>
+                    <th>File</th>
                 </tr>
                 {
                     rps ? rps.map((r,i)=>
-                    { const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency} = r
+                    { const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,file} = r
                     return(
                         <tr key={i}>
                             <td>{i+1}</td>
@@ -261,6 +272,7 @@ function Adminlogin(){
                             <td>{amount_received ? amount_received : '-'}</td>
                             <td>{funding_agency ? funding_agency : '-'}</td>
                             <td>{date_sanctioned ? date_sanctioned : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>Link</a> : null}</td>
                         </tr>
                     )
                     }):null
@@ -1267,7 +1279,8 @@ function Adminlogin(){
                             {field:'amount_sanctioned',title:'Amount Sanctioned',filterPlaceholder:'Filter by Amount Sanctioned'},
                             {field:'amount_received',title:'Amount Received',filterPlaceholder:'Filter by Amount Received'},
                             {field:'funding_agency',title:'Funding Agency',filterPlaceholder:'Filter by Funding Agency'},
-                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},{field:'file',title:'File',filterPlaceholder:'Filter by File'},
+                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},
+                            {field:'file',title:'File',filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rps} title="Research Projects" />
                         
@@ -1870,4 +1883,4 @@ function Adminlogin(){
     )
 }
 
-export default Adminlogin
+export default Staffs

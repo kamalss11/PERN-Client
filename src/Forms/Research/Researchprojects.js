@@ -140,6 +140,7 @@ function Researchprojects(){
                                 dat.append('date_sanctioned',values.date_sanctioned)
                                 dat.append('funding_agency',values.funding_agency)
                                 dat.append('date',values.date)
+                                dat.append('department',uData[0].department)
 
                                 Axios.post('http://localhost:3000/forms/research/research_projects',dat)
                                 .then(res => console.log(res),setSubmitting(false),

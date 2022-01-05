@@ -93,7 +93,7 @@ function Signup(){
                                 .required('Required'),
                             roll: Yup.string()
                                 .oneOf(
-                                ['Staff','Student','IQAC'],
+                                ['User','SuperAdmin'],
                                 'Invalid'
                                 )
                                 .required('Required'),
@@ -166,9 +166,8 @@ function Signup(){
 
                         <MySelect name="roll">
                             <option value="">--- Roll ---</option>
-                            <option value="Staff">Staff</option>
-                            <option value="Student">Student</option>
-                            <option value="IQAC">IQAC</option>
+                            <option value="User">User</option>
+                            <option value="SuperAdmin">SuperAdmin</option>
                         </MySelect>
 
                         <TextInput

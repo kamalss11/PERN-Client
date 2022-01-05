@@ -94,7 +94,6 @@ function Signin(){
                                 window.alert("Logged in Successfull")
                                 setSubmitting(false);
                                 resetForm()
-                                // dispatch({type:'USER',payload:data})
                                 history.push('/dashboard')
                             }
                         }, 400);

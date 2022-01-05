@@ -33,19 +33,6 @@ function Student_dashboard(){
 
     const callAboutPage = async () => {
         try{
-            const res = await fetch('/dashboard',{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const datas = await res.json()
-            console.log(datas)
-            setUdata(datas.user)
-
             const stu = await fetch('/dashboard_student',{
                 method: "GET",
                 headers: {
@@ -54,6 +41,10 @@ function Student_dashboard(){
                 },
                 credentials: 'include'
             })
+
+            const datas = await stu.json()
+            console.log(datas)
+            setUdata(datas.user)
     
             const s = await stu.json()
             console.log(s)
@@ -580,7 +571,7 @@ function Student_dashboard(){
                                         }): <p className="no">No datas</p>}
 
                                         <h4>1.8 Online Courses</h4>  
-                                        {exams ? exams.map((r,i)=>{ const {id,n,roll_no,portal,n_course,duration,financial_support,level,date} = r
+                                        {online_courses ? online_courses.map((r,i)=>{ const {id,n,roll_no,portal,n_course,duration,financial_support,level,date} = r
                                             return(
                                                 <div key={i} className="research_projects">
                                                     <p><b>Name of the student :</b> {n ? n : 'NIL'}</p>
@@ -601,7 +592,7 @@ function Student_dashboard(){
                                         }): <p className="no">No datas</p>}
 
                                         <h4>1.9 Achievements</h4>  
-                                        {exams ? exams.map((r,i)=>{ const {id,n,roll_no,prize,event,level,date,venue} = r
+                                        {achievement ? achievement.map((r,i)=>{ const {id,n,roll_no,prize,event,level,date,venue} = r
                                             return(
                                                 <div key={i} className="research_projects">
                                                     <p><b>Name of the student :</b> {n ? n : 'NIL'}</p>
