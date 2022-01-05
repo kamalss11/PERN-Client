@@ -73,6 +73,8 @@ import Achievement from './Forms/Publications/achievement';
 import Edit_achievement from './Forms/Publications/Edit_achievement';
 import Forget_Password from './Pages/Forget_password';
 import Reset_password from './Pages/Reset_password';
+import Super_admin from './Super_admin/Super_admin';
+import Staffs from './Super_admin/Staffs';
 
 function App() {
   const Routing = ()=>{
@@ -95,7 +97,7 @@ function App() {
             <Forget_Password />
           </Route>
 
-          <Route path="/reset_password">
+          <Route exact path="/reset_password">
             <Reset_password />
           </Route>
 
@@ -103,12 +105,20 @@ function App() {
             <Student_dashboard />
           </Route>
 
-          <Route path="/dashboard/profile">
+          <Route exact path="/dashboard/profile">
             <Profile />
           </Route>
 
-          <Route path="/dashboard/editprofile">
+          <Route exact path="/dashboard/editprofile">
             <Editprofile />
+          </Route>
+
+          <Route exact path="/super_admin">            
+            <Super_admin />
+          </Route>
+
+          <Route path="/super_admin/departments/staffs">            
+            <Staffs />
           </Route>
 
           {/* Research */}
