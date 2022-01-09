@@ -6,11 +6,13 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_research_projects(){
     const [uData,setUdata] = useState()
     const [rp,setRp] = useState()
     const [men,setMen] = useState(false)
+    const [img,setimg] = useState()
     const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
     console.log(uData)
     const history = useHistory()
@@ -106,6 +108,7 @@ function Edit_research_projects(){
 
                     <Formik
                         initialValues = {{
+                            image: `${rp ? rp[0].file :  ''}`,
                             title: `${rp ? rp[0].title : ''}`,
                             no: `${rp ? rp[0].no : ''}`,
                             amount_sanctioned: `${rp ? rp[0].amount_sanctioned : ''}`,
@@ -137,38 +140,29 @@ function Edit_research_projects(){
                         }
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
-                            setTimeout(async () => {
-                                const res = await fetch(`/forms/research/research_projects/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id: `${window.localStorage.getItem('edit')}`,
-                                        title: values.title,
-                                        no: values.no,
-                                        amount_sanctioned: values.amount_sanctioned,
-                                        fileno: values.fileno,
-                                        amount_received: values.amount_received,
-                                        date_sanctioned: values.date_sanctioned,
-                                        funding_agency: values.funding_agency,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    window.localStorage.setItem('edit','')
-                                    alert("Profile Updated")
-                                    history.push("/dashboard")
-                                }
-                            }, 400);
+                            setTimeout(async () => {    
+                                console.log(uData[0].name)
+                                console.log(img)
+                                let dat = new FormData()
+                                dat.append('image',img)
+                                dat.append('id',rp[0].id)
+                                dat.append('n',uData[0].name)
+                                dat.append('title',values.title)
+                                dat.append('no',values.no)
+                                dat.append('amount_sanctioned',values.amount_sanctioned)
+                                dat.append('fileno',values.fileno)
+                                dat.append('amount_received',values.amount_received)
+                                dat.append('date_sanctioned',values.date_sanctioned)
+                                dat.append('funding_agency',values.funding_agency)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/research/research_projects/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
+                            },600)
                         }}
                     >
                         <Form method="PUT" className="form">
@@ -190,7 +184,7 @@ function Edit_research_projects(){
                             <TextInput
                                 id="amount_sanctioned"
                                 name="amount_sanctioned"
-                                type="text"
+                                type="number"
                                 label="Sanctioned Amount (Rs.)"
                                 // placeholder="Sanctioned Amount (Rs.)"
                             />
@@ -205,7 +199,7 @@ function Edit_research_projects(){
                             <TextInput
                                 id="amount_received"
                                 name="amount_received"
-                                type="text"
+                                type="number"
                                 label="Amount Received"
                             />      
 
@@ -221,7 +215,13 @@ function Edit_research_projects(){
                                 name="funding_agency"
                                 type="text"
                                 label="Funding Agency"
-                            />     
+                            />  
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>   
 
                             <TextInput
                                 id="date"

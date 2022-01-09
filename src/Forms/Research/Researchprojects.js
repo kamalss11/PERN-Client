@@ -101,7 +101,8 @@ function Researchprojects(){
                             amount_received: '',
                             date_sanctioned: '',
                             funding_agency: '',
-                            date: ''
+                            date: '',
+                            n: ''
                         }}
 
                         enableReinitialize       
@@ -125,13 +126,10 @@ function Researchprojects(){
                         }
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
-                            setTimeout(async () => {    
-                                console.log(uData[0].name)
-                                console.log(img)
+                            setTimeout(async () => {  
                                 let dat = new FormData()
                                 dat.append('image',img)
-                                dat.append('user_id',uData[0].user_id)
-                                dat.append('n',uData[0].name)
+                                dat.append('n',values.n)
                                 dat.append('title',values.title)
                                 dat.append('no',values.no)
                                 dat.append('amount_sanctioned',values.amount_sanctioned)
@@ -145,50 +143,21 @@ function Researchprojects(){
                                 Axios.post('http://localhost:3000/forms/research/research_projects',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
-                                    alert("Data Updated"),
-                                    history.push("/dashboard"))
+                                    alert("Data Inserted"),
+                                    history.push("/dashboard/view_staffs"))
                                 .catch(err => console.log(err))
                             },600)
                         }}
-
-                        // onSubmit={(values, { setSubmitting,resetForm }) => {
-                        //     setTimeout(async () => {    
-                        //         console.log(uData[0].name)
-                        //         const res = await fetch(`/forms/research/research_projects`,{
-                        //             method: "POST",
-                        //             headers: {
-                        //                 'Content-Type': 'application/json'
-                        //             },
-                        //             body: JSON.stringify({
-                        //                 user_id : `${uData[0].user_id}`,
-                        //                 n : uData[0].name,
-                        //                 title: values.title,
-                        //                 no: values.no,
-                        //                 amount_sanctioned: values.amount_sanctioned,
-                        //                 fileno: values.fileno,
-                        //                 amount_received: values.amount_received,
-                        //                 date_sanctioned: values.date_sanctioned,
-                        //                 funding_agency: values.funding_agency,
-                        //                 date: values.date
-                        //             })
-                        //         })
-    
-                        //         const data = await res.json()
-                        //         console.log(data)
-                        //         if(res.status === 422 || !data){
-                        //             window.alert(`${data.error}`)
-                        //         }
-                        //         else{
-                        //             setSubmitting(false);
-                        //             resetForm()
-                        //             alert("Data Updated")
-                        //             history.push("/dashboard")
-                        //         }
-                        //     }, 600);
-                        // }}
                     >
                         <Form method="POST" encType='multipart/form-data' className="form">
-                            <h3>Research Projects</h3>
+                            <h3>Research Projects</h3>                            
+
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the faculty"
+                            />
                             
                             <TextInput
                                 id="tite"
@@ -196,8 +165,6 @@ function Researchprojects(){
                                 type="text"
                                 label="Title of the project"
                             />
-
-                            <input type="file" name='image' onChange={e=>setimg(e.target.files[0])}/>
     
                             <MySelect name="no" label="Newly Sanctioned / Ongoing">
                                 <option value="">--Newly Sanctioned / Ongoing--</option>
@@ -208,7 +175,7 @@ function Researchprojects(){
                             <TextInput
                                 id="amount_sanctioned"
                                 name="amount_sanctioned"
-                                type="text"
+                                type="number"
                                 label="Sanctioned Amount (Rs.)"
                             />
     
@@ -222,7 +189,7 @@ function Researchprojects(){
                             <TextInput
                                 id="amount_received"
                                 name="amount_received"
-                                type="text"
+                                type="number"
                                 label="Amount Received"
                             />      
     
@@ -247,6 +214,12 @@ function Researchprojects(){
                                 label="Date of Happen"
                             />
 
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload File</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
+
                             <div className="btn">
                                 {/* <button type="reset">Reset</button> */}
                                 <button type="submit">Save</button>
@@ -254,118 +227,6 @@ function Researchprojects(){
                         </Form>
                     </Formik>
                 </div>
-
-                {/* <div className="fo" style={{marginTop: "20px"}}>
-                    <Formik
-                        initialValues = {{
-                            email: `${uData ? uData.email : ''}`,
-                            csvs: ''
-                        }}
-
-                        enableReinitialize       
-
-                        validationSchema = {
-                            Yup.object({
-                                
-                            })
-                        }
-
-                        onSubmit={(values, { setSubmitting,resetForm }) => {
-                            setTimeout(async () => {    
-                                const res = await fetch(`/forms/research/research_projects`,{
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        email : `${uData.email}`,
-                                        filled: `${uData.filled + 1}`,
-                                        csvs: csvArray
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    history.push("/dashboard")
-                                }
-                            }, 1000);
-                        }}
-                    >
-                        <Form method="POST" className="form" >
-                            <h3>Research Projects</h3>
-                            <p><b>You can upload more than one form at a time<br />
-                                Accepts only CSV format
-                            </b></p>
-
-                            
-                            <div className="fields">
-                                <label>Upload file as <b>CSV</b></label>
-                                <input
-                                    id="csvs"
-                                    name="csvs"
-                                    type="file"
-                                    accept=".csv"
-                                    onChange={e=>{setCsv(e.target.files[0]);console.log(e.target.files[0]);
-                                        if(e.target.files[0]){
-                                            console.log(csv)
-                                            const file = e.target.files[0]
-                                            const reader = new FileReader()
-                                            reader.onload = async function(e){
-                                                let allText = e.target.result
-                                                console.log(allText)
-                                                let lines = [];
-                                                const linesArray = allText.split('\n');
-                                                console.log(linesArray)
-                                                linesArray.forEach((e,i) => {
-                                                    const row = e.replace(/['"]+/g, '');
-                                                    console.log(row)
-                                                    lines.push(row);
-                                                });
-                                                // for removing empty record
-                                                lines.splice(lines.length - 1);
-                                                const result = [];
-                                                const headers = lines[0].split(",");
-        
-                                                for (let i = 1; i < lines.length; i++) {
-        
-                                                    const obj = {};
-                                                    const currentline = lines[i].split(",");
-        
-                                                    for (let j = 0; j < headers.length; j++) {
-                                                        obj[headers[j].replace(/['"]+/g, '')] = currentline[j];
-                                                        if(j==headers.length-1){
-                                                            obj[headers[j].replace(/['"]+/g, '')] = currentline[j];
-                                                        }
-                                                    }
-                                                    result.push(obj);
-                                                }
-                                                //return result; //JavaScript object
-                                                // return JSON.stringify(result); //JSON
-                                                var check = result
-                                                setCsvArray(result)
-                                                console.log(check)
-                                                result.map((e)=>{
-                                                    console.log(e)
-                                                })                               
-                                            }
-                                            reader.readAsText(file)
-                                        }}}
-                                />   
-                            </div>
-
-                            <div className="btn">
-                                <button type="submit">Save</button>
-                            </div>
-                        </Form>
-                    </Formik>
-                    </div> */}
                 </div>
             </div>
         </>

@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_chapters(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [chp,setChp] = useState()
     const [men,setMen] = useState(false)
@@ -110,7 +112,8 @@ function Edit_chapters(){
                             publisher: `${chp ? chp[0].publisher : ''}`,
                             level: `${chp ? chp[0].level : ''}`,
                             isbn_no: `${chp ? chp[0].isbn_no : ''}`,
-                            date: `${chp ? chp[0].date : ''}`
+                            date: `${chp ? chp[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -130,35 +133,24 @@ function Edit_chapters(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/chapters_contributed/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        title: values.title,
-                                        chapter: values.chapter,
-                                        editor: values.editor,
-                                        publisher: values.publisher,
-                                        level: values.level,
-                                        isbn_no: values.isbn_no,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',chp[0].id)
+                                dat.append('title',values.title)
+                                dat.append('chapter',values.chapter)
+                                dat.append('editor',values.editor)
+                                dat.append('publisher',values.publisher)
+                                dat.append('level',values.level)
+                                dat.append('isbn_no',values.isbn_no)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/faculty/chapters_contributed/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -205,6 +197,12 @@ function Edit_chapters(){
                                 type="text"
                                 label="ISBN No."
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

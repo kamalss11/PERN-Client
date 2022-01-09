@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_conferene(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [con,setCon] = useState()
     const [men,setMen] = useState(false)
@@ -29,7 +31,7 @@ function Edit_conferene(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const mo = await fetch(`/forms/faculty/conference/edit/${window.localStorage.getItem('edit')}`,{
+            const mo = await fetch(`/forms/faculty/fconference/edit/${window.localStorage.getItem('edit')}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -110,7 +112,8 @@ function Edit_conferene(){
                             level: `${con ? con[0].level : ''}`,
                             financial_support: `${con ? con[0].financial_support : ''}`,
                             programme_outcome: `${con ? con[0].programme_outcome : ''}`,
-                            date: `${con ? con[0].date : ''}`
+                            date: `${con ? con[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -130,35 +133,24 @@ function Edit_conferene(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/conference/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        con: values.con,
-                                        title: values.title,
-                                        venue: values.venue,
-                                        level: values.level,
-                                        financial_support: values.financial_support,
-                                        programme_outcome: values.programme_outcome,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',con[0].id)
+                                dat.append('con',values.con)
+                                dat.append('title',values.title)
+                                dat.append('venue',values.venue)
+                                dat.append('level',values.level)
+                                dat.append('financial_support',values.financial_support)
+                                dat.append('programme_outcome',values.programme_outcome)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/faculty/conference/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -198,7 +190,7 @@ function Edit_conferene(){
                             <TextInput
                                 id="financial_support"
                                 name="financial_support"
-                                type="text"
+                                type="number"
                                 label="Financial Support"
                             />
 
@@ -208,6 +200,12 @@ function Edit_conferene(){
                                 type="text"
                                 label="Programme Outcome"
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_confep(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [conp,setConp] = useState()
     const [men,setMen] = useState(false)
@@ -108,7 +110,8 @@ function Edit_confep(){
                             publication: `${conp ? conp[0].publication : ''}`,
                             level: `${conp ? conp[0].level : ''}`,
                             isbn_no: `${conp ? conp[0].isbn_no : ''}`,
-                            date: `${conp ? conp[0].date : ''}`
+                            date: `${conp ? conp[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -126,34 +129,22 @@ function Edit_confep(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/conference_proceeding/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        con: values.con,
-                                        publication: values.publication,
-                                        level: values.level,
-                                        isbn_no: values.isbn_no,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    window.localStorage.setItem('index','')
-                                    window.localStorage.setItem('_id','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',conp[0].id)
+                                dat.append('con',values.con)
+                                dat.append('publication',values.publication)
+                                dat.append('level',values.level)
+                                dat.append('isbn_no',values.isbn_no)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/faculty/conference_proceeding/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -186,6 +177,12 @@ function Edit_confep(){
                                 type="text"
                                 label="ISBN No."
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

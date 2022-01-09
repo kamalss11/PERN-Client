@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_journal(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [jou,setJou] = useState()
     const [men,setMen] = useState(false)
@@ -27,7 +29,7 @@ function Edit_journal(){
             })
 
             const datas = await res.json()
-            setUdata(datas)
+            setUdata(datas.user)
 
             const mo = await fetch(`/forms/faculty/journal_publications/edit/${window.localStorage.getItem('edit')}`,{
                 method: "GET",
@@ -111,7 +113,8 @@ function Edit_journal(){
                             sci: `${jou ? jou[0].sci : ''}`,
                             impact: `${jou ? jou[0].impact : ''}`,
                             level: `${jou ? jou[0].level : ''}`,
-                            date: `${jou ? jou[0].date : ''}`
+                            date: `${jou ? jou[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -132,36 +135,25 @@ function Edit_journal(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/journal_publications/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        title: values.title,
-                                        jou: values.jou,
-                                        issn_no: values.issn_no,
-                                        volume: values.volume,
-                                        sci: values.sci,
-                                        impact: values.impact,
-                                        level: values.level,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',jou[0].id)
+                                dat.append('title',values.title)
+                                dat.append('jou',values.jou)
+                                dat.append('issn_no',values.issn_no)
+                                dat.append('volume',values.volume)
+                                dat.append('sci',values.sci)
+                                dat.append('impact',values.impact)
+                                dat.append('level',values.level)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/faculty/journal_publications/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -214,7 +206,13 @@ function Edit_journal(){
                                 <option value="">--Level--</option>
                                 <option value="National">National</option>
                                 <option value="International">International</option>
-                            </MySelect>
+                            </MySelect>                            
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

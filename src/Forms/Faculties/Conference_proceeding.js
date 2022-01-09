@@ -6,12 +6,12 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Conference_proceeding(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
-    const [csv,setCsv] = useState()
-    const [csvArray,setCsvArray] = useState([])
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
     const history = useHistory()
@@ -97,7 +97,9 @@ function Conference_proceeding(){
                             publication: '',
                             level: '',
                             isbn_no: '',
-                            date: ''
+                            date: '',
+                            image: '',
+                            n:''
                         }}
 
                         enableReinitialize       
@@ -115,38 +117,35 @@ function Conference_proceeding(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/conference_proceeding`,{
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        user_id : uData[0].user_id,
-                                        n : uData[0].name,
-                                        con: values.con,
-                                        publication: values.publication,
-                                        level: values.level,
-                                        isbn_no: values.isbn_no,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Saved")
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('n',values.n)
+                                dat.append('con',values.con)
+                                dat.append('publication',values.publication)
+                                dat.append('level',values.level)
+                                dat.append('isbn_no',values.isbn_no)
+                                dat.append('date',values.date)
+                                dat.append('department',uData[0].department)
+
+                                Axios.post('http://localhost:3000/forms/faculty/conference_proceeding',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Inserted"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
                         <Form method="POST" className="form">
                             <h3>Conference Proceeding</h3>
+
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                            />
 
                             <TextInput
                                 id="con"
@@ -174,6 +173,12 @@ function Conference_proceeding(){
                                 type="text"
                                 label="ISBN No."
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload File</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
 
                             <TextInput
                                 id="date"

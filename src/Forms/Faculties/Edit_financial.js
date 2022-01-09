@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_financial(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [fin,setFin] = useState()
     const [men,setMen] = useState(false)
@@ -91,7 +93,8 @@ function Edit_financial(){
                         initialValues = {{
                             f: `${fin ? fin[0].f : ''}`,
                             amount_support: `${fin ? fin[0].amount_support : ''}`,
-                            date: `${fin ? fin[0].date : ''}`
+                            date: `${fin ? fin[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -107,31 +110,20 @@ function Edit_financial(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/financial_support/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        f: values.f,
-                                        amount_support: values.amount_support,
-                                        date : values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',fin[0].id)
+                                dat.append('f',values.f)
+                                dat.append('amount_support',values.amount_support)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/faculty/financial_support/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -148,9 +140,15 @@ function Edit_financial(){
                             <TextInput
                                 id="amount_support"
                                 name="amount_support"
-                                type="text"
+                                type="number"
                                 label="Amount of support "
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

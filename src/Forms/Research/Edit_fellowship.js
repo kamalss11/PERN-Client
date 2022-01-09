@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_fellowship(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [fell,setFell] = useState()
     const [men,setMen] = useState(false)
@@ -108,7 +110,8 @@ function Edit_fellowship(){
                             date_sanctioned: `${fell ? fell[0].date_sanctioned : ''}`,
                             funding_agency: `${fell ? fell[0].funding_agency : ''}`,
                             sanctioned_amount: `${fell ? fell[0].sanctioned_amount : ''}`,
-                            date: `${fell ? fell[0].date : ''}`
+                            date: `${fell ? fell[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -126,33 +129,22 @@ function Edit_fellowship(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/research/fellowship/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : `${window.localStorage.getItem('edit')}`,
-                                        fellowship: values.fellowship,
-                                        date_sanctioned: values.date_sanctioned,
-                                        funding_agency: values.funding_agency,
-                                        sanctioned_amount: values.sanctioned_amount,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',fell[0].id)
+                                dat.append('fellowship',values.fellowship)
+                                dat.append('date_sanctioned',values.date_sanctioned)
+                                dat.append('funding_agency',values.funding_agency)
+                                dat.append('sanctioned_amount',values.sanctioned_amount)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/research/fellowship/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -168,7 +160,7 @@ function Edit_fellowship(){
                             <TextInput
                                 id="date_sanctioned"
                                 name="date_sanctioned"
-                                type="text"
+                                type="date"
                                 label="Date of Sanction"
                             />
 
@@ -182,9 +174,15 @@ function Edit_fellowship(){
                             <TextInput
                                 id="sanctioned_amount"
                                 name="sanctioned_amount"
-                                type="text"
+                                type="number"
                                 label="Sanctioned Amount"
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

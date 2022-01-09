@@ -6,12 +6,12 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Development_programmes(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
-    const [csv,setCsv] = useState()
-    const [csvArray,setCsvArray] = useState([])
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
     const history = useHistory()
@@ -98,7 +98,9 @@ function Development_programmes(){
                             venue: '',
                             financial_support: '',
                             level: '',
-                            date : ''
+                            date : '',
+                            image: '',
+                            n: ''
                         }}
 
                         enableReinitialize       
@@ -117,39 +119,36 @@ function Development_programmes(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/development_programmes`,{
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        user_id : uData[0].user_id,
-                                        n : uData[0].name,
-                                        training: values.training,
-                                        title: values.title,
-                                        venue: values.venue,
-                                        financial_support: values.financial_support,
-                                        level: values.level,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('n',values.n)
+                                dat.append('training',values.training)
+                                dat.append('title',values.title)
+                                dat.append('venue',values.venue)
+                                dat.append('level',values.level)
+                                dat.append('financial_support',values.financial_support)
+                                dat.append('date',values.date)
+                                dat.append('department',uData[0].department)
+
+                                Axios.post('http://localhost:3000/forms/faculty/development_programmes',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Inserted"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
                         <Form method="POST" className="form">
                             <h3>Professional Development Programmes</h3>
+
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the faculty"
+                            />
 
                             <MySelect name="training" label="Type">
                                 <option value="">--Select--</option>
@@ -176,7 +175,7 @@ function Development_programmes(){
                             <TextInput
                                 id="financial_support"
                                 name="financial_support"
-                                type="text"
+                                type="number"
                                 label="Financial Support from College"
                             />
 
@@ -187,6 +186,12 @@ function Development_programmes(){
                                 <option value="Regional">Regional</option>
                                 <option value="State">State</option>
                             </MySelect>
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload File</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
 
                             <TextInput
                                 id="date"
@@ -201,116 +206,6 @@ function Development_programmes(){
                         </Form>
                     </Formik>
                     </div>
-
-                    {/* <div className="fo" style={{marginTop: "0"}}>
-                    <Formik
-                        initialValues = {{
-                            email: `${uData ? uData.email : ''}`,
-                            csvs: ''
-                        }}
-
-                        enableReinitialize       
-
-                        // validationSchema = {
-                        //     Yup.object().shape({
-                        //         csvs:  Yup.mixed().required('A file is required')
-                        //     })
-                        // }
-
-                        onSubmit={(values, { setSubmitting,resetForm }) => {
-                            setTimeout(async () => {    
-                                const res = await fetch(`/forms/research/patents`,{
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        email : `${uData.email}`,
-                                        filled: `${uData.filled + 1}`,
-                                        csvs: csvArray
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    history.push("/dashboard")
-                                }
-                            }, 1000);
-                        }}
-                    >
-                        <Form method="POST" className="form">
-                            <h3>Professional Development Programmes</h3>
-                            <p><b>You can upload more than one form at a time<br />
-                                Accepts only CSV format
-                            </b></p>
-
-                            
-                            <div className="fields">
-                                <label>Upload file as <b>CSV</b></label>
-                                <input
-                                    id="csvs"
-                                    name="csvs"
-                                    type="file"
-                                    accept=".csv"
-                                    required
-                                    onChange={e=>{setCsv(e.target.files[0]);console.log(e.target.files[0]);
-                                        if(e.target.files[0]){
-                                            console.log(csv)
-                                            const file = e.target.files[0]
-                                            const reader = new FileReader()
-                                            reader.onload = async function(e){
-                                                let allText = e.target.result
-                                                console.log(allText)
-                                                let lines = [];
-                                                const linesArray = allText.split('\n');
-                                                console.log(linesArray)
-                                                linesArray.forEach((e,i) => {
-                                                    const row = e.replace(/['"]+/g, '');
-                                                    console.log(row)
-                                                    lines.push(row);
-                                                });
-                                                // for removing empty record
-                                                lines.splice(lines.length - 1);
-                                                const result = [];
-                                                const headers = lines[0].split(",");
-        
-                                                for (let i = 1; i < lines.length; i++) {
-        
-                                                    const obj = {};
-                                                    const currentline = lines[i].split(",");
-        
-                                                    for (let j = 0; j < headers.length; j++) {
-                                                        obj[headers[j]] = currentline[j];
-                                                    }
-                                                    result.push(obj);
-                                                }
-                                                //return result; //JavaScript object
-                                                // return JSON.stringify(result); //JSON
-                                                var check = result
-                                                setCsvArray(result)
-                                                console.log(check)
-                                                result.map((e)=>{
-                                                    console.log(e)
-                                                })                               
-                                            }
-                                            reader.readAsText(file)
-                                        }}}
-                                />   
-                            </div>
-
-                            <div className="btn">
-                                <button type="submit">Save</button>
-                            </div>
-                        </Form>
-                    </Formik>
-                    </div> */}
                 </div>
             </div>
         </>

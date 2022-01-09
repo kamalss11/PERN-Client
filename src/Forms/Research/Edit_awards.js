@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_awards(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [awd,setAwd] = useState()
     const [men,setMen] = useState(false)
@@ -111,7 +113,8 @@ function Edit_awards(){
                             awarding_agency: `${awd ? awd[0].awarding_agency : ''}`,
                             venue: `${awd ? awd[0].venue : ''}`,
                             level: `${awd ? awd[0].level : ''}`,
-                            date: `${awd ? awd[0].date : ''}`
+                            date: `${awd ? awd[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -132,36 +135,25 @@ function Edit_awards(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/research/awards_for_innovation/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        awardee_name: values.awardee_name,
-                                        designation: values.designation,
-                                        award_category: values.award_category,
-                                        title: values.title,
-                                        awarding_agency: values.awarding_agency,
-                                        venue: values.venue,
-                                        level: values.level,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',awd[0].id)
+                                dat.append('awardee_name',values.awardee_name)
+                                dat.append('designation',values.designation)
+                                dat.append('award_category',values.award_category)
+                                dat.append('title',values.title)
+                                dat.append('awarding_agency',values.awarding_agency)
+                                dat.append('venue',values.venue)
+                                dat.append('level',values.level)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/research/awards_for_innovation/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -215,7 +207,13 @@ function Edit_awards(){
                                 <option value="State">State</option>
                                 <option value="National">National</option>
                                 <option value="International">International</option>
-                            </MySelect> 
+                            </MySelect>  
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>  
 
                             <TextInput
                                 id="date"

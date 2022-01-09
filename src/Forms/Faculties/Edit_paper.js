@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_paper(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [pap,setPap] = useState()
     const [men,setMen] = useState(false)
@@ -109,7 +111,8 @@ function Edit_paper(){
                             financial_support: `${pap ? pap[0].financial_support : ''}`,
                             venue: `${pap ? pap[0].venue : ''}`,
                             level: `${pap ? pap[0].level : ''}`,
-                            date: `${pap ? pap[0].date : ''}`
+                            date: `${pap ? pap[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -128,34 +131,23 @@ function Edit_paper(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/paper_presentation/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        con: values.con,
-                                        title: values.title,
-                                        financial_support: values.financial_support,
-                                        venue: values.venue,
-                                        level: values.level,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',pap[0].id)
+                                dat.append('con',values.con)
+                                dat.append('title',values.title)
+                                dat.append('financial_support',values.financial_support)
+                                dat.append('venue',values.venue)
+                                dat.append('level',values.level)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/faculty/paper_presentation/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -180,7 +172,7 @@ function Edit_paper(){
                             <TextInput
                                 id="financial_support"
                                 name="financial_support"
-                                type="text"
+                                type="number"
                                 label="Financial Support from college"
                             />
 
@@ -198,6 +190,12 @@ function Edit_paper(){
                                 <option value="State">State</option>
                                 <option value="Regional">Regional</option>
                             </MySelect>
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

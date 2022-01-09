@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_phd(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [deg,setDeg] = useState()
     const [men,setMen] = useState(false)
@@ -29,7 +31,7 @@ function Edit_phd(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const d = await fetch(`/forms/research/deg/edit/${window.localStorage.getItem('edit')}`,{
+            const d = await fetch(`/forms/research/degree/edit/${window.localStorage.getItem('edit')}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -40,6 +42,7 @@ function Edit_phd(){
 
             const de = await d.json()
             setDeg(de)
+            console.log(de)
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -109,7 +112,8 @@ function Edit_phd(){
                             title: `${deg ? deg[0].title : ''}`,
                             external: `${deg ? deg[0].external : ''}`,
                             venue: `${deg ? deg[0].venue : ''}`,
-                            date: `${deg ? deg[0].date : ''}`
+                            date: `${deg ? deg[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -128,34 +132,25 @@ function Edit_phd(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/research/deg/edit}`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        deg: values.deg,
-                                        guide_name: values.guide_name,
-                                        title: values.title,
-                                        external: values.external,
-                                        venue: values.venue,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',deg[0].id)
+                                dat.append('deg',values.deg)
+                                dat.append('guide_name',values.guide_name)
+                                dat.append('title',values.title)
+                                dat.append('external',values.external)
+                                dat.append('awarding_agency',values.awarding_agency)
+                                dat.append('venue',values.venue)
+                                dat.append('date',values.date)
+                                dat.append('department',uData[0].department)
+
+                                Axios.put('http://localhost:3000/forms/research/deg/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -194,7 +189,13 @@ function Edit_phd(){
                                 name="venue"
                                 type="text"
                                 label="Venue of Viva"
-                            /> 
+                            />   
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>  
 
                             <TextInput
                                 id="date"

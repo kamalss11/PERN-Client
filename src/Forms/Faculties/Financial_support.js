@@ -6,12 +6,12 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Financial_support(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
-    const [csv,setCsv] = useState()
-    const [csvArray,setCsvArray] = useState([])
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
     const history = useHistory()
@@ -80,7 +80,9 @@ function Financial_support(){
                         initialValues = {{
                             f: '',
                             amount_support: '',
-                            date: ''
+                            date: '',
+                            image: '',
+                            n: ''
                         }}
 
                         enableReinitialize       
@@ -97,36 +99,33 @@ function Financial_support(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/faculty/financial_support`,{
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        user_id : uData[0].user_id,
-                                        n : uData[0].name,
-                                        f: values.f,
-                                        amount_support: values.amount_support,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Saved")
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('n',values.n)
+                                dat.append('f',values.f)
+                                dat.append('amount_support',values.amount_support)
+                                dat.append('date',values.date)
+                                dat.append('department',uData[0].department)
+
+                                Axios.post('http://localhost:3000/forms/faculty/financial_support',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Inserted"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
                         <Form method="POST" className="form">
                             <h3>Financial Support </h3>
+
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the faculty"
+                            />
 
                             <TextInput
                                 id="f"
@@ -138,9 +137,15 @@ function Financial_support(){
                             <TextInput
                                 id="amount_support"
                                 name="amount_support"
-                                type="text"
+                                type="number"
                                 label="Amount of support "
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload File</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
 
                             <TextInput
                                 id="date"

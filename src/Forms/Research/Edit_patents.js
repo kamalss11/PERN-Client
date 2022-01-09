@@ -6,9 +6,11 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_patents(){
     const [uData,setUdata] = useState()
+    const [img,setimg] = useState()
     const [pat,setpat] = useState()
     const [men,setMen] = useState(false)
     const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
@@ -95,7 +97,7 @@ function Edit_patents(){
                             fileno: `${pat ? pat[0].fileno : ''}`,
                             date_awarded_patent: `${pat ? pat[0].date_awarded_patent : ''}`,
                             royalty_received: `${pat ? pat[0].royalty_received : ''}`,
-                            providing_agency: `${pat ? pat.providing_agency : ''}`,
+                            providing_agency: `${pat ? pat[0].providing_agency : ''}`,
                             country: `${pat ? pat[0].country : ''}`,
                             date: `${pat ? pat[0].date: ''}`
                         }}
@@ -118,37 +120,25 @@ function Edit_patents(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/research/patents/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id: `${window.localStorage.getItem('edit')}`,
-                                        title: values.title,
-                                        field: values.field,
-                                        fileno: values.fileno,
-                                        date_awarded_patent: values.date_awarded_patent,
-                                        royalty_received: values.royalty_received,
-                                        providing_agency: values.providing_agency,
-                                        country: values.country,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
-                            }, 400);
+                                let dat = new FormData()
+                                dat.append('image',img)
+                                dat.append('id',pat[0].id)
+                                dat.append('title',values.title)
+                                dat.append('field',values.field)
+                                dat.append('fileno',values.fileno)
+                                dat.append('date_awarded_patent',values.date_awarded_patent)
+                                dat.append('royalty_received',values.royalty_received)
+                                dat.append('providing_agency',values.providing_agency)
+                                dat.append('date',values.date)
+                                dat.append('country',values.country)
+
+                                Axios.put('http://localhost:3000/forms/research/patents/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
+                            }, 600);
                         }}
                     >
                         <Form method="PUT" className="form">
@@ -201,6 +191,12 @@ function Edit_patents(){
                                 type="text"
                                 label="India / Abroad (specify country)"
                             /> 
+
+                            <div className='fields'>
+                                <label for='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
 
                             <TextInput
                                 id="date"
