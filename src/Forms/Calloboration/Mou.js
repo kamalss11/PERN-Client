@@ -6,12 +6,12 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Mou(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
-    const [csv,setCsv] = useState()
-    const [csvArray,setCsvArray] = useState([])
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
     const history = useHistory()
@@ -84,7 +84,9 @@ function Mou(){
                             participants: '',
                             purpose: '',
                             total: '',
-                            date: ''
+                            date: '',
+                            image: '',
+                            n: ''
                         }}
 
                         enableReinitialize       
@@ -100,44 +102,41 @@ function Mou(){
                                 total: Yup.string(),
                                 date: Yup.date().required('Required')
                             })
-                        }
+                        }                       
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/collaborations/mou`,{
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        user_id : uData[0].user_id,
-                                        n : uData[0].name,
-                                        organization: values.organization,
-                                        date_signed: values.date_signed,
-                                        period: values.period,
-                                        participants: values.participants,
-                                        purpose: values.purpose,
-                                        total: values.total,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('n',values.n)
+                                dat.append('organization',values.organization)
+                                dat.append('date_signed',values.date_signed)
+                                dat.append('period',values.period)
+                                dat.append('participants',values.participants)
+                                dat.append('purpose',values.purpose)
+                                dat.append('total',values.total)
+                                dat.append('date',values.date)
+                                dat.append('department',uData[0].department)
+
+                                Axios.post('http://localhost:3000/forms/collaborations/mou',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Inserted"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
                         <Form method="POST" className="form">
                             <h3>MoU(s) Signed</h3>
+
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the faculty"
+                            />
 
                             <TextInput
                                 id="organization"
@@ -149,7 +148,7 @@ function Mou(){
                             <TextInput
                                 id="date_signed"
                                 name="date_signed"
-                                type="text"
+                                type="date"
                                 label="Date Signed"
                             />
 
@@ -180,6 +179,12 @@ function Mou(){
                                 type="text"
                                 label="Total No. of Beneficiaries"
                             />    
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload File</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
 
                             <TextInput
                                 id="date"

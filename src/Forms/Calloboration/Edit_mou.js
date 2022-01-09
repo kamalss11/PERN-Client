@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_mou(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [mou,setMou] = useState()
     const [men,setMen] = useState(false)
@@ -95,7 +97,8 @@ function Edit_mou(){
                             participants: `${mou ? mou[0].participants : ''}`,
                             purpose: `${mou ? mou[0].purpose : ''}`,
                             total: `${mou ? mou[0].total : ''}`,
-                            date: `${mou ? mou[0].date : ''}`
+                            date: `${mou ? mou[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -111,39 +114,28 @@ function Edit_mou(){
                                 total: Yup.string(),
                                 date: Yup.date().required('Required')
                             })
-                        }
+                        }                   
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/collaborations/mou/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        organization: values.organization,
-                                        date_signed: values.date_signed,
-                                        period: values.period,
-                                        participants: values.participants,
-                                        purpose: values.purpose,
-                                        total: values.total,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',mou[0].id)
+                                dat.append('organization',values.organization)
+                                dat.append('date_signed',values.date_signed)
+                                dat.append('period',values.period)
+                                dat.append('participants',values.participants)
+                                dat.append('purpose',values.purpose)
+                                dat.append('total',values.total)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/collaborations/mou/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -160,7 +152,7 @@ function Edit_mou(){
                             <TextInput
                                 id="date_signed"
                                 name="date_signed"
-                                type="text"
+                                type="date"
                                 label="Date Signed"
                             />
 
@@ -192,6 +184,12 @@ function Edit_mou(){
                                 label="Total No. of Beneficiaries"
                             />    
 
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
+
                             <TextInput
                                 id="date"
                                 name="date"
@@ -200,7 +198,7 @@ function Edit_mou(){
                             />      
 
                             <div className="btn">
-                                <button type="submit">Save</button>
+                                <button type="submit">Update</button>
                             </div>
                         </Form>
                     </Formik>

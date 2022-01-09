@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_evs(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [evs,setEvs] = useState()
     const [men,setMen] = useState(false)
@@ -92,7 +94,8 @@ function Edit_evs(){
                             date: `${evs ? evs[0].date : ''}`,
                             place: `${evs ? evs[0].place : ''}`,
                             total: `${evs ? evs[0].total : ''}`,
-                            activity: `${evs ? evs[0].activity : ''}`
+                            activity: `${evs ? evs[0].activity : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -107,35 +110,24 @@ function Edit_evs(){
                                 activity: Yup.string()
                             })
                         }
-
+                        
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/events/evs/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        date: values.date,
-                                        place: values.place,
-                                        total: values.total,
-                                        activity: values.activity
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',evs[0].id)
+                                dat.append('date',values.date)
+                                dat.append('place',values.place)
+                                dat.append('total',values.total)
+                                dat.append('activity',values.activity)
+
+                                Axios.put('http://localhost:3000/forms/events/evs/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -163,6 +155,12 @@ function Edit_evs(){
                                 label="Nature of Activity"
                             />
 
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
+
                             <TextInput
                                 id="date"
                                 name="date"
@@ -171,7 +169,7 @@ function Edit_evs(){
                             />
 
                             <div className="btn">
-                                <button type="submit">Save</button>
+                                <button type="submit">Update</button>
                             </div>
                         </Form>
                     </Formik>

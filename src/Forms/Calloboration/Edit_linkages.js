@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_linkages(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [link,setLink] = useState()
     const [men,setMen] = useState(false)
@@ -40,6 +42,7 @@ function Edit_linkages(){
 
             const l = await li.json()
             setLink(l)
+            console.log(l)
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -107,7 +110,8 @@ function Edit_linkages(){
                             title: `${link ? link[0].title : ''}`,
                             partnering_agency: `${link ? link[0].partnering_agency : ''}`,
                             period: `${link ? link[0].period : ''}`,
-                            date: `${link ? link[0].date : ''}`
+                            date: `${link ? link[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -124,32 +128,21 @@ function Edit_linkages(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/collaborations/linkages/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        title: values.title,
-                                        partnering_agency: values.partnering_agency,
-                                        period: values.period,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',link[0].id)
+                                dat.append('title',values.title)
+                                dat.append('partnering_agency',values.partnering_agency)
+                                dat.append('period',values.period)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/collaborations/linkages/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -176,6 +169,12 @@ function Edit_linkages(){
                                 type="text"
                                 label="Period"
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

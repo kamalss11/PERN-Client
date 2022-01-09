@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_pro(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [ps,setPs] = useState()
     const [men,setMen] = useState(false)
@@ -109,7 +111,8 @@ function Edit_pro(){
                             revenue_generated: `${ps ? ps[0].revenue_generated : ''}`,
                             date_sanction: `${ps ? ps[0].date_sanction : ''}`,
                             sponsor: `${ps ? ps[0].sponsor : ''}`,
-                            date: `${ps ? ps[0].date : ''}`
+                            date: `${ps ? ps[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -128,34 +131,24 @@ function Edit_pro(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/consultancy/projects_services/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        title: values.title,
-                                        no: values.no,
-                                        revenue_generated: values.revenue_generated,
-                                        date_sanction: values.date_sanction,
-                                        sponsor: values.sponsor,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',ps[0].id)
+                                dat.append('no',values.no)
+                                dat.append('title',values.title)
+                                dat.append('revenue_generated',values.revenue_generated)
+                                dat.append('date_sanction',values.date_sanction)
+                                dat.append('sponsor',values.sponsor)
+                                dat.append('date',values.date)
+                                dat.append('department',uData[0].department)
+
+                                Axios.put('http://localhost:3000/forms/consultancy/projects_services/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -178,14 +171,14 @@ function Edit_pro(){
                             <TextInput
                                 id="revenue_generated"
                                 name="revenue_generated"
-                                type="text"
+                                type="number"
                                 label="Revenue Generated"
                             />
 
                             <TextInput
                                 id="date_sanction"
                                 name="date_sanction"
-                                type="text"
+                                type="date"
                                 label="Date of Sanction"
                             />
 
@@ -195,6 +188,12 @@ function Edit_pro(){
                                 type="text"
                                 label="Sponsoring / Consultancy Agency"
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

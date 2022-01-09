@@ -62,3 +62,16 @@
     margin: 0 7px;
     font-size: 13px;
 }
+
+.tb1,.tb2{
+    height: 0;
+    opacity: 0;
+    transition: .5s;
+    pointer-events: none;
+}
+
+.tb1.active,.tb2.active{
+    height: 532px;
+    opacity: 1;
+    pointer-events: all;
+}

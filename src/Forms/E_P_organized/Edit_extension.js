@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_extension(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [ext,setExt] = useState()
     const [men,setMen] = useState(false)
@@ -93,7 +95,8 @@ function Edit_extension(){
                             collaborations: `${ext ? ext[0].collaborations : ''}`,
                             venue: `${ext ? ext[0].venue : ''}`,
                             total: `${ext ? ext[0].total : ''}`,
-                            date: `${ext ? ext[0].date : ''}`
+                            date: `${ext ? ext[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -108,36 +111,25 @@ function Edit_extension(){
                                 date: Yup.date().required('Required')
                             })
                         }
-
+                        
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/events/extension_activities/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        activities: values.activities,
-                                        collaborations: values.collaborations,
-                                        venue: values.venue,
-                                        total: values.total,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',ext[0].id)
+                                dat.append('activities',values.activities)
+                                dat.append('collaborations',values.collaborations)
+                                dat.append('venue',values.venue)
+                                dat.append('total',values.total)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/events/extension_activities/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -171,6 +163,12 @@ function Edit_extension(){
                                 type="text"
                                 label="Venue"
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div>
 
                             <TextInput
                                 id="date"

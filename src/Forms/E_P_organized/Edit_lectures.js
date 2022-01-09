@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_lectures(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [lec,setLec] = useState()
@@ -96,7 +98,8 @@ function Edit_lectures(){
                             objective: `${lec ? lec[0].objective : ''}`,
                             outcome: `${lec ? lec[0].outcome : ''}`,
                             total: `${lec ? lec[0].total : ''}`,
-                            date: `${lec ? lec[0].date: ''}`
+                            date: `${lec ? lec[0].date: ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -114,39 +117,28 @@ function Edit_lectures(){
                                 date: Yup.date().required('Required')
                             })
                         }
-
+                        
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/events/guest_lectures/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        resource_person: values.resource_person,
-                                        designation: values.designation,
-                                        topic: values.topic,
-                                        venue: values.venue,
-                                        objective: values.objective,
-                                        outcome: values.outcome,
-                                        total: values.total,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',lec[0].id)
+                                dat.append('resource_person',values.resource_person)
+                                dat.append('designation',values.designation)
+                                dat.append('topic',values.topic)
+                                dat.append('venue',values.venue)
+                                dat.append('objective',values.objective)
+                                dat.append('outcome',values.outcome)
+                                dat.append('total',values.total)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/events/guest_lectures/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -201,6 +193,12 @@ function Edit_lectures(){
                                 type="text"
                                 label="Total no. of Participants"
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

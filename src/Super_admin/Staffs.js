@@ -8,6 +8,36 @@ import {FaFileWord} from 'react-icons/fa'
 import { RiAdminFill } from 'react-icons/ri'
 
 function Staffs(){
+    const export_all = ()=>{
+        if (!window.Blob) {
+            alert('Your legacy browser does not support this action.');
+            return;
+        }
+      
+        var html, link, blob, url, css;
+        
+        // EU A4 use: size: 841.95pt 595.35pt;
+        // US Letter use: size:11.0in 8.5in;
+        
+        css = (
+            `<style>@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}div.WordSection1 {page: WordSection1;}table{font-family:Montserrat,sans-serif;width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}p{font-size:14px}.flx{display:flex;}.flx .img{wrap-text:square;}.flx .img2{wrap-text:square;}</style>`
+        );
+        
+        html = window.docx.innerHTML;
+        blob = new Blob(['\ufeff', css + html], {
+          type: 'application/msword'
+        });
+        url = URL.createObjectURL(blob);
+        link = document.createElement('A');
+        link.href = url;
+        // Set default file name. 
+        // Word will append file extension - do not add an extension here.
+        link.download = `Document`;   
+        document.body.appendChild(link);
+        if (navigator.msSaveOrOpenBlob ) navigator.msSaveOrOpenBlob( blob, `Document.doc`); // IE10-11
+        else link.click();  // other browsers
+        document.body.removeChild(link);
+    }
     const [data,setData] = useState()
     const [rps,setRps] = useState([])
     const [rpat,setRpat] = useState([])
@@ -39,42 +69,11 @@ function Staffs(){
     const [fe,setFe] = useState([])
     const history = useHistory()
     const [msg,setMsg] = useState('All')
-    console.log(data)
-
-    const export_all = ()=>{
-        if (!window.Blob) {
-            alert('Your legacy browser does not support this action.');
-            return;
-        }
-      
-        var html, link, blob, url, css;
-        
-        // EU A4 use: size: 841.95pt 595.35pt;
-        // US Letter use: size:11.0in 8.5in;
-        
-        css = (
-            `<style>@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}div.WordSection1 {page: WordSection1;}table{font-family:Montserrat,sans-serif;width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}p{font-size:14px}.flx{display:flex;}.flx .img{wrap-text:square;}.flx .img2{wrap-text:square;}</style>`
-        );
-        
-        html = window.docx.innerHTML;
-        blob = new Blob(['\ufeff', css + html], {
-          type: 'application/msword'
-        });
-        url = URL.createObjectURL(blob);
-        link = document.createElement('A');
-        link.href = url;
-        // Set default file name. 
-        // Word will append file extension - do not add an extension here.
-        link.download = `${window.localStorage.getItem('dprt')}`;   
-        document.body.appendChild(link);
-        if (navigator.msSaveOrOpenBlob ) navigator.msSaveOrOpenBlob( blob, `${window.localStorage.getItem('dprt')}.doc`); // IE10-11
-        else link.click();  // other browsers
-        document.body.removeChild(link);
-    }
+    console.log(data)   
 
     const call_period = async (prd) => {
         try{
-            const res = await fetch(`/period/${prd}`,{
+            const res = await fetch(`/period/${prd}/${window.localStorage.getItem('dprt')}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -127,6 +126,13 @@ function Staffs(){
 
     const callAboutPage = async () => {
         try{
+            if(!window.localStorage.getItem('dprt') || window.localStorage.getItem('dprt') === ''){
+                history.push('/super_admin')
+            }
+            // else{
+            //     history.replace(`super_admin/departments/staffs/${window.localStorage.getItem('dprt')}`)
+            // }
+            
             const res = await fetch('/dashboard',{
                 method: "GET",
                 headers: {
@@ -140,10 +146,11 @@ function Staffs(){
             console.log(datas)
             setData(datas.user)
 
-            // if(datas.user[0].roll != 'SuperAdmin'){
-            //     history.push('/signin')
-            // }
-            // else{
+            if(datas.user[0].roll != 'SuperAdmin'){
+                history.push('/signin')
+            }
+            else{
+                console.log(localStorage.getItem('dprt'))
                 const ad = await fetch(`/super_admin/departments/staffs/${window.localStorage.getItem('dprt')}`,{
                     method: "GET",
                     headers: {
@@ -184,7 +191,7 @@ function Staffs(){
                 setFdp(s_admin.development_programmes)
                 setFoc(s_admin.online_courses)
                 setFe(s_admin.e_content)
-            // }
+            }
             
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -229,13 +236,13 @@ function Staffs(){
                 </div>
                 <div style={{textAlign: 'center'}}>
                     <h2>Internal Quality Assurance Cell (IQAC)</h2>
-                    <h2>Department of {window.localStorage.getItem('dprt')} - </h2>
+                    <h2>Department : {window.localStorage.getItem('dprt')} - Staffs</h2>
                     {
                         msg ? 
                         <>
                             {msg === 'All' ? 
                                 <h2>Reports</h2> : <>
-                                    <h2>Quaterly Report - Staffs</h2>
+                                    <h2>Quaterly Report</h2>
                                     <h2>{msg ? msg : null}</h2>
                                 </>
                             }
@@ -260,11 +267,11 @@ function Staffs(){
                 </tr>
                 {
                     rps ? rps.map((r,i)=>
-                    { const {title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,file} = r
+                    { const {n,title,no,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,file} = r
                     return(
                         <tr key={i}>
                             <td>{i+1}</td>
-                            <td>{data ? data[0].name : '-'}</td>
+                            <td>{n ? n : '-'}</td>
                             <td>{title ? title : '-'}</td>
                             <td>{no ? no : '-'}</td>
                             <td>{amount_sanctioned ? amount_sanctioned : '-'}</td>
@@ -272,7 +279,7 @@ function Staffs(){
                             <td>{amount_received ? amount_received : '-'}</td>
                             <td>{funding_agency ? funding_agency : '-'}</td>
                             <td>{date_sanctioned ? date_sanctioned : '-'}</td>
-                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>Link</a> : null}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                         </tr>
                     )
                     }):null
@@ -293,14 +300,15 @@ function Staffs(){
                     <th>Royalty Received  </th>
                     <th>Patent Providing Agency  </th>
                     <th>India / Abroad(specify country)  </th>
+                    <th>File</th>
                 </tr>
                 {
                     rpat ? rpat.map((r,i)=>{
-                        const {title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country} = r
+                        const {n,title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country,file} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{field ? field : '-'}</td>
                                 <td>{fileno ? fileno : '-'}</td>
@@ -308,6 +316,7 @@ function Staffs(){
                                 <td>{royalty_received ? royalty_received : '-'}</td>
                                 <td>{providing_agency ? providing_agency : '-'}</td>
                                 <td>{country ? country : '-'}</td>
+                                <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}   </a> : null}</td>
                             </tr>
                         )
                     }):null
@@ -329,14 +338,15 @@ function Staffs(){
                     <th>Date</th>
                     <th>Venue </th>
                     <th>Regional/State/ National/ International</th>
+                    <th>File</th>
                 </tr>
                 {
                     rawd ? rawd.map((r,i)=>{
-                    const {awardee_name,designation,award_category,title,awarding_agency,venue,level,date} = r
+                    const {n,awardee_name,designation,award_category,title,awarding_agency,venue,level,date,file} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{award_category ? award_category : '-'}</td>
                                 <td>{awardee_name ? awardee_name : '-'}</td>
@@ -345,6 +355,7 @@ function Staffs(){
                                 <td>{date? date : '-'}</td>
                                 <td>{venue? venue : '-'}</td>
                                 <td>{level ? level : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -352,7 +363,7 @@ function Staffs(){
                 </tbody>
                 </table>     
 
-                <h4>1.4 Ph. D/M. Phil awarded during the period</h4>
+                <h4>1.4 Ph. D/M. Phil</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -364,20 +375,22 @@ function Staffs(){
                     <th>External Examiner’s Name, Designation and Address</th>
                     <th>Date</th>
                     <th>Venue of Viva</th>
+                    <th>File</th>
                 </tr>
                 {
                     rdeg ? rdeg.map((r,i)=>{
-                        const {deg,guide_name,title,external,venue,date} = r
+                        const {n,deg,guide_name,title,external,venue,date,file} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].user : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{deg? deg : '-'}</td>
                                 <td>{guide_name ? guide_name : '-'}</td>
                                 <td>{title? title : '-'}</td>
                                 <td>{external ? external : '-'}</td>
                                 <td>{date? date : '-'}</td>
                                 <td>{venue? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -395,18 +408,20 @@ function Staffs(){
                     <th>Date of Sanction</th>
                     <th>Funding Agency</th>
                     <th>Sanctioned Amount </th>
+                    <th>File</th>
                 </tr>
                 {
                     rfel ? rfel.map((r,i)=>{
-                        const {fellowship,date_sanctioned,funding_agency,sanctioned_amount,name} = r
+                        const {n,fellowship,date_sanctioned,funding_agency,sanctioned_amount,file} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{fellowship? fellowship : '-'}</td>
                                 <td>{date_sanctioned? date_sanctioned : '-'}</td>
                                 <td>{funding_agency ? funding_agency : '-'}</td>
                                 <td>{sanctioned_amount ? sanctioned_amount : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -426,19 +441,21 @@ function Staffs(){
                     <th>Participant</th>
                     <th>Source of financial support</th>
                     <th>Period(from – to)</th>
+                    <th>File)</th>
                 </tr>
                 {
                     ca ? ca.map((r,i)=>{
-                        const {activity,participant,financial_support,period
+                        const {n,activity,participant,financial_support,period,file
                             } = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{activity? activity : '-'}</td>
                                 <td>{participant? participant : '-'}</td>
                                 <td>{financial_support ? financial_support : '-'}</td>
                                 <td>{period ? period : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -455,17 +472,19 @@ function Staffs(){
                     <th>Nature and Title  of the Linkage</th>
                     <th>Partnering agency</th>
                     <th>Period(from – to)</th>
+                    <th>File</th>
                 </tr>
                 {
                     clink ? clink.map((r,i)=>{
-                        const {title,partnering_agency,period} = r
+                        const {n,file,title,partnering_agency,period} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{title? title : '-'}</td>
                                 <td>{partnering_agency? partnering_agency : '-'}</td>
                                 <td>{period ? period : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -488,17 +507,18 @@ function Staffs(){
                 </tr>
                 {
                     cmou ? cmou.map((r,i)=>{
-                        const {organization,date_signed,period,participants,purpose,total} = r
+                        const {n,file,organization,date_signed,period,participants,purpose,total} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{organization? organization : '-'}</td>
                                 <td>{date_signed? date_signed : '-'}</td>
                                 <td>{period ? period : '-'}</td>
                                 <td>{participants ? participants : '-'}</td>
                                 <td>{purpose ? purpose : '-'}</td>
                                 <td>{total ? total : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -524,14 +544,15 @@ function Staffs(){
                     <th>Total No. of Participants</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     econ ? econ.map((r,i)=>{
-                        const {con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,date} = r
+                        const {n,file,con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{con_sem? con_sem : '-'}</td>
                                 <td>{title? title : '-'}</td>
                                 <td>{sponsoring_agency ? sponsoring_agency : '-'}</td>
@@ -542,6 +563,7 @@ function Staffs(){
                                 <td>{total ? total : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -563,14 +585,15 @@ function Staffs(){
                     <th>Total No. of Participants</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     egl ? egl.map((r,i)=>{
-                        const {resource_person,designation,topic,venue,objective,outcome,total,date} = r
+                        const {n,file,resource_person,designation,topic,venue,objective,outcome,total,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{resource_person ? resource_person : '-'}</td>
                                 <td>{designation ? designation : '-'}</td>
                                 <td>{topic ? topic : '-'}</td>
@@ -579,6 +602,7 @@ function Staffs(){
                                 <td>{total ? total : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -597,10 +621,11 @@ function Staffs(){
                     <th>Total No. of Students</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     eea ? eea.map((r,i)=>{
-                        const {activities,collaborations,venue,total,date} = r
+                        const {n,file,activities,collaborations,venue,total,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
@@ -610,6 +635,7 @@ function Staffs(){
                                 <td>{total ? total : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -628,19 +654,21 @@ function Staffs(){
                     <th>Total  No. of Beneficiaries</th>
                     <th>Programme outcome</th>
                     <th>Date</th>
+                    <th>File</th>
                 </tr>
                 {
                     eev ? eev.map((r,i)=>{
-                        const {classes,date,address,total,outcome} = r
+                        const {n,file,classes,date,address,total,outcome} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{classes ? classes : '-'}</td>
                                 <td>{address ? address : '-'}</td>
                                 <td>{total ? total : '-'}</td>
                                 <td>{outcome ? outcome : '-'}</td>
                                 <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -658,18 +686,20 @@ function Staffs(){
                     <th>Place of Visit with Address</th>
                     <th>Total  No. of Students</th>
                     <th>Date</th>
+                    <th>File</th>
                 </tr>
                 {
                     eevs ? eevs.map((r,i)=>{
-                        const {date,place,total,activity} = r
+                        const {n,file,date,place,total,activity} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ?n : '-'}</td>
                                 <td>{activity ? activity : '-'}</td>
                                 <td>{place ? place : '-'}</td>
                                 <td>{total ? total : '-'}</td>
                                 <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -689,20 +719,22 @@ function Staffs(){
                     <th>No. of Participants</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     eda ? eda.map((r,i)=>{
-                        const {activity,guest,topic,total,venue,date} = r
+                        const {n,file,activity,guest,topic,total,venue,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{activity ? activity : '-'}</td>
                                 <td>{guest ? guest : '-'}</td>
                                 <td>{topic ? topic : '-'}</td>
                                 <td>{total ? total : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -723,20 +755,22 @@ function Staffs(){
                     <th>Revenue Generated</th>
                     <th>Date of Sanction</th>
                     <th>Sponsoring / Consultancy Agency</th>
+                    <th>File</th>
                 </tr>
                 {
                     cps ? cps.map((r,i)=>{
-                        const {title,no,revenue_generated,date_sanction,sponsor,date} = r
+                        const {n,file,title,no,revenue_generated,date_sanction,sponsor,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{no ? no : '-'}</td>
                                 <td>{revenue_generated ? revenue_generated : '-'}</td>
                                 <td>{date_sanction ? date_sanction : '-'}</td>
                                 <td>{sponsor ? sponsor : '-'}</td>
                                 <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -757,19 +791,21 @@ function Staffs(){
                     <th>International / National / State/Regional</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     fhnr ? fhnr.map((r,i)=>{
-                        const {award_honour,details,venue,level,date} = r
+                        const {n,file,award_honour,details,venue,level,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{award_honour ? award_honour : '-'}</td>
                                 <td>{details ? details : '-'}</td>
                                 <td>{level ? level : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -785,18 +821,20 @@ function Staffs(){
                     <th>Name of the faculty</th>
                     <th>exam,</th>
                     <th>exam_rollno,</th>
-                    <th>date</th>           
+                    <th>date</th>   
+                    <th>File</th>        
                 </tr>
                 {
                     fexm ? fexm.map((r,i)=>{
-                        const {exam,exam_rollno,date} = r
+                        const {n,file,exam,exam_rollno,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{exam ? exam : `-`}</td>
                                 <td>{exam_rollno ? exam_rollno : `-`}</td>
                                 <td>{date ? date : `-`}</td> 
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -814,18 +852,20 @@ function Staffs(){
                     <th>Publisher</th>
                     <th>International/National</th>
                     <th>ISBN No.</th>
+                    <th>File</th>
                 </tr>
                 {
                     fbp ? fbp.map((r,i)=>{
-                        const {book,publisher,level,isbn_no,} = r
+                        const {n,file,book,publisher,level,isbn_no,} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{book ? book : '-'}</td>
                                 <td>{publisher ? publisher : '-'}</td>
                                 <td>{level ? level : '-'}</td>
                                 <td>{isbn_no ? isbn_no : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -845,20 +885,22 @@ function Staffs(){
                     <th>Publisher</th>
                     <th>International/National</th>
                     <th>ISBN No.</th>
+                    <th>File</th>
                 </tr>
                 {
                     fcc ? fcc.map((r,i)=>{
-                        const {title,chapter,editor,publisher,level,isbn_no} = r
+                        const {n,file,title,chapter,editor,publisher,level,isbn_no} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{chapter ? chapter : '-'}</td>
                                 <td>{editor ? editor : '-'}</td>
                                 <td>{publisher ? publisher : '-'}</td>
                                 <td>{level ? level : '-'}</td>
                                 <td>{isbn_no ? isbn_no : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -876,18 +918,20 @@ function Staffs(){
                     <th>Publication in Conference (give details)</th>
                     <th>International/National</th>
                     <th>Page No. & ISBN No.</th>
+                    <th>File</th>
                 </tr>
                 {
                     fcp ? fcp.map((r,i)=>{
-                        const {con,publication,level,isbn_no} = r
+                        const {n,file,con,publication,level,isbn_no} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{con ? con : '-'}</td>
                                 <td>{publication ? publication : '-'}</td>
                                 <td>{level ? level : '-'}</td>
                                 <td>{isbn_no ? isbn_no : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -907,20 +951,22 @@ function Staffs(){
                     <th>Date</th>
                     <th>Venue</th>
                     <th>International / National/State/Regional</th>
+                    <th>File</th>F
                 </tr>
                 {
                    fpp ?fpp.map((r,i)=>{
-                        const {con,title,financial_support,venue,level,date} = r
+                        const {n,file,con,title,financial_support,venue,level,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{con ? con : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{financial_support ? financial_support : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
                                 <td>{level ? level : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -941,14 +987,15 @@ function Staffs(){
                     <th>SCI/SCIE/Scopus Indexed / UGC Recognized / Others</th>
                     <th>Impact Factor (as per SCI)</th>
                     <th>International / National</th>
+                    <th>File</th>
                 </tr>
                 {
                     fjp ? fjp.map((r,i)=>{
-                        const {title,jou,issn_no,volume,sci,impact,level} = r
+                        const {n,file,title,jou,issn_no,volume,sci,impact,level} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{jou ? jou : '-'}</td>
                                 <td>{issn_no ? issn_no : '-'}</td>
@@ -956,6 +1003,7 @@ function Staffs(){
                                 <td>{sci ? sci : '-'}</td>
                                 <td>{impact ? impact : '-'}</td>
                                 <td>{level ? level : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -976,14 +1024,15 @@ function Staffs(){
                     <th>Programme outcome</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     fcon ? fcon.map((r,i)=>{
-                        const {con,title,venue,level,financial_support,programme_outcome,date} = r
+                        const {n,file,con,title,venue,level,financial_support,programme_outcome,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{con ? con : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{level ? level : '-'}</td>
@@ -991,6 +1040,7 @@ function Staffs(){
                                 <td>{programme_outcome ? programme_outcome : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -1010,20 +1060,22 @@ function Staffs(){
                     <th>National/International/State/Regional</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     frp ? frp.map((r,i)=>{
-                        const {sem,topic,event,venue,level,date} = r
+                        const {n,file,sem,topic,event,venue,level,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{sem ? sem : '-'}</td>
                                 <td>{topic ? topic : '-'}</td>
                                 <td>{event ? event : '-'}</td>
                                 <td>{level ? level : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -1039,16 +1091,18 @@ function Staffs(){
                     <th>Name of the faculty</th>
                     <th>Name of the professional body for which membership fee is provided</th>
                     <th>Amount of support (Rs.)</th>
+                    <th>File</th>
                 </tr>
                 {
                     ffs ? ffs.map((r,i)=>{
-                        const {f,amount_support} = r
+                        const {n,file,f,amount_support} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{f ? f : '-'}</td>
                                 <td>{amount_support ? amount_support : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -1068,20 +1122,22 @@ function Staffs(){
                     <th>National/International/State/Regional</th>
                     <th>Date</th>
                     <th>Venue</th>
+                    <th>File</th>
                 </tr>
                 {
                     fdp ? fdp.map((r,i)=>{
-                        const {training,title,venue,financial_support,date,level} = r
+                        const {n,file,training,title,venue,financial_support,date,level} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{training ? training : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{financial_support ? financial_support : '-'}</td>
                                 <td>{level ? level : '-'}</td>
                                 <td>{date ? date : '-'}</td>
                                 <td>{venue ? venue : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -1100,19 +1156,21 @@ function Staffs(){
                     <th>Duration</th>
                     <th>Financial support  from the College  (Rs.)</th>
                     <th>National/International/State/Regional</th>
+                    <th>File</th>
                 </tr>
                 {
                     foc ? foc.map((r,i)=>{
-                        const {training,title,financial_support,level,duration} = r
+                        const {n,file,training,title,financial_support,level,duration} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{training ? training : '-'}</td>
                                 <td>{title ? title : '-'}</td>
                                 <td>{duration ? duration : '-'}</td>
                                 <td>{financial_support ? financial_support : '-'}</td>
                                 <td>{level ? level : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -1129,17 +1187,19 @@ function Staffs(){
                     <th>Name of the module</th>
                     <th>Platform on which module is developed</th>
                     <th>Date of launching e – content</th>
+                    <th>File</th>
                 </tr>
                 {
                     fe ? fe.map((r,i)=>{
-                        const {module,platform,date} = r
+                        const {n,file,module,platform,date} = r
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{module ? module : '-'}</td>
                                 <td>{platform ? platform : '-'}</td>
                                 <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
                             </tr>
                         )
                     }): null
@@ -1151,7 +1211,7 @@ function Staffs(){
 
             <div style={{margin: '18px 0',textAlign: 'center',lineHeight: '30px',fontWeight: 'bolder'}}>
                 <p style={{color: '#39a7e7'}}>Internal Quality Assurance Cell (IQAC)</p>
-                <p>Department of {window.localStorage.getItem('dprt')} - Staffs</p>
+                <p>Department : {window.localStorage.getItem('dprt')} - Staffs</p>
                 {
                     msg ? 
                     <>
@@ -1184,7 +1244,6 @@ function Staffs(){
                         <label style={{fontSize:'14px',fontWeight:'bold'}}>Filter by Period</label><br />
                         <select style={{margin:'15px 0',}} onChange={async (e)=>{if(e.target.value === 'All'){
                             setMsg('All')
-                            alert('all')
                         }
                         else if(e.target.value === `'2019-07-01' and '2019-09-30'`){
                             setMsg(`July (01/07/2019) to September (30/09/2019)`)
@@ -1258,7 +1317,7 @@ function Staffs(){
                 <div style={{display: 'flex',justifyContent: 'space-between',margin: '0 0 15px'}}>
                     <p style={{cursor:'pointer'}} className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
                     
-                    <Link to="/super_admin" style={{color: "red"}}>Back</Link>
+                    <Link to="/dashboard/view_staffs" style={{color: "red"}}>Back</Link>
                 </div>
                 <h3>Research</h3>
                 
@@ -1279,8 +1338,7 @@ function Staffs(){
                             {field:'amount_sanctioned',title:'Amount Sanctioned',filterPlaceholder:'Filter by Amount Sanctioned'},
                             {field:'amount_received',title:'Amount Received',filterPlaceholder:'Filter by Amount Received'},
                             {field:'funding_agency',title:'Funding Agency',filterPlaceholder:'Filter by Funding Agency'},
-                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},
-                            {field:'file',title:'File',filterPlaceholder:'Filter by File'},
+                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},{field:'file',title:'File',filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rps} title="Research Projects" />
                         
@@ -1878,7 +1936,7 @@ function Staffs(){
                         
                     }    
                 </div>                    
-            </div>    
+            </div>   
         </div>
     )
 }

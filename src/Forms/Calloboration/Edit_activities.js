@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_activities(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [act,setAct] = useState()
     const [men,setMen] = useState(false)
@@ -29,7 +31,7 @@ function Edit_activities(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const ac = await fetch(`/forms/collaborations/collaborative_activities/edit/${window.localStorage.getItem('edit')}`,{
+            const ac = await fetch(`/forms/collaborations/collab_activ/edit/${window.localStorage.getItem('edit')}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -89,11 +91,12 @@ function Edit_activities(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
-                            name: `${act ? act[0].name : ''}`,
+                            activity: `${act ? act[0].activity: ''}`,
                             participant: `${act ? act[0].participant : ''}`,
                             financial_support: `${act ? act[0].financial_support : ''}`,
                             period: `${act ? act[0].period : ''}`,
-                            date: `${act ? act[0].date : ''}`
+                            date: `${act ? act[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -110,33 +113,22 @@ function Edit_activities(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/collaborations/collaborative_activities/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        name: values.name,
-                                        participant: values.participant,
-                                        financial_support: values.financial_support,
-                                        period: values.period,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Profile Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                let dat = new FormData()
+                                console.log(img)
+                                dat.append('image',img)
+                                dat.append('id',act[0].id)
+                                dat.append('activity',values.activity)
+                                dat.append('participant',values.participant)
+                                dat.append('financial_support',values.financial_support)
+                                dat.append('period',values.period)
+                                dat.append('date',values.date)
+
+                                Axios.put('http://localhost:3000/forms/collaborations/collaborative_activities/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -144,8 +136,8 @@ function Edit_activities(){
                             <h3>Edit Collaborative Activities</h3>
 
                             <TextInput
-                                id="name"
-                                name="name"
+                                id="activity"
+                                name="activity"
                                 type="text"
                                 label="Name of the activity"
                             />
@@ -160,7 +152,7 @@ function Edit_activities(){
                             <TextInput
                                 id="financial_support"
                                 name="financial_support"
-                                type="text"
+                                type="number"
                                 label="Financial Support"
                             />
 
@@ -171,6 +163,12 @@ function Edit_activities(){
                                 label="Period (from - to)"
                             />
 
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
+
                             <TextInput
                                 id="date"
                                 name="date"
@@ -179,7 +177,7 @@ function Edit_activities(){
                             />
 
                             <div className="btn">
-                                <button type="submit">Save</button>
+                                <button onClick={e=>console.log(e)} type="submit">Update</button>
                             </div>
                         </Form>
                     </Formik>

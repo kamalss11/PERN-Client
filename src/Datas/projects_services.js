@@ -2,7 +2,9 @@ const prjser = [
     {
         id: 1,
         name: '4.1 Consultancy Projects / Services',
-        url: '/forms/consultancy/projects_services'
+        overall: 'projects_services',
+        url: '/forms/consultancy/projects_services',
+        s_a: '/super_admin/overall/staffs/projects_services'
     }
 ]
 

@@ -6,8 +6,10 @@ import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import Axios from 'axios'
 
 function Edit_departmental(){
+    const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [dep,setDep] = useState()
     const [men,setMen] = useState(false)
@@ -94,7 +96,8 @@ function Edit_departmental(){
                             topic: `${dep ? dep[0].topic : ''}`,
                             total: `${dep ? dep[0].total : ''}`,
                             venue: `${dep ? dep[0].venue : ''}`,
-                            date: `${dep ? dep[0].date : ''}`
+                            date: `${dep ? dep[0].date : ''}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -113,35 +116,23 @@ function Edit_departmental(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
-                                const res = await fetch(`/forms/events/departmental_activities/edit`,{
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        id : window.localStorage.getItem('edit'),
-                                        activity: values.activity,
-                                        guest: values.guest,
-                                        topic: values.topic,
-                                        total: values.total,
-                                        venue: values.venue,
-                                        date: values.date
-                                    })
-                                })
-    
-                                const data = await res.json()
-                                console.log(data)
-                                if(res.status === 422 || !data){
+                                let dat = new FormData()
+                                console.log(img,values.date)
+                                dat.append('image',img)
+                                dat.append('id',dep[0].id)
+                                dat.append('activity',values.activity)
+                                dat.append('guest',values.guest)
+                                dat.append('topic',values.topic)
+                                dat.append('total',values.total)
+                                dat.append('venue',values.venue)
+                                dat.append('date',values.date)
 
-                                    window.alert(`${data.error}`)
-                                }
-                                else{
-                                    setSubmitting(false);
-                                    resetForm()
-                                    alert("Data Updated")
-                                    window.localStorage.setItem('edit','')
-                                    history.push("/dashboard")
-                                }
+                                Axios.put('http://localhost:3000/forms/events/departmental_activities/edit',dat)
+                                .then(res => console.log(res),setSubmitting(false),
+                                    resetForm(),
+                                    alert("Data Updated"),
+                                    history.push("/dashboard/view_staffs"))
+                                .catch(err => console.log(err))
                             }, 400);
                         }}
                     >
@@ -182,6 +173,12 @@ function Edit_departmental(){
                                 type="text"
                                 label="Venue"
                             />
+
+                            <div className='fields'>
+                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                            </div> 
 
                             <TextInput
                                 id="date"

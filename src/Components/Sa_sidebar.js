@@ -14,55 +14,13 @@ import {FaFileWord} from 'react-icons/fa'
 
 function Ss_sidebar(){
     const {bar} = useContext(AppContext)
-    const export_all = ()=>{
-        if (!window.Blob) {
-            alert('Your legacy browser does not support this action.');
-            return;
-        }
-      
-        var html, link, blob, url, css;
-        
-        // EU A4 use: size: 841.95pt 595.35pt;
-        // US Letter use: size:11.0in 8.5in;
-        
-        css = (
-            `<style>@page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: landscape;}div.WordSection1 {page: WordSection1;}table{font-family:Montserrat,sans-serif;width:100%;border-collapse:collapse;}td,th{border:1px gray solid;width:5em;padding:2px;}p{font-size:14px}.flx{display:flex;}.flx .img{wrap-text:square;}.flx .img2{wrap-text:square;}</style>`
-        );
-        
-        html = window.docx.innerHTML;
-        blob = new Blob(['\ufeff', css + html], {
-          type: 'application/msword'
-        });
-        url = URL.createObjectURL(blob);
-        link = document.createElement('A');
-        link.href = url;
-        // Set default file name. 
-        // Word will append file extension - do not add an extension here.
-        link.download = 'Document';   
-        document.body.appendChild(link);
-        if (navigator.msSaveOrOpenBlob ) navigator.msSaveOrOpenBlob( blob, 'Document.doc'); // IE10-11
-        else link.click();  // other browsers
-        document.body.removeChild(link);
-    }
     return (
         <div className={`sidebar ${bar ? `activate` : ''}`}>
             <h2 className="stitle">IQAC</h2>
 
             <ul>
-                {
-                    Sbar.map((bar)=>{
-                        const {id,url,name,icon} = bar
-                        return(
-                            <li key={id}>
-                                <Link to={url}>{icon} {name}</Link>
-                            </li>
-                        )
-                    })
-                }
-
-                <li className="forms" style={{cursor:" pointer"}}>
-                    <p className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
-                </li>                
+                <li><Link to={'/super_admin'}><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"></path></svg> Dashboard</Link>
+                </li>             
 
                 <li>
                     <Link to='/logout'><AiOutlineLogout /> Logout</Link>
