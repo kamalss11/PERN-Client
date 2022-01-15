@@ -1,54 +1,392 @@
-.signUp{
-    height: calc(100vh - 63px);
+.App{
+    overflow: hidden;
+    width: 100%;
+}
+
+/* .App{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(#ff2871,rgba(255,40,119,.2)); 
+    background: linear-gradient(-30deg, #accbee,#e7f0fd);
+    background-image: linear-gradient(to top, #96fbc4 0%, #f9f586 100%);
+    background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+    background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);
+    background-image: linear-gradient(to top, #96fbc4 0%, #f9f586 100%);
+    background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    background-image: linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%);
+    background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);     
+    background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #d353d3 46%, #e0114b 100%);
+    background-color: #2082e8;
+    background-image: linear-gradient(77deg, #2082e8 0%, #ce9cf6 50%, #85d6ff 100%);
+} */
+
+/* .bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--signinup);
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+.bg1 nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px 0;
+}
+
+.bg1 nav .logo,.bg1 nav a{
+    color: var(--white);
+}
+
+.bg1 nav a{
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.bg1 nav a svg{
+    margin-right: 7px;
+}
+
+.bg1 .wel{
+    width: 65%;
+    margin: 20px auto;
+    color: var(--white);
+    text-align: center;
+}
+
+.bg1 .wel h3{
+    margin: 15px 0;
+}
+
+.bg1 .wel p{
+    font-size: 15px;
+    line-height: 28px;
+    color: #ced4da!important;
+}
+
+.bg1,.bg2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* background-image: var(--signinup); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg1{
+    background: linear-gradient(87deg,#11cdef,#1171ef)!important;
+    height: 100%;
+}
+
+.bg2{
+    margin-top: 620px;
+    background: var(--fntgry);
+    height: 1000px;
+    position: relative;
+}
+
+.bg2::before{
+    position: absolute;
+    content: '';
+    top: -70px;
+    left: 0;
+    width: 102%;
+    height: 150px;
+    background: var(--fntgry);
+    transform: rotate(-5deg);
+}
+
+.signUp{
+    position: relative;
+    top: -20%;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.signUp .rd{
+    position: absolute;
+    content: '';
+    background: rgba(255,255,255,.2);
+    animation: animate1 3s linear infinite;
+}
+
+@keyframes animate1{
+    0%{
+        transform: translateY(50px);
+    }
+    50%{
+        transform: translate(100px,-50px);
+        border-radius: 50%;
+    }
+    100%{
+        transform: translateY(50px);
+    }
+}
+
+.signUp .rd:nth-child(1){    
+    top: 30px;
+    right: 50px;
+    width: 130px;
+    height: 130px;
+    /* background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);  */
+}
+
+.signUp .rd:nth-child(2){    
+    left: 20px;
+    bottom: 50%;
+    transform: translateY(50%);
+    width: 100px;
+    height: 100px;
+}
+
+.signUp .rd:nth-child(3){    
+    left: 20%;
+    bottom: 5%;
+    transform: translate(-20%,5%);
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,.2);
+}
+
+.signUp .rd:nth-child(4){    
+    right: 8%;
+    bottom: 10%;
+    transform: translate(-8%,10%);
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,.2);
+}
+
+.signUp .rd:nth-child(5){    
+    left: 15%;
+    top: 5%;
+    transform: translate(-15%,5%);
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,.2);
+}
+
+.signUp .rd:nth-child(6){    
+    right: 35%;
+    top: 7%;
+    transform: translate(-35%,7%);
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,.2);
 }
 
 .signUp form{
-    width: 60%;
-    background-color: var(--gray);
+    backdrop-filter: blur(10px);
+    /* background: rgba(255,255,255,.3); */    
+    background: #f7fafc;
     box-shadow: 0 0 15px rgba(0,0,0,.1);
-    padding: 20px;
+    padding: 30px;
     border-radius: 8px;
+    flex-basis: 80%;
 }
 
 .signUp form h3{
+    margin: 5px 0;
+    padding-bottom: 10px;
     text-align: center;
-    color: var(--black);
+    color: var(--fntgry);
+    display: inline-block;
+    position: relative;
+}
+
+.signUp form h3::before{
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--fntgry);
 }
 
 .signUp form .fields{
-    margin: 20px 0;
+    margin: 25px 0;
     width: 100%;
+    position: relative;
 }
 
-.signUp form .fields input,.signUp form .fields select{
+.signUp form .fields svg{
+    font-size: 25px;
+    margin: 0 20px;
+}
+
+.signUp form .fields svg path{
+    /* color: #00004d; */
+    color: var(--icon);
+    width: 15px;
+}
+
+.signUp form .fields div{
+    flex-basis: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.signUp form .fields div input,.signUp form .fields div div{
     width: 100%;
-    padding: 10px;
+    padding: 15px 25px;
+    background: none;
     border: none;
-    border-bottom: 1px solid rgb(202, 202, 202);
-    font-size: 14px;
+    font-size: 15px;
+    transition: .5s;
+    position: relative;
+    background: var(--white);   
+    color: var(--fntgry) ;
+    box-shadow: 0 1px 3px rgb(50 50 93 / 15%), 0 1px 0 rgb(0 0 0 / 2%);
+    border-radius: 25px;
+    /* box-shadow: 0 0 15px rgba(0,0,0,.1); */
 }
 
-.signUp form .fields p.error{
-    font-size: 11px;
-    margin: 4px;
+.signUp form .fields div input::placeholder{
+    font-size: 16px;
+}
+
+/* .signUp form .fields div input:focus + label,
+.signUp form .fields div input:not([value='']) + label{
+    transform: translate(0,-290%);
+    font-size: 12px;
+    font-weight: bold;
+} */
+
+.signUp form .fields div input:focus + label{
+    transform: translate(0,-290%);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.signUp form .fields div label{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 100px;
+    font-size: 14px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.signUp form .fields div div{
+    display: block;
+    position: relative;
+    cursor: pointer;
+}
+
+.signUp form .fields div svg.d{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .6s;
+}
+
+.signUp form .fields div svg.d.active{
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.signUp form .fields div div div{
+    position: absolute;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    bottom: -330px;
+    padding: 10px 0;
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+    border-radius: 25px;
+    /* background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%); */
+    background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);    
+    /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
+    background: var(--white);
+    z-index: 10;
+    transition: .6s;
+}
+
+.signUp form .fields div div div.active{
+    opacity: 1;
+    height: 250px;
+    overflow: scroll;
+}
+
+.signUp form .fields div div div.active::-webkit-scrollbar{
+    display: none;
+}
+
+.signUp form .fields div.us div div.active{
+    opacity: 1;
+    height: 120px;
+}
+
+.signUp form .fields p.error{    
+    font-size: 12px;
     color: var(--error);
+    margin: 7px 0;
+    position: relative;
+    left: 70px;
+}
+
+.signUp form .fields p.dp{
+    display: none;
+}
+
+.signUp form .fields p.dp.active{
+    display: block;
+}
+
+.signUp form .fields div div div p{
+    padding: 10px 25px;
+    cursor: pointer;
+    font-size: 14px;
+    /* color: #00004d; */
+    color: var(--fntgry);
 }
 
 .signUp form .btn{
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
 }
 
 .signUp form .btn button{
-    background-color: var(--blue);
-    padding: 8px 10px;
-    border-radius: 3px;
+    /* background: #00004d; */
+    background: #5e72e4;
+    box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+    padding: 13px 20px;
+    border-radius: 10px;
     color: var(--white);
     border: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: .6s;
+}
+
+.signUp form .btn button:hover{
+    box-shadow: 0 5px 20px rgba(0,0,0,.2);
+}
+
+.signUp form .btn button svg{
+    transform: rotate(90deg);
+    font-size: 20px;
 }
 
 .signUp form .ls{
@@ -57,8 +395,36 @@
     margin: 25px 0;
 }
 
-@media(max-width:650px){
+.bg2 .signUp .bt{
+    font-size: 13px;
+    margin: 30px 0;
+    text-align: center;
+    color: #ced4da;
+}
+
+.bg2 .signUp .bt a{
+    font-size: 14px;
+    color: #ced4da
+}
+
+@media(max-width: 860px){
+    /* .signUp {
+        flex-basis: 90%;
+    } */
+
+    .signUp form .fields div input, .signUp form .fields div div,
+    .signUp form .fields div input::placeholder{
+        font-size: 14px;
+    }
+}
+
+@media(max-width: 550px){
+    .signUp form .fields svg {
+        font-size: 25px;
+        margin: 0 10px 0 10px;
+    }
+
     .signUp form{
-        width: 90%;
+        padding: 30px 15px;
     }
 }
