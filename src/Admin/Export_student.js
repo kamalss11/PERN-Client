@@ -175,7 +175,7 @@ function Export_student(){
             </div>
             <div style={{textAlign: 'center'}}>
                 <h2>Internal Quality Assurance Cell (IQAC)</h2>
-                <h2>{window.localStorage.getItem('dprt')} - Students</h2>
+                    <h2>Department : {data[0].department} - Students</h2>
                 {
                     msg ? 
                     <>
@@ -189,365 +189,365 @@ function Export_student(){
                 }
             </div>
             <h2>Student Details</h2>
-            <h4>1.1 Placements</h4>
+            <h4>1.1 Placements (Total - {placements ?  placements.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Company Placed</th>
-                <th>Annual Package</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                placements ? placements.map((r,i)=>
-                { const {n,roll_no,company_placed,annual_package,date,file} = r
-                return(
-                    <tr key={i}>
-                        <td>{i+1}</td>
-                        <td>{n ? n : '-'}</td>
-                        <td>{roll_no ? roll_no : '-'}</td>
-                        <td>{company_placed ? company_placed : '-'}</td>
-                        <td>{annual_package ? annual_package : '-'}</td>
-                        <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                    </tr>
-                )
-                }):null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Company Placed</th>
+                    <th>Annual Package</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    placements ? placements.map((r,i)=>
+                    { const {n,roll_no,company_placed,annual_package,date,file} = r
+                    return(
+                        <tr key={i}>
+                            <td>{i+1}</td>
+                            <td>{n ? n : '-'}</td>
+                            <td>{roll_no ? roll_no : '-'}</td>
+                            <td>{company_placed ? company_placed : '-'}</td>
+                            <td>{annual_package ? annual_package : '-'}</td>
+                            <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                        </tr>
+                    )
+                    }):null
+                }
+                </tbody>
             </table>
             
-            <h4>1.2 Publications</h4>
+            <h4>1.2 Publications (Total - {publications ?  publications.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Title of the paper</th>
-                <th>Name of the Journal</th>
-                <th>ISSN No. & DoI</th>
-                <th>Volume No. , Issue &  Page No.</th>
-                <th>SCI/SCIE/Scopus Indexed / UGC Recognized / Others</th>
-                <th>Impact Factor(as per SCI)</th>
-                <th>International / National</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                publications ? publications.map((r,i)=>{
-                    const {n,file,roll_no,title,n_journal,issn,volume,sci,impact,level,date} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no ? roll_no : '-'}</td>
-                            <td>{title ? title : '-'}</td>
-                            <td>{n_journal ? n_journal : '-'}</td>
-                            <td>{issn ? issn : '-'}</td>
-                            <td>{volume ? volume : '-'}</td>
-                            <td>{sci ? sci : '-'}</td>
-                            <td>{impact ? impact : '-'}</td>
-                            <td>{level ? level : '-'}</td>
-                            <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }):null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Title of the paper</th>
+                    <th>Name of the Journal</th>
+                    <th>ISSN No. & DoI</th>
+                    <th>Volume No. , Issue &  Page No.</th>
+                    <th>SCI/SCIE/Scopus Indexed / UGC Recognized / Others</th>
+                    <th>Impact Factor(as per SCI)</th>
+                    <th>International / National</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    publications ? publications.map((r,i)=>{
+                        const {n,file,roll_no,title,n_journal,issn,volume,sci,impact,level,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no ? roll_no : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{n_journal ? n_journal : '-'}</td>
+                                <td>{issn ? issn : '-'}</td>
+                                <td>{volume ? volume : '-'}</td>
+                                <td>{sci ? sci : '-'}</td>
+                                <td>{impact ? impact : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }):null
+                }
+                </tbody>
             </table>
 
-            <h4>1.3 Paper Presentation</h4>
+            <h4>1.3 Paper Presentation (Total - {paper_presentation ?  paper_presentation.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Conference / Seminar/ Symposium /Workshop</th>
-                <th>Title of the Paper</th>
-                <th>Financial support  from the College(Rs.)</th>
-                <th>Date</th>
-                <th>Venue </th>
-                <th>Regional/State/ National/ International</th>
-                <th>File</th>
-            </tr>
-            {
-                paper_presentation ? paper_presentation.map((r,i)=>{
-                const {n,file,roll_no,con,title,financial_support,venue,level,date} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no ? roll_no : '-'}</td>
-                            <td>{con ? con : '-'}</td>
-                            <td>{title ? title : '-'}</td>
-                            <td>{financial_support ? financial_support : '-'}</td>
-                            <td>{venue? venue : '-'}</td>
-                            <td>{level ? level : '-'}</td>
-                            <td>{date? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Conference / Seminar/ Symposium /Workshop</th>
+                    <th>Title of the Paper</th>
+                    <th>Financial support  from the College(Rs.)</th>
+                    <th>Date</th>
+                    <th>Venue </th>
+                    <th>Regional/State/ National/ International</th>
+                    <th>File</th>
+                </tr>
+                {
+                    paper_presentation ? paper_presentation.map((r,i)=>{
+                    const {n,file,roll_no,con,title,financial_support,venue,level,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no ? roll_no : '-'}</td>
+                                <td>{con ? con : '-'}</td>
+                                <td>{title ? title : '-'}</td>
+                                <td>{financial_support ? financial_support : '-'}</td>
+                                <td>{venue? venue : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{date? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table>     
 
-            <h4>1.4 Participation in Workshop/Seminar/Conference/Symposium</h4>
+            <h4>1.4 Participation in Workshop/Seminar/Conference/Symposium (Total -{conference ?  conference.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Conference/Workshop/Seminar/ Symposium</th>
-                <th>Name of the Conferece</th>
-                <th>Sponsoring Agency</th>
-                <th>Awards</th>
-                <th>International / National/State/Regional</th>
-                <th>Venue</th>
-                <th>Poster</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                conference ? conference.map((r,i)=>{
-                    const {n,roll_no,con,n_con,sponsoring_agency,award,level,venue,poster,date,file} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no? roll_no : '-'}</td>
-                            <td>{con ? con : '-'}</td>
-                            <td>{n_con ? n_con : '-'}</td>
-                            <td>{sponsoring_agency? sponsoring_agency : '-'}</td>
-                            <td>{award ? award : '-'}</td>
-                            <td>{level ? level : '-'}</td>
-                            <td>{venue? venue : '-'}</td>
-                            <td>{poster? poster : '-'}</td>
-                            <td>{date? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Conference/Workshop/Seminar/ Symposium</th>
+                    <th>Name of the Conferece</th>
+                    <th>Sponsoring Agency</th>
+                    <th>Awards</th>
+                    <th>International / National/State/Regional</th>
+                    <th>Venue</th>
+                    <th>Poster</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    conference ? conference.map((r,i)=>{
+                        const {n,roll_no,con,n_con,sponsoring_agency,award,level,venue,poster,date,file} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no? roll_no : '-'}</td>
+                                <td>{con ? con : '-'}</td>
+                                <td>{n_con ? n_con : '-'}</td>
+                                <td>{sponsoring_agency? sponsoring_agency : '-'}</td>
+                                <td>{award ? award : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{venue? venue : '-'}</td>
+                                <td>{poster? poster : '-'}</td>
+                                <td>{date? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table>           
 
-            <h4>1.5 Participation in Competition/Others </h4>
+            <h4>1.5 Participation in Competition/Others (Total - {competition ?  competition.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Name of the Event</th>
-                <th>Name of the Conference </th>
-                <th>Sponsoring Agency</th>
-                <th>Venue</th>
-                <th>Awards / Medals/Prize  received </th>
-                <th>International / National</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                competition ? competition.map((r,i)=>{
-                    const {n,roll_no,n_event,n_con,sponsoring_agency,venue,award,level,date,file} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no ? roll_no : '-'}</td>
-                            <td>{n_event? n_event : '-'}</td>
-                            <td>{n_con? n_con : '-'}</td>
-                            <td>{sponsoring_agency ? sponsoring_agency : '-'}</td>
-                            <td>{venue ? venue : '-'}</td>
-                            <td>{award ? award : '-'}</td>
-                            <td>{level ? level : '-'}</td>
-                            <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Name of the Event</th>
+                    <th>Name of the Conference </th>
+                    <th>Sponsoring Agency</th>
+                    <th>Venue</th>
+                    <th>Awards / Medals/Prize  received </th>
+                    <th>International / National</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    competition ? competition.map((r,i)=>{
+                        const {n,roll_no,n_event,n_con,sponsoring_agency,venue,award,level,date,file} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no ? roll_no : '-'}</td>
+                                <td>{n_event? n_event : '-'}</td>
+                                <td>{n_con? n_con : '-'}</td>
+                                <td>{sponsoring_agency ? sponsoring_agency : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                                <td>{award ? award : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table>   
 
-            <h4>1.6 Training Programmes / Internship/Field Work</h4>
+            <h4>1.6 Training Programmes / Internship/Field Work (Total - {training ? training.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Training / Internship / Field Work</th>
-                <th>Company / Research Institute with full address</th>
-                <th>Period(from – to)</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                training ? training.map((r,i)=>{
-                    const {n,roll_no,training,company,period,date,file
-                        } = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no ? roll_no : '-'}</td>
-                            <td>{training? training : '-'}</td>
-                            <td>{company? company : '-'}</td>
-                            <td>{period ? period : '-'}</td>
-                            <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Training / Internship / Field Work</th>
+                    <th>Company / Research Institute with full address</th>
+                    <th>Period(from – to)</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    training ? training.map((r,i)=>{
+                        const {n,roll_no,training,company,period,date,file
+                            } = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no ? roll_no : '-'}</td>
+                                <td>{training? training : '-'}</td>
+                                <td>{company? company : '-'}</td>
+                                <td>{period ? period : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table>  
 
-            <h4>1.7 Project Work </h4>
+            <h4>1.7 Project Work (Total - {projectwork ?  projectwork.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Guide Name</th>
-                <th>Company / Research Institute with full address if the project was done outside PSGCAS</th>
-                <th>Certificate</th>
-                <th>Period(from – to)</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                projectwork ? projectwork.map((r,i)=>{
-                    const {n,file,roll_no,guide,company,certificate,date,period} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no? roll_no : '-'}</td>
-                            <td>{guide? guide : '-'}</td>
-                            <td>{company? company : '-'}</td>
-                            <td>{certificate ? <a href={`Uploads/${certificate}`}>{certificate}</a> : '-'}</td>
-                            <td>{period ? period : '-'}</td>
-                            <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Guide Name</th>
+                    <th>Company / Research Institute with full address if the project was done outside PSGCAS</th>
+                    <th>Certificate</th>
+                    <th>Period(from – to)</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    projectwork ? projectwork.map((r,i)=>{
+                        const {n,file,roll_no,guide,company,certificate,date,period} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no? roll_no : '-'}</td>
+                                <td>{guide? guide : '-'}</td>
+                                <td>{company? company : '-'}</td>
+                                <td>{certificate ? <a href={`Uploads/${certificate}`}>{certificate}</a> : '-'}</td>
+                                <td>{period ? period : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table>  
 
-            <h4>1.8 Students qualifying in state/ national/ international level examinations</h4>
+            <h4>1.8 Students qualifying in state/ national/ international level examinations(Total - {exams ? exams.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Examination Qualified</th>
-                <th>Examination Roll No. / Register Number</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                exams ? exams.map((r,i)=>{
-                    const {n,file,roll_no,exam_qualified,e_roll,date} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no ? roll_no : '-'}</td>
-                            <td>{exam_qualified? exam_qualified : '-'}</td>
-                            <td>{e_roll ? e_roll : '-'}</td>
-                            <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Examination Qualified</th>
+                    <th>Examination Roll No. / Register Number</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    exams ? exams.map((r,i)=>{
+                        const {n,file,roll_no,exam_qualified,e_roll,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no ? roll_no : '-'}</td>
+                                <td>{exam_qualified? exam_qualified : '-'}</td>
+                                <td>{e_roll ? e_roll : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table> 
 
-            <h4>1.9 Students completed Online-Courses </h4>
+            <h4>1.9 Students completed Online-Courses (Total - {online_courses ? online_courses.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Name of the MOOC portal</th>
-                <th>Name of the course</th>
-                <th>Duration of the course</th>
-                <th>Financial support  from the College (Rs.)</th>
-                <th>International / National/State/Regional</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-                online_courses ? online_courses.map((r,i)=>{
-                    const {n,file,roll_no,portal,n_course,duration,financial_support,level,date} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no ? roll_no : '-'}</td>
-                            <td>{portal ? portal : '-'}</td>
-                            <td>{n_course ? n_course : '-'}</td>
-                            <td>{duration ? duration : '-'}</td>
-                            <td>{financial_support ? financial_support : '-'}</td>
-                            <td>{level ? level : '-'}</td>
-                            <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Name of the MOOC portal</th>
+                    <th>Name of the course</th>
+                    <th>Duration of the course</th>
+                    <th>Financial support  from the College (Rs.)</th>
+                    <th>International / National/State/Regional</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                    online_courses ? online_courses.map((r,i)=>{
+                        const {n,file,roll_no,portal,n_course,duration,financial_support,level,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no ? roll_no : '-'}</td>
+                                <td>{portal ? portal : '-'}</td>
+                                <td>{n_course ? n_course : '-'}</td>
+                                <td>{duration ? duration : '-'}</td>
+                                <td>{financial_support ? financial_support : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table> 
 
-            <h4>1.10 Achievements</h4>
+            <h4>1.10 Achievements (Total - {achievements ? achievements.length : '0'})</h4>
             <table>
-            <tbody>
-            <tr>
-                <th>S.No</th>
-                <th>Name of the Student</th>
-                <th>Roll Number</th>
-                <th>Prize/Achievement</th>
-                <th>Event</th>
-                <th>Level</th>
-                <th>Venue</th>
-                <th>Date</th>
-                <th>File</th>
-            </tr>
-            {
-               achievements ?achievements.map((r,i)=>{
-                    const {n,file,roll_no,prize,event,venue,level,date} = r
-                    return(
-                        <tr key={i}>
-                            <td>{i+1}</td>
-                            <td>{n ? n : '-'}</td>
-                            <td>{roll_no ? roll_no : '-'}</td>
-                            <td>{prize ? prize : '-'}</td>
-                            <td>{event ? event : '-'}</td>
-                            <td>{level ? level : '-'}</td>
-                            <td>{venue ? venue : '-'}</td>
-                            <td>{date ? date : '-'}</td>
-                        <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
-                        </tr>
-                    )
-                }): null
-            }
-            </tbody>
+                <tbody>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of the Student</th>
+                    <th>Roll Number</th>
+                    <th>Prize/Achievement</th>
+                    <th>Event</th>
+                    <th>Level</th>
+                    <th>Venue</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+                {
+                   achievements ?achievements.map((r,i)=>{
+                        const {n,file,roll_no,prize,event,venue,level,date} = r
+                        return(
+                            <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{n ? n : '-'}</td>
+                                <td>{roll_no ? roll_no : '-'}</td>
+                                <td>{prize ? prize : '-'}</td>
+                                <td>{event ? event : '-'}</td>
+                                <td>{level ? level : '-'}</td>
+                                <td>{venue ? venue : '-'}</td>
+                                <td>{date ? date : '-'}</td>
+                            <td>{file ? <a href={`https://localhost:3000/Uploads/${file}`}>{file}</a> : null}</td>
+                            </tr>
+                        )
+                    }): null
+                }
+                </tbody>
             </table>
         </div>
         </div>
@@ -677,7 +677,7 @@ function Export_student(){
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'roll_no',title:'Roll No',filterPlaceholder:'Filter by Roll No'},
                             {field:'company_placed',title:'Company Placed',filterPlaceholder:'Filter by Company Placed'},
-                            {field:'annual_package',title:'Annual Package',filterPlaceholder:'Filter by Annual Package'},
+                            {field:'annual_package',title:'Annual Package',filterPlaceholder:'Filter by Annual Package'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={placements} title="Placements" />
                         
@@ -702,7 +702,7 @@ function Export_student(){
                             {field:'volume',title:'Volume No',filterPlaceholder:'Filter by Volume No'},
                             {field:'sci',title:'SCI/SCIE/Scopus Indexed / UGC Recognized / Others',filterPlaceholder:'Filter by SCI'},
                             {field:'impact',title:'Impact Factor (as per SCI)',filterPlaceholder:'Filter by Impact Factor'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={publications} title="Publications"  />
                         
@@ -725,7 +725,7 @@ function Export_student(){
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={paper_presentation} title="Paper Presentation"  />
                         
@@ -750,7 +750,7 @@ function Export_student(){
                             {field:'poster',title:'Poster',filterPlaceholder:'Filter by Poster'},
                             {field:'award',title:'Award',filterPlaceholder:'Filter by Award'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={conference} title="Conference"  />
                         
@@ -774,7 +774,7 @@ function Export_student(){
                             {field:'sponsoring_agency',title:'Sponsorin Aagency',filterPlaceholder:'Filter by Sponsoring Agency'},
                             {field:'award',title:'Award',filterPlaceholder:'Filter by Award'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={competition} title="Competition"  />
                         
@@ -795,7 +795,7 @@ function Export_student(){
                             {field:'roll_no',title:'Roll No',filterPlaceholder:'Filter by Roll No'},
                             {field:'training',title:'Training / Internship / Field Work',filterPlaceholder:'Filter by Training / Internship / Field Work'},
                             {field:'company',title:'Company / Research Institute with full address',filterPlaceholder:'Filter by Company / Research Institute with full address'},
-                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
+                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={training} title="Training"  />
                         
@@ -817,7 +817,7 @@ function Export_student(){
                             {field:'guide',title:'Guide',filterPlaceholder:'Filter by Guide'},
                             {field:'company',title:'Company / Research Institute with full address if the project was done outside PSGCAS',filterPlaceholder:'Filter by Company / Research Institute with full address if the project was done outside PSGCAS '},
                             {field:'certificate',title:'Certificate',filterPlaceholder:'Filter by Certificate'},
-                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
+                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={projectwork} title="Project Work"  />
                         
@@ -837,7 +837,7 @@ function Export_student(){
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'roll_no',title:'Roll No',filterPlaceholder:'Filter by Roll No'},
                             {field:'exam_qualified',title:'Exam Qualified',filterPlaceholder:'Filter by Exam Qualified'},
-                            {field:'e_roll',title:'Examination Roll No. / Register Number',filterPlaceholder:'Filter by Examination Roll No. / Register Number'},
+                            {field:'e_roll',title:'Examination Roll No. / Register Number',filterPlaceholder:'Filter by Examination Roll No. / Register Number'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={exams} title="Exams"  />
                         
@@ -860,7 +860,7 @@ function Export_student(){
                             {field:'n_course',title:'Name of the course',filterPlaceholder:'Filter by Course Name'},
                             {field:'duration',title:'Duration of the course ',filterPlaceholder:'Filter by duration'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={online_courses} title="Online Courses"  />
                         
@@ -882,7 +882,7 @@ function Export_student(){
                             {field:'prize',title:'Prize/Achievement',filterPlaceholder:'Filter by Prize/Achievement'},
                             {field:'event',title:'Event',filterPlaceholder:'Filter by Event'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={achievements} title="Achievements"  />
                         

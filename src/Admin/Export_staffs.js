@@ -234,7 +234,7 @@ function Adminlogin(){
                 </div>
                 <div style={{textAlign: 'center'}}>
                     <h2>Internal Quality Assurance Cell (IQAC)</h2>
-                    <h2>Department : {window.localStorage.getItem('dprt')} - Staffs</h2>
+                    <h2>Department : {data ? data[0].department : ''} - Staffs</h2>
                     {
                         msg ? 
                         <>
@@ -248,7 +248,7 @@ function Adminlogin(){
                     }
                 </div>
                 <h2>RESEARCH </h2>
-                <h4>1.1 Research Projects</h4>
+                <h4>1.1 Research Projects (Total - {rps ? rps.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -285,7 +285,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
                 
-                <h4>1.2 Patents</h4>
+                <h4>1.2 Patents (Total {rpat ? rpat.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -322,7 +322,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>1.3 Awards for Innovation</h4>
+                <h4>1.3 Awards for Innovation (Total - {rawd ? rawd.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -361,7 +361,7 @@ function Adminlogin(){
                 </tbody>
                 </table>     
 
-                <h4>1.4 Ph. D/M. Phil</h4>
+                <h4>1.4 Ph. D/M. Phil (Total - {rdeg ? rdeg.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -396,7 +396,7 @@ function Adminlogin(){
                 </tbody>
                 </table>           
 
-                <h4>1.5 National/International Fellowship</h4>
+                <h4>1.5 National/International Fellowship (Total - {rfel ? rfel.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -429,7 +429,7 @@ function Adminlogin(){
 
                 <h2>COLLABORATIONS</h2>
 
-                <h4>2.1 Number of Collaborative activities</h4>
+                <h4>2.1 Number of Collaborative activities (Total - {ca ? ca.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -461,7 +461,7 @@ function Adminlogin(){
                 </tbody>
                 </table>  
 
-                <h4>2.2 Linkages</h4>
+                <h4>2.2 Linkages (Total - {clink ? clink.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -490,7 +490,7 @@ function Adminlogin(){
                 </tbody>
                 </table>  
 
-                <h4>2.3 MoU(s) Signed</h4>
+                <h4>2.3 MoU(s) Signed (Total - {cmou ? cmou.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -502,6 +502,7 @@ function Adminlogin(){
                     <th>Participants</th>
                     <th>Purpose</th>
                     <th>Total No. of Beneficiaries</th>
+                    <th>File</th>
                 </tr>
                 {
                     cmou ? cmou.map((r,i)=>{
@@ -526,7 +527,7 @@ function Adminlogin(){
 
                 <h2>EVENTS/PROGRAMMES/VISITS ORGANIZED</h2>
 
-                <h4>3.1 Conference / Seminar / Symposium / Workshop organized</h4>
+                <h4>3.1 Conference / Seminar / Symposium / Workshop organized (Total - {econ ? econ.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -569,7 +570,7 @@ function Adminlogin(){
                 </tbody>
                 </table> 
 
-                <h4>3.2 Guest Lectures organized</h4>
+                <h4>3.2 Guest Lectures organized (Total - {egl ? egl.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -608,7 +609,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>3.3 Extension Activities</h4>
+                <h4>3.3 Extension Activities (Total - {eea ? eea.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -627,7 +628,7 @@ function Adminlogin(){
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{data ? data[0].name : '-'}</td>
+                                <td>{n ? n : '-'}</td>
                                 <td>{activities ? activities : '-'}</td>
                                 <td>{collaborations ? collaborations : '-'}</td>
                                 <td>{total ? total : '-'}</td>
@@ -641,7 +642,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>3.4 Industrial Visits</h4>
+                <h4>3.4 Industrial Visits (Total - {eev ? eev.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -674,7 +675,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>3.5 Environmental Science (EVS) visit</h4>
+                <h4>3.5 Environmental Science (EVS) visit (Total - {eevs ? eevs.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -692,7 +693,7 @@ function Adminlogin(){
                         return(
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{n ? n : '-'}</td>
+                                <td>{n ?n : '-'}</td>
                                 <td>{activity ? activity : '-'}</td>
                                 <td>{place ? place : '-'}</td>
                                 <td>{total ? total : '-'}</td>
@@ -705,7 +706,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>3.6 Any other departmental activities</h4>
+                <h4>3.6 Any other departmental activities (Total - {eda ? eda.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -742,7 +743,7 @@ function Adminlogin(){
 
                 <h2>CONSULTANCY PROJECTS / SERVICES</h2>
 
-                <h4>4.1 Consultancy Projects / Services</h4>
+                <h4>4.1 Consultancy Projects / Services (Total - {cps ? cps.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -778,7 +779,7 @@ function Adminlogin(){
 
                 <h2>FACULTY DETAILS </h2>
 
-                <h4>5.1 Honours and Recognitions received by Teachers</h4>
+                <h4>5.1 Honours and Recognitions received by Teachers (Total - {fhnr ? fhnr.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -811,7 +812,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.2 Qualifying in state/ national/ international level examinations</h4>
+                <h4>5.2 Qualifying in state/ national/ international level examinations (Total - {fexm ? fexm.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -840,7 +841,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.3 Books Published</h4>
+                <h4>5.3 Books Published (Total - {fbp ? fbp.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -871,7 +872,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.4 Chapters Contributed</h4>
+                <h4>5.4 Chapters Contributed (Total - {fcc ? fcc.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -906,7 +907,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.5 Conference Proceeding</h4>
+                <h4>5.5 Conference Proceeding (Total - {fcp ?  fcp.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -937,7 +938,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.6 Paper Presentation</h4>
+                <h4>5.6 Paper Presentation (Total - {fpp ? fpp.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -952,7 +953,7 @@ function Adminlogin(){
                     <th>File</th>F
                 </tr>
                 {
-                   fpp ?fpp.map((r,i)=>{
+                fpp ?fpp.map((r,i)=>{
                         const {n,file,con,title,financial_support,venue,level,date} = r
                         return(
                             <tr key={i}>
@@ -972,7 +973,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.7 Journal Publications</h4>
+                <h4>5.7 Journal Publications (Total - {fjp ? fjp.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -1009,7 +1010,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.8 Conference / Seminar / Symposium / Workshop Attended</h4>
+                <h4>5.8 Conference / Seminar / Symposium / Workshop Attended (Total - {fcon ? fcon.length : ''})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -1046,7 +1047,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.9 Resource Person</h4>
+                <h4>5.9 Resource Person (Total - {frp ? frp.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -1081,7 +1082,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.10 Financial support</h4>
+                <h4>5.10 Financial support (Total - {ffs ? ffs.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -1108,7 +1109,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.11 Professional development programmes</h4>
+                <h4>5.11 Professional development programmes (Total - {fdp ? fdp.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -1143,7 +1144,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.12 Undergone Online-Courses</h4>
+                <h4>5.12 Undergone Online-Courses (Total - {foc ? foc.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -1176,7 +1177,7 @@ function Adminlogin(){
                 </tbody>
                 </table>
 
-                <h4>5.13 E-content developed</h4>
+                <h4>5.13 E-content developed (Total - {fe ? fe.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -1336,7 +1337,7 @@ function Adminlogin(){
                             {field:'amount_sanctioned',title:'Amount Sanctioned',filterPlaceholder:'Filter by Amount Sanctioned'},
                             {field:'amount_received',title:'Amount Received',filterPlaceholder:'Filter by Amount Received'},
                             {field:'funding_agency',title:'Funding Agency',filterPlaceholder:'Filter by Funding Agency'},
-                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},{field:'file',title:'File',filterPlaceholder:'Filter by File'},
+                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rps} title="Research Projects" />
                         
@@ -1360,7 +1361,7 @@ function Adminlogin(){
                             {field:'date_awarded_patent',title:'Date of patent awarded',filterPlaceholder:'Filter by Date of patent awarded'},
                             {field:'providing_agency',title:'Providing Agency',filterPlaceholder:'Filter by Providing Agency'},
                             {field:'royalty_received',title:'Royalty Received',filterPlaceholder:'Filter by Royalty Received'},
-                            {field:'country',title:'Country',filterPlaceholder:'Filter by Country'},
+                            {field:'country',title:'Country',filterPlaceholder:'Filter by Country'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rpat} title="Patents"  />
                         
@@ -1384,7 +1385,7 @@ function Adminlogin(){
                             {field:'designation',title:'Designation',filterPlaceholder:'Filter by Designation'},
                             {field:'awarding_agency',title:'Awarding Agency',filterPlaceholder:'Filter by Awarding Agency'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rawd} title="Awards for Innovation"  />
                         
@@ -1405,7 +1406,7 @@ function Adminlogin(){
                             {field:'deg',title:'Degree',filterPlaceholder:'Filter by Degree'},
                             {field:'title',title:'Title of Thesis',filterPlaceholder:'Filter by Title of thesis'},
                             {field:'external',title:'External',filterPlaceholder:'Filter by External'},
-                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
+                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rdeg} title="Ph.D/M.Phil"  />
                         
@@ -1426,7 +1427,7 @@ function Adminlogin(){
                             {field:'fellowship',title:'Fellowship',filterPlaceholder:'Filter by Fellowship'},
                             {field:'date_sanctioned',title:'Date Sanctioned',filterPlaceholder:'Filter by Date Sanctioned'},
                             {field:'funding_agency',title:'Funding Agency',filterPlaceholder:'Filter by Funding Agency'},
-                            {field:'sanctioned_amount',title:'Amount Sanctioned',filterPlaceholder:'Filter by Amount Sanctioned'},
+                            {field:'sanctioned_amount',title:'Amount Sanctioned',filterPlaceholder:'Filter by Amount Sanctioned'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rfel} title="Fellowship"  />
                         
@@ -1449,7 +1450,7 @@ function Adminlogin(){
                             {field:'activity',title:'Activity',filterPlaceholder:'Filter by Activity'},
                             {field:'participant',title:'Participant',filterPlaceholder:'Filter by Participant'},
                             {field:'financial_support',title:'Financial support',filterPlaceholder:'Filter by Financial support'},
-                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
+                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={ca} title="Collaborative Activities"  />
                         
@@ -1468,7 +1469,7 @@ function Adminlogin(){
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'partnering_agency',title:'Partnering Agency',filterPlaceholder:'Filter by Partnering Agency'},
-                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
+                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={clink} title="Linkages"  />
                         
@@ -1491,7 +1492,7 @@ function Adminlogin(){
                             {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
                             {field:'participants',title:'Participants',filterPlaceholder:'Filter by Participants'},
                             {field:'purpose',title:'Purpose',filterPlaceholder:'Filter by Purpose'},
-                            {field:'total',title:'Total no. of beneficiaries',filterPlaceholder:'Filter by total'},
+                            {field:'total',title:'Total no. of beneficiaries',filterPlaceholder:'Filter by total'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={cmou} title="Mou's Signed"  />
                         
@@ -1517,7 +1518,7 @@ function Adminlogin(){
                             {field:'objective',title:'Objective',filterPlaceholder:'Filter by Objective'},
                             {field:'outcome',title:'Outcome',filterPlaceholder:'Filter by Outcome'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
-                            {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
+                            {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={econ} title="Conference / Seminar / Symposium / Workshop organized"  />
                         
@@ -1541,7 +1542,7 @@ function Adminlogin(){
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
                             {field:'objective',title:'Objective',filterPlaceholder:'Filter by Objective'},
                             {field:'outcome',title:'Outcome',filterPlaceholder:'Filter by Outcome'},
-                            {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
+                            {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={egl} title="Guest Lectures"  />
                         
@@ -1562,7 +1563,7 @@ function Adminlogin(){
                             {field:'activities',title:'Activities Performed',filterPlaceholder:'Filter by Activities Performed'},
                             {field:'collaborations',title:'Collaborating Agency',filterPlaceholder:'Filter by Collaborating Agency'},
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
-                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
+                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={eea} title="Extension Activities"  />
                         
@@ -1582,7 +1583,7 @@ function Adminlogin(){
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'classes',title:'Class',filterPlaceholder:'Filter by Class'},
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
-                            {field:'outcome',title:'Outcome',filterPlaceholder:'Filter by Outcome'},
+                            {field:'outcome',title:'Outcome',filterPlaceholder:'Filter by Outcome'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={eev} title="Industrial Visits"  />
                         
@@ -1602,7 +1603,7 @@ function Adminlogin(){
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'place',title:'Place of visit',filterPlaceholder:'Filter by place'},
                             {field:'total',title:'Total no. Students',filterPlaceholder:'Filter by Total'},
-                            {field:'activity',title:'Nature of activity',filterPlaceholder:'Filter by activity'},
+                            {field:'activity',title:'Nature of activity',filterPlaceholder:'Filter by activity'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={eevs} title="Evs Visits"  />
                         
@@ -1624,7 +1625,7 @@ function Adminlogin(){
                             {field:'guest',title:'Guest',filterPlaceholder:'Filter by Guest'},
                             {field:'topic',title:'Topic',filterPlaceholder:'Filter by Topic'},
                             {field:'total',title:'Total no. Students',filterPlaceholder:'Filter by Total'},
-                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by venue'},
+                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={eda} title="Departmental Activities"  />
                         
@@ -1648,7 +1649,7 @@ function Adminlogin(){
                             {field:'no',title:'New/Ongoing',filterPlaceholder:'Filter by New/Ongoing'},
                             {field:'revenue_generated',title:'Revenue Generated',filterPlaceholder:'Filter by Revenue Generated'},
                             {field:'date_sanction',title:'Date sanction',filterPlaceholder:'Filter by Date sanction'},
-                            {field:'sponsor',title:'Sponsors',filterPlaceholder:'Filter by Sponsors'},
+                            {field:'sponsor',title:'Sponsors',filterPlaceholder:'Filter by Sponsors'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={cps} title="Projects Services"  />
                         
@@ -1671,7 +1672,7 @@ function Adminlogin(){
                             {field:'award_honour',title:'Award Honour ',filterPlaceholder:'Filter by Award Honour'},
                             {field:'details',title:'Details',filterPlaceholder:'Filter by Details'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fhnr} title="Honours and Recognitions"  />
                         
@@ -1690,7 +1691,7 @@ function Adminlogin(){
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'exam',title:'Exam ',filterPlaceholder:'Filter by Exam'},
-                            {field:'exam_rollno',title:'Exam Rollno',filterPlaceholder:'Filter by Exam Rollno'},
+                            {field:'exam_rollno',title:'Exam Rollno',filterPlaceholder:'Filter by Exam Rollno'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fexm} title="Qualifying in state/ national/ international level examinations"  />
                         
@@ -1711,7 +1712,7 @@ function Adminlogin(){
                             {field:'book',title:'Book ',filterPlaceholder:'Filter by Book'},
                             {field:'publisher',title:'Publisher',filterPlaceholder:'Filter by Publisher'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
-                            {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  
+                            {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fbp} title="Books Published"  />
                         
@@ -1734,7 +1735,7 @@ function Adminlogin(){
                             {field:'editor',title:'Editor',filterPlaceholder:'Filter by Editor'},
                             {field:'publisher',title:'Publisher',filterPlaceholder:'Filter by Publisher'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
-                            {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  
+                            {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fcc} title="Chapters Contributed"  />
                         
@@ -1755,7 +1756,7 @@ function Adminlogin(){
                             {field:'con',title:'Type ',filterPlaceholder:'Filter by Type'},
                             {field:'publication',title:'Publication',filterPlaceholder:'Filter by Publication'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
-                            {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  
+                            {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fcp} title="Conferece Proceeding"  />
                         
@@ -1777,7 +1778,7 @@ function Adminlogin(){
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
-                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},  
+                            {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},  
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fpp} title="Paper Presentation"  />
                         
@@ -1801,7 +1802,7 @@ function Adminlogin(){
                             {field:'impact',title:'Impact',filterPlaceholder:'Filter by Impact'},
                             {field:'level',title:'level',filterPlaceholder:'Filter by level'},
                             {field:'sci',title:'Sci',filterPlaceholder:'Filter by Sci'},
-                            {field:'volume',title:'Volume',filterPlaceholder:'Filter by Volume'},  
+                            {field:'volume',title:'Volume',filterPlaceholder:'Filter by Volume'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fjp} title="Journal Publications"  />
                         
@@ -1824,7 +1825,7 @@ function Adminlogin(){
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
-                            {field:'programme_outcome',title:'Programme Outcome',filterPlaceholder:'Filter by Programme Outcome'},
+                            {field:'programme_outcome',title:'Programme Outcome',filterPlaceholder:'Filter by Programme Outcome'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fcon} title="Conference"  />
                         
@@ -1846,7 +1847,7 @@ function Adminlogin(){
                             {field:'topic',title:'Topic',filterPlaceholder:'Filter by Topic'},
                             {field:'event',title:'Event',filterPlaceholder:'Filter by Event'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={frp} title="Resource Person" />
                         
@@ -1865,7 +1866,7 @@ function Adminlogin(){
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'f',title:'C',filterPlaceholder:'Filter by C'},
-                            {field:'amount_support',title:'Amount Support',filterPlaceholder:'Filter by Amount Support'},
+                            {field:'amount_support',title:'Amount Support',filterPlaceholder:'Filter by Amount Support'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={ffs} title="Financial Support" />
                         
@@ -1887,7 +1888,7 @@ function Adminlogin(){
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
-                            {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
+                            {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fdp} title="Development Programmes" />
                         
@@ -1909,7 +1910,7 @@ function Adminlogin(){
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'duration',title:'Duration',filterPlaceholder:'Filter by Duration'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
-                            {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
+                            {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={foc} title="Online Courses" />
                         
@@ -1928,7 +1929,7 @@ function Adminlogin(){
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'platform',title:'Platform',filterPlaceholder:'Filter by Platform'},
-                            {field:'module',title:'Module',filterPlaceholder:'Filter by Module'},
+                            {field:'module',title:'Module',filterPlaceholder:'Filter by Module'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={fe} title="E content" />
                         

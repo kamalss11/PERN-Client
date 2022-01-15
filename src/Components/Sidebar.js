@@ -1,19 +1,12 @@
 import React, { useContext } from 'react'
 import {Link} from 'react-router-dom'
 import Sbar from '../Datas/S_data'
-// import Formdatas from '../Datas/Formdatas'
-// import {FaWpforms} from 'react-icons/fa'
-// import research from '../Datas/research'
-// import callob from '../Datas/callaborations'
-// import consultancy from '../Datas/projects_services'
-// import events from '../Datas/events'
-// import faculty from '../Datas/faculties'
 import {TiExport} from 'react-icons/ti'
 import {AiOutlineLogout} from 'react-icons/ai'
 import AppContext from '../Context/context'
-import {FaFileWord} from 'react-icons/fa'
+import '../CSS/About.css'
 
-function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu}){
+function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu,dactive,pactive}){
     const {bar} = useContext(AppContext)
     return (
         <div className={`sidebar ${bar ? `activate` : ''}`}>
@@ -23,11 +16,20 @@ function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu})
                 {
                     Sbar.map((bar)=>{
                         const {id,url,name,icon} = bar
-                        return(
-                            <li key={id}>
-                                <Link to={url}>{icon} {name}</Link>
-                            </li>
-                        )
+                        if(name === 'Dashboard'){
+                            return(
+                                <li key={id}>
+                                    <Link className={`${dactive ? 'active' : ''}`} to={url}>{icon} {name}</Link>
+                                </li>
+                            )
+                        }
+                        else{
+                            return(
+                                <li key={id}>
+                                    <Link className={`${pactive ? 'active' : ''}`} to={url}>{icon} {name}</Link>
+                                </li>
+                            )
+                        }
                     })
                 }
  
