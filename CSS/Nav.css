@@ -1,0 +1,31 @@
+/* nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10px;
+    background-color: var(--gray);
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+}
+
+nav .links{
+    display: flex;
+    align-items: center;
+}
+
+nav .links li{
+    margin: 0 20px;
+}
+
+nav .links li a{
+    color: var(--black);
+}
+
+@media(max-width: 500px){
+    nav .links li a{
+        font-size: 14px;
+    }
+
+    nav .links li{
+        margin: 0 15px;
+    }
+} */
