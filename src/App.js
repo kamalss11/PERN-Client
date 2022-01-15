@@ -65,16 +65,59 @@ import Edit_development from './Forms/Faculties/Edit_development';
 import Edit_onlinecourses from './Forms/Faculties/Edit_onlinecourses';
 import Edit_econtent from './Forms/Faculties/Edit_econtent';
 import AppContext from './Context/context';
-import Adminlogin from './Admin/Login';
-import Student_dashboard from './Pages/Student_dashboard';
-import Edit_publication from './Forms/Publications/Edit_publication';
-import Publication from './Forms/Publications/publication';
-import Achievement from './Forms/Publications/achievement';
-import Edit_achievement from './Forms/Publications/Edit_achievement';
+import Export_staffs from './Admin/Export_staffs';
 import Forget_Password from './Pages/Forget_password';
 import Reset_password from './Pages/Reset_password';
 import Super_admin from './Super_admin/Super_admin';
 import Staffs from './Super_admin/Staffs';
+import Students from './Super_admin/Students';
+import Research_projects from './Super_admin/Overall/Staffs/research_projects';
+import Pat from './Super_admin/Overall/Staffs/patents';
+import Aw from './Super_admin/Overall/Staffs/awards';
+import De from './Super_admin/Overall/Staffs/deg';
+import Fe from './Super_admin/Overall/Staffs/fellowship';
+import Ca from './Super_admin/Overall/Staffs/collab_activ';
+import Li from './Super_admin/Overall/Staffs/linkages';
+import Mo from './Super_admin/Overall/Staffs/mou';
+import Co from './Super_admin/Overall/Staffs/conference';
+import Gl from './Super_admin/Overall/Staffs/guestl';
+import Ea from './Super_admin/Overall/Staffs/extensiona';
+import Iv from './Super_admin/Overall/Staffs/industrialv';
+import Ev from './Super_admin/Overall/Staffs/evsv';
+import Da from './Super_admin/Overall/Staffs/departmentala';
+import Ps from './Super_admin/Overall/Staffs/projects';
+import Ho from './Super_admin/Overall/Staffs/honours';
+import Ex from './Super_admin/Overall/Staffs/exams';
+import Bp from './Super_admin/Overall/Staffs/booksp';
+import Cc from './Super_admin/Overall/Staffs/chaptersc';
+import Cp from './Super_admin/Overall/Staffs/conferencep';
+import Pp from './Super_admin/Overall/Staffs/Paperp';
+import Jp from './Super_admin/Overall/Staffs/journalp';
+import Fc from './Super_admin/Overall/Staffs/f_conf';
+import Rp from './Super_admin/Overall/Staffs/resourcep';
+import Fs from './Super_admin/Overall/Staffs/financials';
+import Dp from './Super_admin/Overall/Staffs/developmentp';
+import Oc from './Super_admin/Overall/Staffs/onlinec';
+import Ec from './Super_admin/Overall/Staffs/econ';
+import Pl from './Super_admin/Overall/Students/placements';
+import Pub from './Super_admin/Overall/Students/publications';
+import StuPp from './Super_admin/Overall/Students/paperp';
+import StuCon from './Super_admin/Overall/Students/conference';
+import StuCom from './Super_admin/Overall/Students/competition';
+import Stutra from './Super_admin/Overall/Students/training';
+import Stupw from './Super_admin/Overall/Students/projectwork';
+import Stuexm from './Super_admin/Overall/Students/exams';
+import StuOc from './Super_admin/Overall/Students/onlinec';
+import StuAc from './Super_admin/Overall/Students/achievements';
+import Viewstaffs from './Pages/View_staffs';
+import Add_staffs from './Pages/Add_staffs';
+import Viewstudents from './Pages/View_students';
+import Export_student from './Admin/Export_student';
+import Add_students from './Pages/Add_students';
+import Edit_Placements from './Forms/Students/Edit_place';
+import Placements from './Forms/Students/Placements';
+import Edit_publi from './Forms/Students/Edit_publi';
+import Publications from './Forms/Students/Publications';
 
 function App() {
   const Routing = ()=>{
@@ -93,6 +136,30 @@ function App() {
             <Dashboard />
           </Route>
 
+          <Route exact path="/dashboard/view_staffs">
+            <Viewstaffs />
+          </Route>
+
+          <Route exact path="/dashboard/view_students">
+            <Viewstudents />
+          </Route>
+
+          <Route exact path="/dashboard/staffs_export">
+            <Export_staffs />
+          </Route>
+
+          <Route exact path="/dashboard/students_export">
+            <Export_student />
+          </Route>
+
+          <Route exact path="/dashboard/add_staffs">
+            <Add_staffs />
+          </Route>
+
+          <Route exact path="/dashboard/add_students">
+            <Add_students />
+          </Route>
+
           <Route exact path="/forget_password">
             <Forget_Password />
           </Route>
@@ -101,15 +168,11 @@ function App() {
             <Reset_password />
           </Route>
 
-          <Route exact path="/student_dashboard">
-            <Student_dashboard />
-          </Route>
-
           <Route exact path="/dashboard/profile">
             <Profile />
           </Route>
 
-          <Route exact path="/dashboard/editprofile">
+          <Route path="/dashboard/editprofile">
             <Editprofile />
           </Route>
 
@@ -119,6 +182,162 @@ function App() {
 
           <Route path="/super_admin/departments/staffs">            
             <Staffs />
+          </Route>
+
+          <Route path="/super_admin/departments/students">            
+            <Students />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/research_projects">            
+            <Research_projects />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/patents">            
+            <Pat />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/awards_for_innovation">            
+            <Aw />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/deg">            
+            <De />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/fellowship">            
+            <Fe />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/collaborative_activities">            
+            <Ca />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/linkages">            
+            <Li />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/mou">            
+            <Mo />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/conference">            
+            <Co />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/guest_lectures">            
+            <Gl />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/extension_activities">            
+            <Ea />
+          </Route>
+
+          <Route exact path="/super_admin/overall/staffs/industrial_visits">            
+            <Iv />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/evs">            
+            <Ev />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/departmental_activities">            
+            <Da />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/projects_services">            
+            <Ps />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/honours">            
+            <Ho />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/exams">            
+            <Ex />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/books_published">            
+            <Bp />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/chapters_contributed">            
+            <Cc />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/conference_proceeding">            
+            <Cp />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/paper_presentation">            
+            <Pp />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/journal_publications">            
+            <Jp />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/f_conference">            
+            <Fc />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/resource_person">            
+            <Rp />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/financial_support">            
+            <Fs />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/development_programmes">            
+            <Dp />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/online_courses">            
+            <Oc />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/staffs/e_content">            
+            <Ec />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/placements">            
+            <Pl />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_publications">            
+            <Pub />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_paper_presentation">            
+            <StuPp />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_conference">            
+            <StuCon />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_competition">            
+            <StuCom />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_training">            
+            <Stutra />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_projectwork">            
+            <Stupw />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_exams">            
+            <Stuexm />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_onlinecourses">            
+            <StuOc />
+          </Route>
+          
+          <Route exact path="/super_admin/overall/students/s_achievements">            
+            <StuAc />
           </Route>
 
           {/* Research */}
@@ -355,24 +574,22 @@ function App() {
             <Edit_econtent />
           </Route>
 
-          <Route path="/forms/publication/publications">
-            <Publication />
+          {/* Students Details */}
+
+          <Route exact path="/forms/student/placements">
+            <Placements />
           </Route>
 
-          <Route path="/forms/publication/publications/edit">
-            <Edit_publication />
+          <Route path="/forms/student/placements/edit">
+            <Edit_Placements />
           </Route>
 
-          <Route path="/forms/achievement/achievements">
-            <Achievement />
+          <Route exact path="/forms/student/s_publications">
+            <Publications />
           </Route>
 
-          <Route path="/forms/achievement/achievements/edit">
-            <Edit_achievement />
-          </Route>
-
-          <Route exact path="/admin">
-            <Adminlogin />
+          <Route path="/forms/student/s_publications/edit">
+            <Edit_publi />
           </Route>
 
           <Route path="/logout">
