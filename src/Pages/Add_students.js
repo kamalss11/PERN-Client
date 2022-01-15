@@ -4,10 +4,10 @@ import { Formik,Form,useField } from 'formik'
 import '../CSS/About.css'
 import '../CSS/dashboard.css'
 import Sidebar from '../Components/Sidebar'
-import {RiLockPasswordLine, RiRadarFill} from 'react-icons/ri'
+import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
-import {AiOutlineBars} from 'react-icons/ai'
-import { CgProfile } from 'react-icons/cg'
+import {FaUserCircle} from 'react-icons/fa'
+import { CgMenuRight } from 'react-icons/cg'
 import stu from '../Datas/student_details'
 
 function Add_students(){
@@ -69,13 +69,13 @@ function Add_students(){
                     <div className="content">
                         <div className="hdr">
                             <div className="beg">
-                                <AiOutlineBars />
-                                <h3>Dashboard</h3>
+                                <CgMenuRight />
+                                <h4>Dashboard</h4>
                             </div>
                             <b onClick={()=>setMen(!men)}>
                                 <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
                                 <ul className={men ? "men active" : "men"}>
-                                    <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
+                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
                                     <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
                                     <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                                 </ul>
@@ -83,29 +83,34 @@ function Add_students(){
                         </div>
     
                         <div className="submitted">
+                            <div className='img'>
+                                <img src='/Uploads/add.svg' />
+                            </div>
                             {
                                 uData  ? 
                                     <>
                                         <div className='dprt'>
-                                            <h3>Internal Quality Assurance Cell (IQAC)</h3>
-                                            <h3>Department : {uData ? uData[0].department : null} - Add Student Datas</h3>
+                                            <h4>Internal Quality Assurance Cell (IQAC)</h4>
+                                            <h4>Department : {uData ? uData[0].department : null} - Add Student Datas</h4>
                                         </div>
-                                        {
-                                            stu ?
-                                            <ul>
-                                                {
-                                                    stu.map((r)=>{
-                                                    const{id,name,url} = r
-                                                        return(
-                                                            <li key={id}>
-                                                                <Link to={url}>{name}</Link>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
 
-                                            </ul>  : null
-                                        }
+                                        <div className='add'>
+                                            <h3>Student Details</h3>
+                                            {
+                                                stu ?
+                                                <>
+                                                    {
+                                                        stu.map((r)=>{
+                                                        const{id,name,url} = r
+                                                            return(
+                                                                <Link key={id} to={url}>{name}</Link>
+                                                            )
+                                                        })
+                                                    }
+
+                                                </>  : null
+                                            }
+                                        </div>
                                 </>: null 
                             }    
                         </div>    

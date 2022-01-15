@@ -1,16 +1,14 @@
-import React,{ useContext, useEffect, useState} from 'react'
+import React,{ useEffect, useState} from 'react'
 import {Link, useHistory} from 'react-router-dom'
-import { Formik,Form,useField } from 'formik'
-import Axios from 'axios'
+import {useField } from 'formik'
 import '../CSS/About.css'
 import '../CSS/dashboard.css'
 import Sidebar from '../Components/Sidebar'
-import * as Yup from 'yup'
-import {FaWpforms} from 'react-icons/fa'
 import {RiLockPasswordLine} from 'react-icons/ri'
-import {AiFillEdit,AiOutlineLogout} from 'react-icons/ai'
-import { CgProfile } from 'react-icons/cg'
-import {AiOutlineBars} from 'react-icons/ai'
+import {AiOutlineLogout} from 'react-icons/ai'
+import { CgProfile,CgMenuRight } from 'react-icons/cg'
+import {IoArrowRedoCircle} from 'react-icons/io5'
+import {FaUserCircle} from 'react-icons/fa'
 
 
 function Dashboard(){
@@ -37,7 +35,7 @@ function Dashboard(){
             console.log(datas)
             setUdata(datas.user)
 
-            if(datas.user[0].roll = 'SuperAdmin'){
+            if(datas.user[0].roll === 'SuperAdmin'){
                 history.push('/super_admin')
             }
 
@@ -71,18 +69,20 @@ function Dashboard(){
     },[])
     return (
         <>
-            <Sidebar />
+            <div className='dg'></div>
+            <Sidebar dactive="active" />
             <div className={`about`}>
                 <div className="content">
                     <div className="hdr">
                             <div className="beg">
-                                <AiOutlineBars />
-                                <h3>Dashboard</h3>
+                                <CgMenuRight />
+                                <h4>Dashboard</h4>
                             </div>
+
                             <b onClick={()=>setMen(!men)}>
                                 <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
                                 <ul className={men ? "men active" : "men"}>
-                                    <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
+                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
                                     <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
                                     <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                                 </ul>
@@ -94,8 +94,9 @@ function Dashboard(){
                             uData  ? 
                                 <>
                                     <div className='dprt'>
-                                            <h3>Internal Quality Assurance Cell (IQAC)</h3>
-                                            <h3>Department : {uData ? uData[0].department : null}</h3>
+                                        <h4>Internal Quality Assurance Cell (IQAC)</h4>
+                                        <h4>Department : {uData ? uData[0].department : null }</h4>
+                                        <img src='/Uploads/dashboard.svg'></img>
                                     </div>
 
                                     <div className='modules'>
@@ -110,12 +111,12 @@ function Dashboard(){
                                             {
                                                 tabind == 1 ? 
                                                 <ul className='links'>
-                                                    <li><Link to='/dashboard/view_staffs'>1. View Staffs Datas</Link></li>
-                                                    <li><Link to='/dashboard/add_staffs'>2. Add Staffs Datas</Link></li>
+                                                    <li><Link to='/dashboard/view_staffs'><IoArrowRedoCircle /> View Staffs Datas</Link></li>
+                                                    <li><Link to='/dashboard/add_staffs'><IoArrowRedoCircle /> Add Staffs Datas</Link></li>
                                                 </ul> : 
                                                 <ul className='links'>
-                                                    <li><Link to='/dashboard/view_students'>1. View Students Datas</Link></li>
-                                                    <li><Link to='/dashboard/add_students'>2. Add Students Datas</Link></li>
+                                                    <li><Link to='/dashboard/view_students'><IoArrowRedoCircle /> View Students Datas</Link></li>
+                                                    <li><Link to='/dashboard/add_students'><IoArrowRedoCircle /> Add Students Datas</Link></li>
                                                 </ul>
                                             }
                                     </div>

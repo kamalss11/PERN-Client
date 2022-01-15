@@ -3,7 +3,10 @@ import { Formik,Form,useField } from 'formik'
 import * as Yup from 'yup'
 import { Link,useHistory } from 'react-router-dom'
 import '../CSS/LS.css'
-import Navbar from '../Components/Navbar'
+import {IoPerson} from 'react-icons/io5'
+import {AiFillLock} from 'react-icons/ai'
+import {TiArrowSortedUp} from 'react-icons/ti'
+import {RiUser3Fill} from 'react-icons/ri'
 
 function Signin(){
     const history = useHistory()
@@ -36,15 +39,20 @@ function Signin(){
     const TextInput = ({ label,...props }) => {
         const [field,meta] = useField(props)
         return(
-            <div className="fields">
-                {/* <label htmlFor={props.id || props.name}>{label}</label> */}
-                <input {...field} {...props}></input>
-                {
-                    meta.touched && meta.error ?(
-                        <p className="error">{meta.error}</p>
-                    ):null
-                }
-            </div>
+            <>
+                <div className="fields">
+                    <div>
+                        {props.icon}
+                        <input {...field}{...props}></input>
+                        <label htmlFor={props.id || props.name}>{label}</label>
+                    </div>
+                    {
+                        meta.touched && meta.error ?(
+                            <p className="error">{meta.error}</p>
+                        ):null
+                    }
+                </div>
+            </>
         )
     }
 
@@ -53,75 +61,99 @@ function Signin(){
     },[])
     return(
         <>
-            <Navbar/>
-            <div className="signUp">
-                <Formik
-                    initialValues = {{
-                        email: '',
-                        password: ''
-                    }}
-                    
-                    validationSchema = {
-                        Yup.object({
-                            email: Yup.string()
-                                .email('Invalid Email')
-                                .required('Required'),
-                            password: Yup.string()
-                                .min(4,'Password must be greater than 4 characters')
-                                .required('Required')
-                        })
-                    }
+            <div className='bg1'>
+                <nav>
+                    <h2 className='logo'>IQAC</h2>
+                </nav>
 
-                    onSubmit={(values, { setSubmitting,resetForm }) => {
-                        setTimeout(async () => {
-                            const res = await fetch('/signin',{
-                                method: "POST",
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    email : values.email,
-                                    password : values.password
-                                })
+                <div className='wel'>
+                    <h3>Welcome !</h3>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</p>
+                </div>
+            </div>
+
+            <div className='bg2' style={{height: '800px'}}>
+                <div className="signUp" style={{top: '-25%'}}>
+                    {/* <div className='rd'></div>
+                    <div className='rd'></div>
+                    <div className='rd'></div>
+                    <div className='rd'></div>
+                    <div className='rd'></div>
+                    <div className='rd'></div> */}
+                    <Formik
+                        initialValues = {{
+                            email: '',
+                            password: ''
+                        }}
+                        
+                        validationSchema = {
+                            Yup.object({
+                                email: Yup.string()
+                                    .email('Invalid Email')
+                                    .required('Required'),
+                                password: Yup.string()
+                                    .min(4,'Password must be greater than 4 characters')
+                                    .required('Required')
                             })
+                        }
 
-                            const data = await res.json()
-                            console.log(data,'Signin')
-                            if(res.status === 400 || !data){
-                                window.alert(`${data.error}`)
-                            }
-                            else{
-                                window.alert("Logged in Successfull")
-                                setSubmitting(false);
-                                resetForm()
-                                history.push('/dashboard')
-                            }
-                        }, 400);
-                    }}
-                >
-                    <Form method="POST" className="form">
-                        <h3>SignIn</h3>
+                        onSubmit={(values, { setSubmitting,resetForm }) => {
+                            setTimeout(async () => {
+                                const res = await fetch('/signin',{
+                                    method: "POST",
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        email : values.email,
+                                        password : values.password
+                                    })
+                                })
 
-                        <TextInput
-                            name="email"
-                            type="text"
-                            placeholder="Enter your Email"
-                        />
+                                const data = await res.json()
+                                console.log(data,'Signin')
+                                if(res.status === 400 || !data){
+                                    window.alert(`${data.error}`)
+                                }
+                                else{
+                                    window.alert("Logged in Successfull")
+                                    setSubmitting(false);
+                                    resetForm()
+                                    history.push('/dashboard')
+                                }
+                            }, 400);
+                        }}
+                    >
+                        <Form method="POST" className="form">
+                            <div style={{textAlign:'center'}}>
+                                {/* <h3>Internal Quality Assurance Cell - (IQAC)</h3><br /> */}
+                                <h3>SignIn</h3>
+                            </div>
 
-                        <TextInput
-                            name="password"
-                            type="password"
-                            placeholder="Enter Password"
-                        />
+                            <TextInput
+                                icon={<IoPerson/>}
+                                name="email"
+                                type="text"
+                                placeholder="Enter your Email"
+                            />
 
-                        <div className="btn">
-                            <button type="submit">SignIn</button>
-                        </div>
+                            <TextInput
+                                icon={<AiFillLock />}
+                                name="password"
+                                type="password"
+                                placeholder="Enter Password"
+                            />
 
-                        <p className="ls">Don't have an account ? <Link to="/">Register</Link></p>
-                        <p className="ls"><Link to="/forget_password">Forget Password ?</Link></p>
-                    </Form>
-                </Formik>                                    
+                            <div className="btn">
+                                <button type="submit">SignIn <TiArrowSortedUp /></button>
+                            </div>
+                        </Form>
+                    </Formik>     
+                      
+                    <p className='bt'>
+                        <Link to={'/forget_password'}>Forget Password ?</Link>
+                    </p>                                  
+                </div>
             </div>
         </>
     )

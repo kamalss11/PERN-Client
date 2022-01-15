@@ -4,15 +4,15 @@ import { Formik,Form,useField } from 'formik'
 import '../CSS/About.css'
 import '../CSS/dashboard.css'
 import Sidebar from '../Components/Sidebar'
-import {RiLockPasswordLine, RiRadarFill} from 'react-icons/ri'
+import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
-import {AiOutlineBars} from 'react-icons/ai'
-import { CgProfile } from 'react-icons/cg'
 import research from '../Datas/research'
 import collab from '../Datas/callaborations'
 import events from '../Datas/events'
 import pser from '../Datas/projects_services'
 import faculties from '../Datas/faculties'
+import {FaUserCircle} from 'react-icons/fa'
+import { CgMenuRight } from 'react-icons/cg'
 
 function Add_staffs(){
     const [uData,setUdata] = useState()   
@@ -73,13 +73,13 @@ function Add_staffs(){
                     <div className="content">
                         <div className="hdr">
                             <div className="beg">
-                                <AiOutlineBars />
-                                <h3>Dashboard</h3>
+                                <CgMenuRight />
+                                <h4>Dashboard</h4>
                             </div>
                             <b onClick={()=>setMen(!men)}>
                                 <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
                                 <ul className={men ? "men active" : "men"}>
-                                    <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
+                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
                                     <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
                                     <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                                 </ul>
@@ -87,97 +87,98 @@ function Add_staffs(){
                         </div>
     
                         <div className="submitted">
+                            <div className='img'>
+                                <img src='/Uploads/add.svg' />
+                            </div>
                             {
                                 uData  ? 
                                     <>
                                         <div className='dprt'>
-                                            <h3>Internal Quality Assurance Cell (IQAC)</h3>
-                                            <h3>Department : {uData ? uData[0].department : null} - Add Staffs Datas</h3>
+                                            <h4>Internal Quality Assurance Cell (IQAC)</h4>
+                                            <h4>Department : {uData ? uData[0].department : null} - Add Staffs Datas</h4>
                                         </div>
-                                        {
-                                            research ?
-                                            <ul>
-                                                {
-                                                    research.map((r)=>{
-                                                    const{id,name,url} = r
-                                                        return(
-                                                            <li key={id}>
-                                                                <Link to={url}>{name}</Link>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
+                                        <div className='add'>
+                                            <h3>Research</h3>
+                                            {
+                                                research ?
+                                                <>
+                                                    {
+                                                        research.map((r)=>{
+                                                        const{id,name,url} = r
+                                                            return(
+                                                                <Link key={id} to={url}>{name}</Link>
+                                                            )
+                                                        })
+                                                    }
 
-                                            </ul>  : null
-                                        }
+                                                </>  : null
+                                            }
 
-                                        {
-                                            collab ?
-                                            <ul>
-                                                {
-                                                    collab.map((r)=>{
-                                                    const{id,name,url} = r
-                                                        return(
-                                                            <li key={id}>
-                                                                <Link to={url}>{name}</Link>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
+                                            <h3>Collaborations</h3>
+                                            {
+                                                collab ?
+                                                <>
+                                                    {
+                                                        collab.map((r)=>{
+                                                        const{id,name,url} = r
+                                                            return(
+                                                                <Link key={id} to={url}>{name}</Link>
+                                                            )
+                                                        })
+                                                    }
 
-                                            </ul>  : null
-                                        }     
+                                                </>  : null
+                                            }     
 
-                                        {
-                                            events ?
-                                            <ul>
-                                                {
-                                                    events.map((r)=>{
-                                                    const{id,name,url} = r
-                                                        return(
-                                                            <li key={id}>
-                                                                <Link to={url}>{name}</Link>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
+                                            <h3>Events/Programmes/Visits Organized</h3>
+                                            {
+                                                events ?
+                                                <>
+                                                    {
+                                                        events.map((r)=>{
+                                                        const{id,name,url} = r
+                                                            return(
+                                                                <Link key={id} to={url}>{name}</Link>
+                                                            )
+                                                        })
+                                                    }
 
-                                            </ul>  : null
-                                        }       
+                                                </>  : null
+                                            }       
 
-                                        {
-                                            pser ?
-                                            <ul>
-                                                {
-                                                    pser.map((r)=>{
-                                                    const{id,name,url} = r
-                                                        return(
-                                                            <li key={id}>
-                                                                <Link to={url}>{name}</Link>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
+                                            <h3>Consultancy Projects/Services</h3>
+                                            {
+                                                pser ?
+                                                <>
+                                                    {
+                                                        pser.map((r)=>{
+                                                        const{id,name,url} = r
+                                                            return(
+                                                                <Link key={id} to={url}>{name}</Link>
+                                                            )
+                                                        })
+                                                    }
 
-                                            </ul>  : null
-                                        } 
+                                                </>  : null
+                                            } 
 
-                                        {
-                                            faculties ?
-                                            <ul>
-                                                {
-                                                    faculties.map((r)=>{
-                                                    const{id,name,url} = r
-                                                        return(
-                                                            <li key={id}>
-                                                                <Link to={url}>{name}</Link>
-                                                            </li>
-                                                        )
-                                                    })
-                                                }
+                                            <h3>Faculty Details</h3>
 
-                                            </ul>  : null
-                                        } 
+                                            {
+                                                faculties ?
+                                                <>
+                                                    {
+                                                        faculties.map((r)=>{
+                                                        const{id,name,url} = r
+                                                            return(
+                                                                <Link key={id} to={url}>{name}</Link>
+                                                            )
+                                                        })
+                                                    }
+
+                                                </>  : null
+                                            } 
+                                        </div>
                                 </>: null 
                             }    
                         </div>    

@@ -3,8 +3,9 @@ import {Link,useHistory} from 'react-router-dom'
 import Sidebar from "../Components/Sidebar";
 import {MdEdit} from 'react-icons/md'
 import {AiOutlineLogout} from 'react-icons/ai'
-import { CgProfile } from 'react-icons/cg'
 import { RiLockPasswordLine } from "react-icons/ri";
+import { CgMenuRight } from 'react-icons/cg'
+import {FaUserCircle} from 'react-icons/fa'
 
 function Profile(){
     const [uData,setUdata] = useState()
@@ -41,27 +42,34 @@ function Profile(){
     },[])
     return(
         <>
-            <Sidebar />
+            <Sidebar pactive='active' />
             <div className="about">
                 <div className="content">
                     <div className="hdr">
-                        <h3>Dashboard</h3>
+                        <div className="beg">
+                            <CgMenuRight />
+                            <h4>Dashboard</h4>
+                        </div>
                         <b onClick={()=>setMen(!men)}>
                             <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
                             <ul className={men ? "men active" : "men"}>
-                                <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
+                                <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
                                 <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
                                 <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                             </ul>
                         </b>
                     </div>
 
-                    <div className="pro-data" style={{padding:"20px"}}>
+                    <div className="pro-data">                        
                         <div className="hdrs">
                             <h3>Profile</h3>
                             {
-                                uData ? <button id={uData[0].user_id} onClick={()=> history.push(`/dashboard/editprofile/${uData[0].user_id}`)}><MdEdit />Edit Profile</button> : ''
+                                uData ? <button id={uData[0].user_id} onClick={()=> history.push(`/dashboard/editprofile/${uData[0].user_id}`)}><MdEdit />Edit </button> : ''
                             }
+                        </div>
+
+                        <div className="img">
+                            <img src='/Uploads/profile.svg'></img>
                         </div>
 
                         <p><b>Name  : </b> {uData ? uData[0].name : ''}</p>
