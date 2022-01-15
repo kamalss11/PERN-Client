@@ -196,7 +196,7 @@ function Students(){
                     }
                 </div>
                 <h2>Student Details</h2>
-                <h4>1.1 Placements</h4>
+                <h4>1.1 Placements (Total - {placements ?  placements.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -227,7 +227,7 @@ function Students(){
                 </tbody>
                 </table>
                 
-                <h4>1.2 Publications</h4>
+                <h4>1.2 Publications (Total - {publications ?  publications.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -268,7 +268,7 @@ function Students(){
                 </tbody>
                 </table>
 
-                <h4>1.3 Paper Presentation</h4>
+                <h4>1.3 Paper Presentation (Total - {paper_presentation ?  paper_presentation.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -305,7 +305,7 @@ function Students(){
                 </tbody>
                 </table>     
 
-                <h4>1.4 Participation in Workshop/Seminar/Conference/Symposium</h4>
+                <h4>1.4 Participation in Workshop/Seminar/Conference/Symposium (Total - {conference ?  conference.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -346,7 +346,7 @@ function Students(){
                 </tbody>
                 </table>           
 
-                <h4>1.5 Participation in Competition/Others </h4>
+                <h4>1.5 Participation in Competition/Others (Total - {competition ?  competition.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -385,7 +385,7 @@ function Students(){
                 </tbody>
                 </table>   
 
-                <h4>1.6 Training Programmes / Internship/Field Work</h4>
+                <h4>1.6 Training Programmes / Internship/Field Work (Total - {training ?  training.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -419,7 +419,7 @@ function Students(){
                 </tbody>
                 </table>  
 
-                <h4>1.7 Project Work </h4>
+                <h4>1.7 Project Work (Total - {projectwork ?  projectwork.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -454,7 +454,7 @@ function Students(){
                 </tbody>
                 </table>  
 
-                <h4>1.8 Students qualifying in state/ national/ international level examinations</h4>
+                <h4>1.8 Students qualifying in state/ national/ international level examinations (Total - {exams ? exams.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -485,7 +485,7 @@ function Students(){
                 </tbody>
                 </table> 
 
-                <h4>1.9 Students completed Online-Courses </h4>
+                <h4>1.9 Students completed Online-Courses (Total - {online_courses ?  online_courses.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -522,7 +522,7 @@ function Students(){
                 </tbody>
                 </table> 
 
-                <h4>1.10 Achievements</h4>
+                <h4>1.10 Achievements (Total - {achievements ? achievements.length : '0'})</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -684,7 +684,7 @@ function Students(){
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'roll_no',title:'Roll No',filterPlaceholder:'Filter by Roll No'},
                             {field:'company_placed',title:'Company Placed',filterPlaceholder:'Filter by Company Placed'},
-                            {field:'annual_package',title:'Annual Package',filterPlaceholder:'Filter by Annual Package'},
+                            {field:'annual_package',title:'Annual Package',filterPlaceholder:'Filter by Annual Package'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={placements} title="Placements" />
                         
@@ -709,7 +709,7 @@ function Students(){
                             {field:'volume',title:'Volume No',filterPlaceholder:'Filter by Volume No'},
                             {field:'sci',title:'SCI/SCIE/Scopus Indexed / UGC Recognized / Others',filterPlaceholder:'Filter by SCI'},
                             {field:'impact',title:'Impact Factor (as per SCI)',filterPlaceholder:'Filter by Impact Factor'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={publications} title="Publications"  />
                         
@@ -732,7 +732,7 @@ function Students(){
                             {field:'title',title:'Title',filterPlaceholder:'Filter by Title'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={paper_presentation} title="Paper Presentation"  />
                         
@@ -757,7 +757,7 @@ function Students(){
                             {field:'poster',title:'Poster',filterPlaceholder:'Filter by Poster'},
                             {field:'award',title:'Award',filterPlaceholder:'Filter by Award'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={conference} title="Conference"  />
                         
@@ -781,7 +781,7 @@ function Students(){
                             {field:'sponsoring_agency',title:'Sponsorin Aagency',filterPlaceholder:'Filter by Sponsoring Agency'},
                             {field:'award',title:'Award',filterPlaceholder:'Filter by Award'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={competition} title="Competition"  />
                         
@@ -802,7 +802,7 @@ function Students(){
                             {field:'roll_no',title:'Roll No',filterPlaceholder:'Filter by Roll No'},
                             {field:'training',title:'Training / Internship / Field Work',filterPlaceholder:'Filter by Training / Internship / Field Work'},
                             {field:'company',title:'Company / Research Institute with full address',filterPlaceholder:'Filter by Company / Research Institute with full address'},
-                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
+                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={training} title="Training"  />
                         
@@ -824,7 +824,7 @@ function Students(){
                             {field:'guide',title:'Guide',filterPlaceholder:'Filter by Guide'},
                             {field:'company',title:'Company / Research Institute with full address if the project was done outside PSGCAS',filterPlaceholder:'Filter by Company / Research Institute with full address if the project was done outside PSGCAS '},
                             {field:'certificate',title:'Certificate',filterPlaceholder:'Filter by Certificate'},
-                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},
+                            {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={projectwork} title="Project Work"  />
                         
@@ -844,7 +844,7 @@ function Students(){
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'roll_no',title:'Roll No',filterPlaceholder:'Filter by Roll No'},
                             {field:'exam_qualified',title:'Exam Qualified',filterPlaceholder:'Filter by Exam Qualified'},
-                            {field:'e_roll',title:'Examination Roll No. / Register Number',filterPlaceholder:'Filter by Examination Roll No. / Register Number'},
+                            {field:'e_roll',title:'Examination Roll No. / Register Number',filterPlaceholder:'Filter by Examination Roll No. / Register Number'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={exams} title="Exams"  />
                         
@@ -867,7 +867,7 @@ function Students(){
                             {field:'n_course',title:'Name of the course',filterPlaceholder:'Filter by Course Name'},
                             {field:'duration',title:'Duration of the course ',filterPlaceholder:'Filter by duration'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={online_courses} title="Online Courses"  />
                         
@@ -889,7 +889,7 @@ function Students(){
                             {field:'prize',title:'Prize/Achievement',filterPlaceholder:'Filter by Prize/Achievement'},
                             {field:'event',title:'Event',filterPlaceholder:'Filter by Event'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
-                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
+                            {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={achievements} title="Achievements"  />
                         
