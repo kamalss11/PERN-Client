@@ -6,7 +6,7 @@ import {AiOutlineLogout} from 'react-icons/ai'
 import AppContext from '../Context/context'
 import '../CSS/About.css'
 
-function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu,dactive,pactive}){
+function Sidebar({sa,Formdatas,research,callob,events,consultancy,faculty,exp,stu,dactive,pactive}){
     const {bar} = useContext(AppContext)
     return (
         <div className={`sidebar ${bar ? `activate` : ''}`}>
@@ -19,7 +19,7 @@ function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu,d
                         if(name === 'Dashboard'){
                             return(
                                 <li key={id}>
-                                    <Link className={`${dactive ? 'active' : ''}`} to={url}>{icon} {name}</Link>
+                                    <Link className={`${dactive ? 'active' : ''}`} to={`${sa ? '/super_admin' : url}`}>{icon} {name}</Link>
                                 </li>
                             )
                         }
