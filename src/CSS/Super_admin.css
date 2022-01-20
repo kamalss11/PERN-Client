@@ -2,8 +2,10 @@
     margin: 85px 0 10px;
 }
 
-.details h3{
+.details h4{
     text-align: center;
+    color: var(--gray2);
+    margin: 20px 0;
 }
 
 .details .tab{
@@ -21,16 +23,23 @@
     padding: 15px 0;
     width: 140px;
     text-align: center;
-    transition: 1s;
+    transition: .6s;
+    border: 1px solid var(--pink);
+    color: var(--fntgry);
+    font-size: 15px;
+}
+
+.shdr li.active{
+    color: var(--white);
 }
 
 .shdr li.slide{
     position: absolute;
+    content: '';
     top: 0;
     height: 100%;
     width: 140px;
-    background-color: lightskyblue;
-    color: black;
+    background: var(--pink);
     transition: .5s;
     z-index: -1;
 }
@@ -43,35 +52,65 @@
     left: 140px;
 }
 
+.dprt .dlist{
+    margin: 35px 10px;
+}
+
 .dprt .dlist li{
     font-size: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-    border: .5px solid gray;
+    border: .5px solid var(--icon);
+    color: var(--fntgry);
     border-radius: 5px;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .dprt .dlist li div a{
-    padding: 5px 10px;
-    border-radius: 7px;
+    padding: 7px 15px;
+    border-radius: 5px;
     background-color: brown;
-    color: wheat;
+    background: var(--sidebar);
+    box-shadow: 0 0 20px rgba(0,0,0,.3);
+    color: var(--white);
     margin: 0 7px;
     font-size: 13px;
 }
 
 .tb1,.tb2{
+    width: 100%;
     height: 0;
     opacity: 0;
-    transition: .5s;
     pointer-events: none;
+    background: var(--white);
+    border-radius: 7px;
+    transition: .5s;
+}
+
+.tb1 h4,.tb2 h4{
+    color: var(--pink);
 }
 
 .tb1.active,.tb2.active{
-    height: 532px;
+    padding: 25px;
     opacity: 1;
     pointer-events: all;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+
+.tb1.active{
+    height: 1500px;
+}
+
+.tb2.active{
+    height: 500px;
+}
+
+.tb1 a,.tb2 a{
+    display: block;
+    text-align: left;
+    color: var(--gray2);
+    font-size: 14px;
 }

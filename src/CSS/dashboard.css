@@ -299,6 +299,7 @@
 .select div.active{
     height: 350px;
     pointer-events: all;
+    z-index: 11;
 }
 
 .select div::-webkit-scrollbar{

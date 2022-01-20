@@ -217,6 +217,30 @@
     background: var(--fntgry);
 }
 
+.signUp form p.se{
+    margin: 30px 0;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    padding: 7px 13px;
+}
+
+.signUp form p.err{
+    background: #ff111140;
+    color: #e71a1a;
+    border: 1px solid #e71a1a;
+}
+
+.signUp form p.suc {
+    background: #1ae76b26;
+    color: #1ae76b;
+    border: 1px solid #1ae76b;
+}
+
+.signUp form p.err svg{
+    margin-right: 10px;
+}
+
 .signUp form .fields{
     margin: 25px 0;
     width: 100%;
@@ -316,7 +340,7 @@
     /* background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%); */
     background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);    
     /* background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); */
-    background: var(--white);
+    background: var(--fntgry);
     z-index: 10;
     transition: .6s;
 }
@@ -357,7 +381,12 @@
     cursor: pointer;
     font-size: 14px;
     /* color: #00004d; */
-    color: var(--fntgry);
+    color: var(--fntbgclr);
+    transition: .5s;
+}
+
+.signUp form .fields div div div p:hover{
+    color: var(--white);
 }
 
 .signUp form .btn{
@@ -393,6 +422,10 @@
     text-align: center;
     font-size: 13px;
     margin: 25px 0;
+}
+
+.signUp form .ls a{
+    color: var(--fntgry);
 }
 
 .bg2 .signUp .bt{
