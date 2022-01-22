@@ -164,7 +164,7 @@ function App() {
             <Forget_Password />
           </Route>
 
-          <Route exact path="/reset_password">
+          <Route path="/reset_password">
             <Reset_password />
           </Route>
 

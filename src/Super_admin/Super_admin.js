@@ -14,6 +14,7 @@ import events from '../Datas/events'
 import prjser from '../Datas/projects_services'
 import faculty from '../Datas/faculties'
 import {FaUserCircle} from 'react-icons/fa'
+import {IoMdArrowDropdownCircle} from 'react-icons/io'
 
 
 function Super_admin(){
@@ -109,7 +110,7 @@ function Super_admin(){
                             </div> : 
                             <div className='dprt'>
                                 <ul className='dlist'>
-                                    <li onClick={e=>setStaff(!staff)}>Staffs</li>
+                                    <li onClick={e=>setStaff(!staff)}>Staffs<IoMdArrowDropdownCircle className={`${staff ? 'active' : ''}`}/></li>
                                         <div className={staff ? 'tb1 active' : 'tb1'}>
                                             <h4>Research</h4>
                                             {
@@ -175,7 +176,7 @@ function Super_admin(){
                                                 })
                                             }
                                         </div>
-                                    <li onClick={e=>setStudent(!student)}>Students</li>
+                                    <li onClick={e=>setStudent(!student)}>Students <IoMdArrowDropdownCircle className={`${student ? 'active' : ''}`}/></li>
                                         <div className={student ? 'tb2 active' : 'tb2'}>
                                             <h4>Student Details</h4>
                                             {
