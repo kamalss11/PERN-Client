@@ -1,3 +1,17 @@
+
+
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: var(--icon) !important;
+}
+
+::-webkit-scrollbar-thumb{
+    background: var(--pink) !important;
+    border-radius: 10px;
+}
 .sidebar{
     position: fixed;
     top: 0;

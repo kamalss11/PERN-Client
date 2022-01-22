@@ -24,6 +24,19 @@
     z-index: -1;
 }
 
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: var(--icon) !important;
+}
+
+::-webkit-scrollbar-thumb{
+    background: var(--pink) !important;
+    border-radius: 10px;
+}
+
 .dprt{
     text-align: center;
 }
@@ -31,6 +44,10 @@
 .dprt h4{
     line-height: 33px;
     color: var(--gray2);
+}
+
+.dprt h4:nth-child(3){
+    color: var(--pink);
 }
 
 .dprt .rp{
@@ -453,6 +470,7 @@
 .about .content form .fields label{
     font-size: 12px;
     font-weight: bold;
+    color: var(--gray3);
 }
 
 .about .content form .fields input,.about .content form .fields select{
@@ -629,6 +647,10 @@ table td{
 
 .MuiTableSortLabel-root:hover .MuiTableSortLabel-icon{
     opacity: 1 !important;
+}
+
+.MuiTableSortLabel-root:hover {
+    color: #d3d9da !important;
 }
 
 @media(max-width:1080px){

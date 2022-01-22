@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { Link,useHistory } from 'react-router-dom'
 import MaterialTable from 'material-table'
 import {FaFileWord} from 'react-icons/fa'
-import {IoMdArrowDropdownCircle} from 'react-icons/io'
+import {IoMdArrowDropdownCircle,IoMdArrowRoundBack} from 'react-icons/io'
 
 function Adminlogin(){
     const export_all = ()=>{
@@ -1210,16 +1210,16 @@ function Adminlogin(){
             </div>
 
             <div style={{margin: '18px 0',textAlign: 'center',lineHeight: '30px',fontWeight: 'bolder'}}>
-                <p style={{color: '#39a7e7'}}>Internal Quality Assurance Cell (IQAC)</p>
+                <p style={{color: '#0093E9'}}>Internal Quality Assurance Cell (IQAC)</p>
                 <p>Department : {data ? data[0].department : null} - Staffs</p>
                 {
                     msg ? 
                     <>
                         {msg === 'All' ? 
-                            <p style={{color: '#39a7e7'}}>Reports</p> :
+                            <p style={{color: '#0093E9'}}>Reports</p> :
                             <>
                                 <p style={{fontSize: '14px'}}>Quaterly Report</p>
-                                <p style={{color: '#39a7e7'}}>{msg ? msg: null}</p>
+                                <p style={{color: '#0093E9'}}>{msg ? msg: null}</p>
                             </>
                         }
                     </> : null
@@ -1228,31 +1228,32 @@ function Adminlogin(){
 
             <div className='select'>
                 <p><b>Filter by Period</b></p>
-                <p className='msg' onClick={e=>setDrp(!drp)}>{pvalue ? pvalue : ''}<IoMdArrowDropdownCircle className={`${drp ? 'active' : ''}`} /></p>
-                <div className={`${drp ? 'active' : ''}`}>
-                                                <p onClick={e=>{callAboutPage();setMsg('All');setPvalue('All');setDrp(!drp)}}>All</p>
-                                                <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`);setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
-                                                <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`);setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>October - December(2019)</p>
-                                                <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`);setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('July - September(2019)');setDrp(!drp)}}>January - March(2020)</p>
-                                                <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`);setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
+                <p className='msg' onClick={e=>setDrp(!drp)}>{pvalue ? pvalue : ''}<IoMdArrowDropdownCircle style={{color: '#0093E9'}} className={`${drp ? 'active' : ''}`} /></p>
+                <div className={`${drp ? 'active' : ''}`} style={{backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'}}>
+                    <p onClick={e=>{callAboutPage();setMsg('All');setPvalue('All');setDrp(!drp)}}>All</p>
+                    <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`);setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
+                    <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`);setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>October - December(2019)</p>
+                    <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`);setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('July - September(2019)');setDrp(!drp)}}>January - March(2020)</p>
+                    <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`);setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
 
-                                                <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`);setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
-                                                <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`);setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
-                                                <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`);setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
-                                                <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`);setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
+                    <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`);setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
+                    <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`);setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
+                    <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`);setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
+                    <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`);setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
 
-                                                <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`);setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
-                                                <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`);setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
-                                                <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`);setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
-                                                <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`);setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
+                    <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`);setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
+                    <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`);setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
+                    <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`);setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
+                    <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`);setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
                 </div>
             </div><br />
 
             <div className="tables">
                 <div style={{display: 'flex',justifyContent: 'space-between',margin: '0 0 15px'}}>
-                    <p style={{cursor:'pointer'}} className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
+                    <p style={{cursor:'pointer',color: '#0093E9'}} className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
                     
-                    <Link to="/dashboard/view_staffs" style={{color: "red"}}>Back</Link>
+                    <Link to="/dashboard/view_staffs" style={{color: "#ff7295", display:'flex',alignItems:'center'}}><IoMdArrowRoundBack /> Back</Link>
                 </div>
                 <h3>Research</h3>
                 
@@ -1263,7 +1264,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1287,7 +1289,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1311,7 +1314,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1335,7 +1339,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1356,7 +1361,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1379,7 +1385,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1400,7 +1407,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1419,7 +1427,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1442,7 +1451,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1468,7 +1478,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1492,7 +1503,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1513,7 +1525,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1533,7 +1546,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1553,7 +1567,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1577,7 +1592,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1601,7 +1617,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1622,7 +1639,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1641,7 +1659,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1662,7 +1681,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1685,7 +1705,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1706,7 +1727,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1728,7 +1750,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1752,7 +1775,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1775,7 +1799,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1797,7 +1822,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1816,7 +1842,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1838,7 +1865,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1860,7 +1888,8 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#039be5',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},

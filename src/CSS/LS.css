@@ -38,6 +38,21 @@
     background-size: cover;
 } */
 
+
+
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: var(--gray3) !important;
+}
+
+::-webkit-scrollbar-thumb{
+    background: var(--white) !important;
+    border-radius: 10px;
+}
+
 .bg1 nav{
     display: flex;
     align-items: center;
@@ -237,8 +252,9 @@
     border: 1px solid #1ae76b;
 }
 
-.signUp form p.err svg{
+.signUp form p.err svg,.signUp form p.suc svg{
     margin-right: 10px;
+    font-size: 20px;
 }
 
 .signUp form .fields{

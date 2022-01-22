@@ -1,3 +1,18 @@
+
+
+::-webkit-scrollbar{
+    width: 10px;
+}
+
+::-webkit-scrollbar-track{
+    background: var(--icon) !important;
+}
+
+::-webkit-scrollbar-thumb{
+    background: var(--pink) !important;
+    border-radius: 10px;
+}
+
 .details{
     margin: 85px 0 10px;
 }
@@ -66,6 +81,17 @@
     color: var(--fntgry);
     border-radius: 5px;
     margin: 15px 0;
+    cursor: pointer;
+}
+
+.dprt .dlist li svg{
+    font-size: 20px;
+    color: var(--pink);
+    transition: .6s;
+}
+
+.dprt .dlist li svg.active{
+    transform: rotate(180deg);
 }
 
 .dprt .dlist li div a{
@@ -73,7 +99,7 @@
     border-radius: 5px;
     background-color: brown;
     background: var(--sidebar);
-    box-shadow: 0 0 20px rgba(0,0,0,.3);
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
     color: var(--white);
     margin: 0 7px;
     font-size: 13px;
