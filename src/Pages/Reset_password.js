@@ -28,6 +28,7 @@ function Reset_password(){
             if(!res.status === 200){
                 const error = new Error(res.error)
                 throw error
+                history.push('signin')
             }
         }catch(err){
             history.push('/dashboard')
@@ -114,12 +115,13 @@ function Reset_password(){
                                 console.log(data)
                                 if(res.status === 400 || !data){
                                     window.alert(`${data.error}`)
+                                    history.push('/forget_password')
                                 }
                                 else{
                                     window.localStorage.setItem('email','')
                                     setSubmitting(false);
                                     resetForm()
-                                    // history.push('/signin')
+                                    history.push('/signin')
                                 }
                             }, 400);
                         }}
