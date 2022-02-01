@@ -983,7 +983,11 @@ function Viewstaffs(){
                                                 <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`);setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
                                             </div>
                                         </div><br />
-                                         
+                                            
+                                        {uData[0].roll === "IQAC"  ? 
+                                            <Link to="/admin" style={{color: "#f56036"}}>Move to Admin</Link>
+                                        : null
+                                        }
                                         <div className="research">
                                             <h3>Research</h3>
         
