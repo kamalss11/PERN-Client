@@ -89,12 +89,6 @@ function Development_programmes(){
                             </ul>
                         </b>
                     </div>
-                    
-                    <div className='dprt'>
-                        <h4>Internal Quality Assurance Cell (IQAC)</h4>
-                        <h4>Department : {uData ? uData[0].department : null } - Staffs</h4>
-                        <h4 className='h'>Faculties</h4>
-                    </div>
 
                     <div className="fo">
                     <Formik

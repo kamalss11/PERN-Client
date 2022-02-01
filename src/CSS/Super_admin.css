@@ -1,26 +1,9 @@
-
-
-::-webkit-scrollbar{
-    width: 10px;
-}
-
-::-webkit-scrollbar-track{
-    background: var(--icon) !important;
-}
-
-::-webkit-scrollbar-thumb{
-    background: var(--pink) !important;
-    border-radius: 10px;
-}
-
 .details{
     margin: 85px 0 10px;
 }
 
-.details h4{
+.details h3{
     text-align: center;
-    color: var(--gray2);
-    margin: 20px 0;
 }
 
 .details .tab{
@@ -38,23 +21,16 @@
     padding: 15px 0;
     width: 140px;
     text-align: center;
-    transition: .6s;
-    border: 1px solid var(--pink);
-    color: var(--fntgry);
-    font-size: 15px;
-}
-
-.shdr li.active{
-    color: var(--white);
+    transition: 1s;
 }
 
 .shdr li.slide{
     position: absolute;
-    content: '';
     top: 0;
     height: 100%;
     width: 140px;
-    background: var(--pink);
+    background-color: lightskyblue;
+    color: black;
     transition: .5s;
     z-index: -1;
 }
@@ -67,76 +43,35 @@
     left: 140px;
 }
 
-.dprt .dlist{
-    margin: 35px 10px;
-}
-
 .dprt .dlist li{
     font-size: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-    border: .5px solid var(--icon);
-    color: var(--fntgry);
+    border: .5px solid gray;
     border-radius: 5px;
-    margin: 15px 0;
-    cursor: pointer;
-}
-
-.dprt .dlist li svg{
-    font-size: 20px;
-    color: var(--pink);
-    transition: .6s;
-}
-
-.dprt .dlist li svg.active{
-    transform: rotate(180deg);
+    margin: 10px 0;
 }
 
 .dprt .dlist li div a{
-    padding: 7px 15px;
-    border-radius: 5px;
+    padding: 5px 10px;
+    border-radius: 7px;
     background-color: brown;
-    background: var(--sidebar);
-    box-shadow: 0 0 15px rgba(0,0,0,.1);
-    color: var(--white);
+    color: wheat;
     margin: 0 7px;
     font-size: 13px;
 }
 
 .tb1,.tb2{
-    width: 100%;
     height: 0;
     opacity: 0;
-    pointer-events: none;
-    background: var(--white);
-    border-radius: 7px;
     transition: .5s;
-}
-
-.tb1 h4,.tb2 h4{
-    color: var(--pink);
+    pointer-events: none;
 }
 
 .tb1.active,.tb2.active{
-    padding: 25px;
+    height: 532px;
     opacity: 1;
     pointer-events: all;
-    box-shadow: 0 0 10px rgba(0,0,0,.2);
-}
-
-.tb1.active{
-    height: 1500px;
-}
-
-.tb2.active{
-    height: 500px;
-}
-
-.tb1 a,.tb2 a{
-    display: block;
-    text-align: left;
-    color: var(--gray2);
-    font-size: 14px;
 }

@@ -88,12 +88,6 @@ function Placements(){
                                 <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                             </ul>
                         </b>
-                    </div>                    
-
-                    <div className='dprt'>
-                        <h4>Internal Quality Assurance Cell (IQAC)</h4>
-                        <h4>Department : {uData ? uData[0].department : null } - Students</h4>
-                        <h4 className='h'>Students Details</h4>
                     </div>
                     
                     <div className="fo">
