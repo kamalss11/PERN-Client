@@ -9,13 +9,13 @@ import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
-function Activities(){
-    const [img,setimg] = useState()
+function Training(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
-    const [sb,setSb] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const [img,setimg] = useState()
+    const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
     console.log(uData)
+    const [sb,setSb] = useState(false)
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -60,116 +60,130 @@ function Activities(){
             </div>
         )
     }
+
+    const MySelect = ({ label, ...props }) => {
+        const [field, meta] = useField(props);
+        return (
+          <div className="fields">
+            <label htmlFor={props.id || props.name}>{label}</label>
+            <select {...field} {...props} />
+            {
+                meta.touched && meta.error ?(
+                    <p className="error">{meta.error}</p>
+                ):null
+            }
+          </div>
+        )
+    }
     return(
         <>
-            <Sidebar sb={sb} set={setSb} />
-            <div className={`about ${sb ? 'activate' : ''}`}>
-                <div className="content">
-                    <div className={`hdr ${sb ? 'activate' : ''}`}>
-                            <div className="beg">
-                                <CgMenuRight onClick={e=>setSb(!sb)} />
-                                <h4>Dashboard</h4>
-                            </div>
-
-                            <b onClick={()=>setMen(!men)}>
-                                <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
-                                <ul className={men ? "men active" : "men"}>
-                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
-                                    <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
-                                    <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
-                                </ul>
-                            </b>
+        <Sidebar sb={sb} set={setSb} />
+        <div className={`about ${sb ? 'activate' : ''}`}>
+        <div className="content">
+            <div className={`hdr ${sb ? 'activate' : ''}`}>
+                    <div className="beg">
+                        <CgMenuRight onClick={e=>setSb(!sb)} />
+                        <h4>Dashboard</h4>
                     </div>
+
+                    <b onClick={()=>setMen(!men)}>
+                        <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
+                        <ul className={men ? "men active" : "men"}>
+                            <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
+                            <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
+                            <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
+                        </ul>
+                    </b>
+            </div>                      
 
                     <div className='dprt'>
                         <h4>Internal Quality Assurance Cell (IQAC)</h4>
-                        <h4>Department : {uData ? uData[0].department : null } - Staffs</h4>
-                        <h4 className='h'>Collaborations</h4>
+                        <h4>Department : {uData ? uData[0].department : null } - Students</h4>
+                        <h4 className='h'>Students Details</h4>
                     </div>
-
+                    
                     <div className="fo">
                     <Formik
                         initialValues = {{
-                            activity: '',
-                            participant: '',
-                            financial_support: '',
+                            roll_no: '',
+                            training: '',
+                            company: '',
                             period: '',
                             date: '',
-                            image: '',
-                            n: ''
+                            n: '',
+                            image: ''
                         }}
 
                         enableReinitialize       
 
                         validationSchema = {
-                            Yup.object({                                     
-                                activity: Yup.string()
+                            Yup.object({
+                                n: Yup.string()
+                                        .required('Required'),
+                                roll_no: Yup.string()
                                     .required('Required'),
-                                participant: Yup.string(),
-                                financial_support: Yup.string(),
-                                period: Yup.string(),
                                 date: Yup.date().required('Required')
                             })
                         }
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
-                            setTimeout(async () => {
+                            setTimeout(async () => {  
                                 let dat = new FormData()
-                                console.log(img)
                                 dat.append('image',img)
                                 dat.append('n',values.n)
-                                dat.append('activity',values.activity)
-                                dat.append('participant',values.participant)
-                                dat.append('financial_support',values.financial_support)
+                                dat.append('roll_no',values.roll_no)
+                                dat.append('training',values.training)
+                                dat.append('company',values.company)
                                 dat.append('period',values.period)
                                 dat.append('date',values.date)
                                 dat.append('department',uData[0].department)
 
-                                Axios.post('http://localhost:3000/forms/collaborations/collaborative_activities',dat)
+                                Axios.post('http://localhost:3000/forms/student/s_training',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
                                     alert("Data Inserted"),
-                                    history.push("/dashboard/view_staffs"))
+                                    history.push("/dashboard/view_students"))
                                 .catch(err => console.log(err))
-                            }, 400);
+                            },600)
                         }}
                     >
-                        <Form method="POST" className="form">
-                            <h3>Collaborative Activities</h3>
+                        <Form method="POST" encType='multipart/form-data' className="form">
+                            <h3>Training Programmes / Internship/Field Work</h3>                            
 
                             <TextInput
                                 id="n"
                                 name="n"
                                 type="text"
-                                label="Name of the faculty"
+                                label="Name of the Student"
                             />
-
+                            
                             <TextInput
-                                id="activity"
-                                name="activity"
+                                id="roll_no"
+                                name="roll_no"
                                 type="text"
-                                label="Name of the activity"
+                                label="Roll Number"
                             />
 
+                            <MySelect name="training" label="Training / Internship / Field Work">
+                                <option value="">--Training / Internship / Field Work--</option>
+                                <option value="Training">Training</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Field Work">Field Work</option>
+                            </MySelect>
+
+    
                             <TextInput
-                                id="participant"
-                                name="participant"
+                                id="company"
+                                name="company"
                                 type="text"
-                                label="Participant"
+                                label="Company / Research Institute with full address"
                             />
-
-                            <TextInput
-                                id="financial_support"
-                                name="financial_support"
-                                type="number"
-                                label="Financial Support"
-                            />
-
+    
                             <TextInput
                                 id="period"
                                 name="period"
                                 type="text"
-                                label="Period (from - to)"
+                                label="Period(from – to)"
                             />
 
                             <div className='fields'>
@@ -186,15 +200,16 @@ function Activities(){
                             />
 
                             <div className="btn">
+                                {/* <button type="reset">Reset</button> */}
                                 <button type="submit">Save</button>
                             </div>
                         </Form>
                     </Formik>
-                    </div>
+                </div>
                 </div>
             </div>
         </>
     )
 }
 
-export default Activities
+export default Training

@@ -9,11 +9,11 @@ import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
-function Edit_Placements(){
+function Edit_compet(){
+    const [ppr,setPpr] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [img,setimg] = useState()
-    const [place,setPlace] = useState()
     const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
     console.log(uData)
     const [sb,setSb] = useState(false)
@@ -38,7 +38,7 @@ function Edit_Placements(){
                 throw error
             }
 
-            const place = await fetch(`/forms/student/placements/edit/${window.localStorage.getItem('edit')}`,{
+            const ppr = await fetch(`/forms/student/s_competition/edit/${window.localStorage.getItem('edit')}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -47,9 +47,9 @@ function Edit_Placements(){
                 credentials: 'include'
             })
 
-            const r = await place.json()
+            const r = await ppr.json()
             console.log(r)
-            setPlace(r)
+            setPpr(r)
         }catch(err){
             console.log(err)
             history.push('/signin')
@@ -108,7 +108,7 @@ function Edit_Placements(){
                             <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                         </ul>
                     </b>
-            </div> 
+            </div>                 
 
                     <div className='dprt'>
                         <h4>Internal Quality Assurance Cell (IQAC)</h4>
@@ -119,11 +119,17 @@ function Edit_Placements(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
-                            roll_no: `${place ? place[0].roll_no : null}`,
-                            company_placed:`${place ? place[0].company_placed : null}`,
-                            date: `${place ? place[0].date : null}`,
-                            n: `${place ? place[0].n : null}`,
-                            annual_package: `${place ? place[0].annual_package : null}`
+                            roll_no: `${ppr ? ppr[0].roll_no : null}`,
+                            n_event: `${ppr ? ppr[0].n_event : null}`,
+                            n_con: `${ppr ? ppr[0].n_con : null}`,
+                            date: `${ppr ? ppr[0].date : null}`,
+                            n: `${ppr ? ppr[0].n : null}`,
+                            award: `${ppr ? ppr[0].award : null}`,
+                            sponsoring_agency: `${ppr ? ppr[0].sponsoring_agency : null}`,
+                            financial_support: `${ppr ? ppr[0].financial_support : null}`,
+                            venue: `${ppr ? ppr[0].venue : null}`,
+                            level : `${ppr ? ppr[0].level : null}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -142,14 +148,18 @@ function Edit_Placements(){
                             setTimeout(async () => {  
                                 let dat = new FormData()
                                 dat.append('image',img)
-                                dat.append('id',place[0].id)
+                                dat.append('id',ppr[0].id)
                                 dat.append('n',values.n)
                                 dat.append('roll_no',values.roll_no)
+                                dat.append('n_event',values.n_event)
+                                dat.append('n_con',values.n_con)
+                                dat.append('sponsoring_agency',values.sponsoring_agency)
+                                dat.append('award',values.award)
                                 dat.append('date',values.date)
-                                dat.append('company_placed',values.company_placed)
-                                dat.append('annual_package',values.annual_package)
+                                dat.append('venue',values.venue)
+                                dat.append('level',values.level)
 
-                                Axios.put('http://localhost:3000/forms/student/placements/edit',dat)
+                                Axios.put('http://localhost:3000/forms/student/s_competition/edit',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
                                     window.localStorage.setItem('edit',''),
@@ -160,7 +170,7 @@ function Edit_Placements(){
                         }}
                     >
                         <Form method="PUT" encType='multipart/form-data' className="form">
-                            <h3>Edit Placements</h3>                            
+                            <h3>Edit Participation in Competition/Others</h3>                            
 
                             <TextInput
                                 id="n"
@@ -177,24 +187,59 @@ function Edit_Placements(){
                             />
     
                             <TextInput
-                                id="company_placed"
-                                name="company_placed"
+                                id="n_event"
+                                name="n_event"
                                 type="text"
-                                label="Company Placed"
+                                label="Name of the Event"
                             />
     
                             <TextInput
-                                id="annual_package"
-                                name="annual_package"
-                                type="number"
-                                label="Annual Package"
+                                id="n_con"
+                                name="n_con"
+                                type="text"
+                                label="Name of the Conference"
+                            />
+    
+                            <TextInput
+                                id="sponsoring_agency"
+                                name="sponsoring_agency"
+                                type="text"
+                                label="Sponsoring Agency"
+                            />
+                            
+                            <MySelect name="poster" label="Oral/Paper Presentation">
+                                <option value="">--Oral/Paper Presentation--</option>
+                                <option value="Oral">Oral</option>
+                                <option value="Paper Presentation">Paper Presentation</option>
+                            </MySelect>
+    
+                            <TextInput
+                                id="awards"
+                                name="awards"
+                                type="text"
+                                label="Awards/Medals/Price Received"
+                            />
+
+                            <MySelect name="level" label="International/National/State/Regional">
+                                <option value="">--International/National/State/Regional--</option>
+                                <option value="International">International</option>
+                                <option value="National">National</option>
+                                <option value="National">State</option>
+                                <option value="National">Regional</option>
+                            </MySelect>
+
+                            <TextInput
+                                id="venue"
+                                name="venue"
+                                type="text"
+                                label="Venue"
                             />
 
                             <div className='fields'>
                                 <label htmlFor='file'>Upload New File or it will replace with old file</label>
 
                                 <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
-                            </div>  
+                            </div> 
 
                             <TextInput
                                 id="date"
@@ -205,7 +250,7 @@ function Edit_Placements(){
 
                             <div className="btn">
                                 {/* <button type="reset">Reset</button> */}
-                                <button type="submit">Update</button>
+                                <button type="submit">Save</button>
                             </div>
                         </Form>
                     </Formik>
@@ -216,4 +261,4 @@ function Edit_Placements(){
     )
 }
 
-export default Edit_Placements
+export default Edit_compet

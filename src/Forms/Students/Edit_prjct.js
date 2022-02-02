@@ -9,11 +9,11 @@ import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
-function Edit_Placements(){
+function Edit_prjct(){
+    const [ppr,setPpr] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [img,setimg] = useState()
-    const [place,setPlace] = useState()
     const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
     console.log(uData)
     const [sb,setSb] = useState(false)
@@ -38,7 +38,7 @@ function Edit_Placements(){
                 throw error
             }
 
-            const place = await fetch(`/forms/student/placements/edit/${window.localStorage.getItem('edit')}`,{
+            const ppr = await fetch(`/forms/student/s_projectwork/edit/${window.localStorage.getItem('edit')}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -47,9 +47,9 @@ function Edit_Placements(){
                 credentials: 'include'
             })
 
-            const r = await place.json()
+            const r = await ppr.json()
             console.log(r)
-            setPlace(r)
+            setPpr(r)
         }catch(err){
             console.log(err)
             history.push('/signin')
@@ -108,7 +108,7 @@ function Edit_Placements(){
                             <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                         </ul>
                     </b>
-            </div> 
+            </div>                
 
                     <div className='dprt'>
                         <h4>Internal Quality Assurance Cell (IQAC)</h4>
@@ -119,11 +119,14 @@ function Edit_Placements(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
-                            roll_no: `${place ? place[0].roll_no : null}`,
-                            company_placed:`${place ? place[0].company_placed : null}`,
-                            date: `${place ? place[0].date : null}`,
-                            n: `${place ? place[0].n : null}`,
-                            annual_package: `${place ? place[0].annual_package : null}`
+                            roll_no: `${ppr ? ppr[0].roll_no : null}`,
+                            training: `${ppr ? ppr[0].training : null}`,
+                            guide: `${ppr ? ppr[0].guide : null}`,
+                            company: `${ppr ? ppr[0].company : null}`,
+                            period: `${ppr ? ppr[0].period : null}`,
+                            date: `${ppr ? ppr[0].date : null}`,
+                            n: `${ppr ? ppr[0].n : null}`,
+                            image: ''
                         }}
 
                         enableReinitialize       
@@ -142,14 +145,15 @@ function Edit_Placements(){
                             setTimeout(async () => {  
                                 let dat = new FormData()
                                 dat.append('image',img)
-                                dat.append('id',place[0].id)
+                                dat.append('id',ppr[0].id)
                                 dat.append('n',values.n)
                                 dat.append('roll_no',values.roll_no)
+                                dat.append('training',values.training)
+                                dat.append('company',values.company)
+                                dat.append('period',values.period)
                                 dat.append('date',values.date)
-                                dat.append('company_placed',values.company_placed)
-                                dat.append('annual_package',values.annual_package)
 
-                                Axios.put('http://localhost:3000/forms/student/placements/edit',dat)
+                                Axios.put('http://localhost:3000/forms/student/s_projectwork/edit',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
                                     window.localStorage.setItem('edit',''),
@@ -160,53 +164,60 @@ function Edit_Placements(){
                         }}
                     >
                         <Form method="PUT" encType='multipart/form-data' className="form">
-                            <h3>Edit Placements</h3>                            
+                        <h3>Project Work</h3>                            
 
-                            <TextInput
-                                id="n"
-                                name="n"
-                                type="text"
-                                label="Name of the Student"
-                            />
-                            
-                            <TextInput
-                                id="roll_no"
-                                name="roll_no"
-                                type="text"
-                                label="Roll Number"
-                            />
-    
-                            <TextInput
-                                id="company_placed"
-                                name="company_placed"
-                                type="text"
-                                label="Company Placed"
-                            />
-    
-                            <TextInput
-                                id="annual_package"
-                                name="annual_package"
-                                type="number"
-                                label="Annual Package"
-                            />
+                        <TextInput
+                            id="n"
+                            name="n"
+                            type="text"
+                            label="Name of the Student"
+                        />
+                        
+                        <TextInput
+                            id="roll_no"
+                            name="roll_no"
+                            type="text"
+                            label="Roll Number"
+                        />
 
-                            <div className='fields'>
-                                <label htmlFor='file'>Upload New File or it will replace with old file</label>
+                        <TextInput
+                            id="guide"
+                            name="guide"
+                            type="text"
+                            label="Guide Name"
+                        />
 
-                                <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
-                            </div>  
+                        <TextInput
+                            id="company"
+                            name="company"
+                            type="text"
+                            label="Company / Research Institute with full address"
+                        />
 
-                            <TextInput
-                                id="date"
-                                name="date"
-                                type="date"
-                                label="Date of Happen"
-                            />
+                        <TextInput
+                            id="period"
+                            name="period"
+                            type="text"
+                            label="Period(from – to)"
+                        />
 
-                            <div className="btn">
-                                {/* <button type="reset">Reset</button> */}
-                                <button type="submit">Update</button>
-                            </div>
+                        <div className='fields'>
+                            <label htmlFor='file'>Upload New File or it will replace with old file</label>
+
+                            <input type="file" id='file' name='image' onChange={e=>setimg(e.target.files[0])}/>       
+                        </div> 
+
+                        <TextInput
+                            id="date"
+                            name="date"
+                            type="date"
+                            label="Date of Happen"
+                        />
+
+                        <div className="btn">
+                            {/* <button type="reset">Reset</button> */}
+                            <button type="submit">Save</button>
+                        </div>
                         </Form>
                     </Formik>
                 </div>
@@ -216,4 +227,4 @@ function Edit_Placements(){
     )
 }
 
-export default Edit_Placements
+export default Edit_prjct

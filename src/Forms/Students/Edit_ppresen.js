@@ -9,12 +9,12 @@ import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
-function Edit_paper(){
-    const [img,setimg] = useState()
+function Edit_Paper_presentation(){
+    const [ppr,setPpr] = useState()
     const [uData,setUdata] = useState()
-    const [pap,setPap] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const [img,setimg] = useState()
+    const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,22 +33,23 @@ function Edit_paper(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const mo = await fetch(`/forms/faculty/paper_presentation/edit/${window.localStorage.getItem('edit')}`,{
+            if(!res.status === 200){
+                const error = new Error(res.error)
+                throw error
+            }
+
+            const ppr = await fetch(`/forms/student/s_paper_presentation/edit/${window.localStorage.getItem('edit')}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
                     "Content-Type": "application/json"
                 },
                 credentials: 'include'
-            })            
-            
-            const m = await mo.json()
-            setPap(m)
+            })
 
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
+            const r = await ppr.json()
+            console.log(r)
+            setPpr(r)
         }catch(err){
             console.log(err)
             history.push('/signin')
@@ -77,15 +78,15 @@ function Edit_paper(){
     const MySelect = ({ label, ...props }) => {
         const [field, meta] = useField(props);
         return (
-            <div className="fields">
-                <label htmlFor={props.id || props.name}>{label}</label>
-                <select {...field} {...props} />
-                {
-                    meta.touched && meta.error ?(
-                        <p className="error">{meta.error}</p>
-                    ):null
-                }
-            </div>
+          <div className="fields">
+            <label htmlFor={props.id || props.name}>{label}</label>
+            <select {...field} {...props} />
+            {
+                meta.touched && meta.error ?(
+                    <p className="error">{meta.error}</p>
+                ):null
+            }
+          </div>
         )
     }
     return(
@@ -107,85 +108,101 @@ function Edit_paper(){
                             <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                         </ul>
                     </b>
-            </div>
-                    
+            </div>                 
+
                     <div className='dprt'>
                         <h4>Internal Quality Assurance Cell (IQAC)</h4>
-                        <h4>Department : {uData ? uData[0].department : null } - Staffs</h4>
-                        <h4 className='h'>Faculties</h4>
+                        <h4>Department : {uData ? uData[0].department : null } - Students</h4>
+                        <h4 className='h'>Students Details</h4>
                     </div>
-
+                    
                     <div className="fo">
                     <Formik
                         initialValues = {{
-                            con: `${pap ? pap[0].con : ''}`,
-                            title: `${pap ? pap[0].title : ''}`,
-                            financial_support: `${pap ? pap[0].financial_support : ''}`,
-                            venue: `${pap ? pap[0].venue : ''}`,
-                            level: `${pap ? pap[0].level : ''}`,
-                            date: `${pap ? pap[0].date : ''}`,
+                            roll_no: `${ppr ? ppr[0].roll_no : null}`,
+                            con: `${ppr ? ppr[0].con : null}`,
+                            date: `${ppr ? ppr[0].date : null}`,
+                            n: `${ppr ? ppr[0].n : null}`,
+                            title: `${ppr ? ppr[0].title : null}`,
+                            financial_support: `${ppr ? ppr[0].financial_support : null}`,
+                            venue: `${ppr ? ppr[0].venue : null}`,
+                            level : `${ppr ? ppr[0].level : null}`,
                             image: ''
                         }}
 
                         enableReinitialize       
 
                         validationSchema = {
-                            Yup.object({                                     
-                                con: Yup.string()
+                            Yup.object({
+                                n: Yup.string()
+                                        .required('Required'),
+                                roll_no: Yup.string()
                                     .required('Required'),
-                                title: Yup.string(),
-                                financial_support: Yup.string(),
-                                venue: Yup.string(),
-                                level: Yup.string(),
                                 date: Yup.date().required('Required')
                             })
                         }
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
-                            setTimeout(async () => {
+                            setTimeout(async () => {  
                                 let dat = new FormData()
-                                console.log(img,values.date)
                                 dat.append('image',img)
-                                dat.append('id',pap[0].id)
+                                dat.append('n',values.n)
+                                dat.append('id',ppr[0].id)
+                                dat.append('roll_no',values.roll_no)
                                 dat.append('con',values.con)
                                 dat.append('title',values.title)
-                                dat.append('financial_support',values.financial_support)
+                                dat.append('date',values.date)
                                 dat.append('venue',values.venue)
                                 dat.append('level',values.level)
-                                dat.append('date',values.date)
+                                dat.append('financial_support',values.financial_support)
+                                dat.append('department',uData[0].department)
 
-                                Axios.put('http://localhost:3000/forms/faculty/paper_presentation/edit',dat)
+                                Axios.put('http://localhost:3000/forms/student/s_paper_presentation/edit',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
+                                    window.localStorage.setItem('edit',''),
                                     alert("Data Updated"),
-                                    history.push("/dashboard/view_staffs"))
+                                    history.push("/dashboard/view_students"))
                                 .catch(err => console.log(err))
-                            }, 400);
+                            },600)
                         }}
                     >
-                        <Form method="PUT" className="form">
-                            <h3>Edit Paper Presentation</h3>
+                        <Form method="PUT" encType='multipart/form-data' className="form">
+                            <h3>Edit Paper Presentation</h3>                            
 
-                            <MySelect name="con" label="Type">
-                                <option value="">--Select--</option>
-                                <option value="Conference">Conference</option>
-                                <option value="Seminar">Seminar</option>
-                                <option value="Symposium">Symposium</option>
-                                <option value="Workshops">Workshops</option>
-                            </MySelect>
-
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Student"
+                            />
+                            
+                            <TextInput
+                                id="roll_no"
+                                name="roll_no"
+                                type="text"
+                                label="Roll Number"
+                            />
+    
+                            <TextInput
+                                id="con"
+                                name="con"
+                                type="text"
+                                label="Conference / Seminar/ Symposium /Workshop"
+                            />
+    
                             <TextInput
                                 id="title"
                                 name="title"
                                 type="text"
-                                label="Title of the paper"
+                                label="Title of the Paper"
                             />
-
+    
                             <TextInput
                                 id="financial_support"
                                 name="financial_support"
-                                type="number"
-                                label="Financial Support from college"
+                                type="text"
+                                label="Financial support  from the College(Rs.)"
                             />
 
                             <TextInput
@@ -195,12 +212,19 @@ function Edit_paper(){
                                 label="Venue"
                             />
 
-                            <MySelect name="level" label="Level">
-                                <option value="">--Level--</option>
-                                <option value="National">National</option>
+                            <TextInput
+                                id="level"
+                                name="level"
+                                type="text"
+                                label="Venue"
+                            />
+
+                            <MySelect name="level" label="International/National/State/Regional">
+                                <option value="">--International/National/State/Regional--</option>
                                 <option value="International">International</option>
-                                <option value="State">State</option>
-                                <option value="Regional">Regional</option>
+                                <option value="National">National</option>
+                                <option value="National">State</option>
+                                <option value="National">Regional</option>
                             </MySelect>
 
                             <div className='fields'>
@@ -217,15 +241,16 @@ function Edit_paper(){
                             />
 
                             <div className="btn">
-                                <button type="submit">Update</button>
+                                {/* <button type="reset">Reset</button> */}
+                                <button type="submit">Save</button>
                             </div>
                         </Form>
                     </Formik>
-                    </div>
+                </div>
                 </div>
             </div>
         </>
     )
 }
 
-export default Edit_paper
+export default Edit_Paper_presentation

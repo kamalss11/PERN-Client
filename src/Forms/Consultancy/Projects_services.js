@@ -2,11 +2,12 @@ import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
 import {Link,useHistory} from 'react-router-dom'
 import * as Yup from 'yup'
-import {CgProfile} from 'react-icons/cg'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
+import {CgMenuRight} from 'react-icons/cg'
+import {FaUserCircle} from 'react-icons/fa'
 
 function Projects_services(){
     const [img,setimg] = useState()
@@ -14,6 +15,7 @@ function Projects_services(){
     const [men,setMen] = useState(false)
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
+    const [sb,setSb] = useState(false)
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -75,21 +77,31 @@ function Projects_services(){
     }
     return(
         <>
-            <Sidebar />
-            <div className="about">
-                <div className="content">
-                    <div className="hdr">
-                        <h3>Dashboard</h3>
-                        <b onClick={()=>setMen(!men)}>
-                            <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
-                            <ul className={men ? "men active" : "men"}>
-                                <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
-                                <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
-                                <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
-                            </ul>
-                        </b>
+        <Sidebar sb={sb} set={setSb} />
+        <div className={`about ${sb ? 'activate' : ''}`}>
+        <div className="content">
+            <div className={`hdr ${sb ? 'activate' : ''}`}>
+                    <div className="beg">
+                        <CgMenuRight onClick={e=>setSb(!sb)} />
+                        <h4>Dashboard</h4>
                     </div>
 
+                    <b onClick={()=>setMen(!men)}>
+                        <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
+                        <ul className={men ? "men active" : "men"}>
+                            <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
+                            <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
+                            <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
+                        </ul>
+                    </b>
+            </div>
+
+                    <div className='dprt'>
+                        <h4>Internal Quality Assurance Cell (IQAC)</h4>
+                        <h4>Department : {uData ? uData[0].department : null } - Staffs</h4>
+                        <h4 className='h'>Consultancy Projects / Services</h4>
+                    </div>
+                    
                     <div className="fo">
                     <Formik
                         initialValues = {{

@@ -16,7 +16,7 @@ const student_details = [
     {
         id: 3,
         name: '1.3 Paper Presentation',
-        url: '/forms/students_/paper_presentation',
+        url: '/forms/student/paper_presentation',
         overall: 's_paper_presentation',
         s_a: '/super_admin/overall/students/s_paper_presentation'
     },
