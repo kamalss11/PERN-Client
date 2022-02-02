@@ -1,15 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext,useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import Sbar from '../Datas/S_data'
 import {TiExport} from 'react-icons/ti'
 import {AiOutlineLogout} from 'react-icons/ai'
-import AppContext from '../Context/context'
 import '../CSS/About.css'
+import {TiArrowSortedUp} from 'react-icons/ti'
 
-function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu,dactive,pactive}){
-    const {bar} = useContext(AppContext)
+function Sidebar({sa,Formdatas,research,callob,events,consultancy,faculty,exp,stu,dactive,pactive,sb,set}){
+    console.log(set)
+    const [width,setWidth] = useState()
+    useEffect(()=>{
+        setWidth(window.innerWidth)
+    })
     return (
-        <div className={`sidebar ${bar ? `activate` : ''}`}>
+        <div className={`sidebar ${sb ? `activate` : ''}`}>
             <h2 className="stitle">IQAC</h2>
 
             <ul>
@@ -19,7 +23,7 @@ function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu,d
                         if(name === 'Dashboard'){
                             return(
                                 <li key={id}>
-                                    <Link className={`${dactive ? 'active' : ''}`} to={url}>{icon} {name}</Link>
+                                    <Link className={`${dactive ? 'active' : ''}`} to={`${sa ? '/super_admin' : url}`}>{icon} {name}</Link>
                                 </li>
                             )
                         }
@@ -132,6 +136,16 @@ function Sidebar({Formdatas,research,callob,events,consultancy,faculty,exp,stu,d
                     <Link to='/logout'><AiOutlineLogout /> Logout</Link>
                 </li>
             </ul>
+
+            {
+                width ? 
+                <>
+                    {
+                        width <= '700' ?
+                        <TiArrowSortedUp onClick={e=>set(!set)} className={`${sb ? 'scls activate' : 'scls'}`} /> : null
+                    }
+                </> : null
+            }
         </div>
     )
 }
