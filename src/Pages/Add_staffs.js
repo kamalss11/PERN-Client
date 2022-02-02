@@ -17,9 +17,9 @@ import { CgMenuRight } from 'react-icons/cg'
 function Add_staffs(){
     const [uData,setUdata] = useState()   
     const [men,setMen] = useState(false)
+    const [sb,setSb] = useState(false)
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
-    const [msg,setMsg] = useState('All')
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -67,15 +67,15 @@ function Add_staffs(){
     },[])
     return (
         <>
-            <Sidebar />
-
-            <div className={`about`}>
-                    <div className="content">
-                        <div className="hdr">
+            <Sidebar sb={sb} set={setSb} />
+            <div className={`about ${sb ? 'activate' : ''}`}>
+                <div className="content">
+                    <div className={`hdr ${sb ? 'activate' : ''}`}>
                             <div className="beg">
-                                <CgMenuRight />
+                                <CgMenuRight onClick={e=>setSb(!sb)} />
                                 <h4>Dashboard</h4>
                             </div>
+
                             <b onClick={()=>setMen(!men)}>
                                 <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
                                 <ul className={men ? "men active" : "men"}>
@@ -84,9 +84,9 @@ function Add_staffs(){
                                     <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                                 </ul>
                             </b>
-                        </div>
+                    </div>
     
-                        <div className="submitted">
+                    <div className="submitted">
                             <div className='img'>
                                 <img src='/Uploads/add.svg' />
                             </div>
@@ -181,8 +181,8 @@ function Add_staffs(){
                                         </div>
                                 </>: null 
                             }    
-                        </div>    
-                    </div>
+                    </div>    
+                </div>
             </div>
         </>
     )

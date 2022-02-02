@@ -15,7 +15,7 @@ function Add_students(){
     const [men,setMen] = useState(false)
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
-    const [msg,setMsg] = useState('All')
+    const [sb,setSb] = useState(false)
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -63,26 +63,26 @@ function Add_students(){
     },[])
     return (
         <>
-            <Sidebar />
-
-            <div className={`about`}>
-                    <div className="content">
-                        <div className="hdr">
-                            <div className="beg">
-                                <CgMenuRight />
-                                <h4>Dashboard</h4>
-                            </div>
-                            <b onClick={()=>setMen(!men)}>
-                                <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
-                                <ul className={men ? "men active" : "men"}>
-                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
-                                    <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
-                                    <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
-                                </ul>
-                            </b>
+        <Sidebar sb={sb} set={setSb} />
+        <div className={`about ${sb ? 'activate' : ''}`}>
+            <div className="content">
+                <div className={`hdr ${sb ? 'activate' : ''}`}>
+                        <div className="beg">
+                            <CgMenuRight onClick={e=>setSb(!sb)} />
+                            <h4>Dashboard</h4>
                         </div>
+
+                        <b onClick={()=>setMen(!men)}>
+                            <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
+                            <ul className={men ? "men active" : "men"}>
+                                <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
+                                <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
+                                <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
+                            </ul>
+                        </b>
+                </div>
     
-                        <div className="submitted">
+                <div className="submitted">
                             <div className='img'>
                                 <img src='/Uploads/add.svg' />
                             </div>
@@ -113,9 +113,9 @@ function Add_students(){
                                         </div>
                                 </>: null 
                             }    
-                        </div>    
-                    </div>
+                </div>    
             </div>
+        </div>
         </>
     )
 }

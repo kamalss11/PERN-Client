@@ -10,6 +10,7 @@ import {FaUserCircle} from 'react-icons/fa'
 function Profile(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
+    const [sb,setSb] = useState(false)
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     const history = useHistory()
     const callAboutPage = async () => {
@@ -42,14 +43,15 @@ function Profile(){
     },[])
     return(
         <>
-            <Sidebar pactive='active' />
-            <div className="about">
-                <div className="content">
-                    <div className="hdr">
+        <Sidebar pactive='active' sb={sb} set={setSb} />
+        <div className={`about ${sb ? 'activate' : ''}`}>
+            <div className="content">
+                <div className={`hdr ${sb ? 'activate' : ''}`}>
                         <div className="beg">
-                            <CgMenuRight />
+                            <CgMenuRight onClick={e=>setSb(!sb)} />
                             <h4>Dashboard</h4>
                         </div>
+
                         <b onClick={()=>setMen(!men)}>
                             <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
                             <ul className={men ? "men active" : "men"}>
@@ -58,9 +60,9 @@ function Profile(){
                                 <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                             </ul>
                         </b>
-                    </div>
+                </div>
 
-                    <div className="pro-data">                        
+                <div className="pro-data">                        
                         <div className="hdrs">
                             <h3>Profile</h3>
                             {
@@ -75,9 +77,9 @@ function Profile(){
                         <p><b>Name  : </b> {uData ? uData[0].name : ''}</p>
                         <p><b>Email : </b> {uData ? uData[0].email : ''}</p>
                         <p><b>Department  : </b> {uData ? uData[0].department : ''}</p>
-                    </div>
                 </div>
             </div>
+        </div>
         </>
     )
 }

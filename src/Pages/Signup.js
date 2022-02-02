@@ -11,9 +11,11 @@ import { useState } from 'react'
 import {TiArrowSortedUp} from 'react-icons/ti'
 import {IoMdArrowDropdownCircle} from 'react-icons/io'
 import {RiUser3Fill} from 'react-icons/ri'
+import {AiFillCloseCircle} from 'react-icons/ai'
 
 function Signup(){
     const history = useHistory()
+    const [ers,Seters] = useState()
     const [select1,setSelect1] = useState('Select Department')
     const [drp1,Setdrp1] = useState(false)
     const [er1,setEr1] = useState(false)
@@ -35,11 +37,8 @@ function Signup(){
             const datas = await res.json()
 
             if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
+                history.push('/dashboard')
             }
-
-            history.push('/dashboard')
         }catch(err){
             console.log(err)
         }
@@ -169,7 +168,7 @@ function Signup(){
             
                                         const data = await res.json()
                                         if(res.status === 422 || !data){
-                                            window.alert(`${data.error}`)
+                                            Seters(data.error)
                                         }
                                         else{
                                             window.alert("Registration Successfull")
@@ -186,6 +185,9 @@ function Signup(){
                                     {/* <h3>Internal Quality Assurance Cell - (IQAC)</h3><br /> */}
                                     <h3>SignUp</h3>
                                 </div>
+
+                                {ers ? <p className='se'><AiFillCloseCircle />{ers}</p> : null}
+
                                 <TextInput icon={<IoPerson/>}
                                     name="name"
                                     placeholder='Enter your name'

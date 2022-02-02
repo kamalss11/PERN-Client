@@ -15,9 +15,9 @@ function Dashboard(){
     const [tabind,setTabind] = useState(1)
     const [uData,setUdata] = useState()  
     const [men,setMen] = useState(false)
+    const [sb,setSb] = useState(false)
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
-    const [msg,setMsg] = useState('All')
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -70,12 +70,12 @@ function Dashboard(){
     return (
         <>
             <div className='dg'></div>
-            <Sidebar dactive="active" />
-            <div className={`about`}>
+            <Sidebar dactive="active" sb={sb} set={setSb} />
+            <div className={`about ${sb ? 'activate' : ''}`}>
                 <div className="content">
-                    <div className="hdr">
+                    <div className={`hdr ${sb ? 'activate' : ''}`}>
                             <div className="beg">
-                                <CgMenuRight />
+                                <CgMenuRight onClick={e=>setSb(!sb)} />
                                 <h4>Dashboard</h4>
                             </div>
 

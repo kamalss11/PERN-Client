@@ -14,6 +14,7 @@ import {MdDelete,MdEdit} from 'react-icons/md'
 
 function Viewstudents(){
     const [exp,setExp] = useState('exp')
+    const [sb,setSb] = useState(false)
     const [drp,setDrp] = useState(false)
     const [uData,setUdata] = useState()
     const [placements,setPlacements] = useState([])
@@ -121,217 +122,10 @@ function Viewstudents(){
         }
     }
     // Delete Placements
-    const Pla = async(id)=>{
+    const Pla = async(id,table)=>{
         console.log(id)
         try{
             const res = await fetch(`/forms/student/palcements/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Delete Publications
-    const Pub = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_publications/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Paper Presentation
-    const Ppr = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_paper_presentation/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Competition
-    const Com = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_competition/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Conference
-    const Con = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_conference/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Training
-    const Tra = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_training/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // project work
-    const Pw = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_projectwork/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // exams
-    const Ex = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_exams/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // online courses
-    const Oc = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_onlinecourses/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // achievements
-    const Ac = async(id)=>{
-        try{
-            const res = await fetch(`/forms/student/s_achievements/delete/${id}`,{
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
@@ -370,33 +164,33 @@ function Viewstudents(){
         callAboutPage()
     },[])
     return (
-        <>
-            <Sidebar stu={exp} />
-
-            <div className={`about`}>
-                    <div className="content">
-                        <div className="hdr">
-                            <div className="beg">
-                                <CgMenuRight />
-                                <h4>Dashboard</h4>
-                            </div>
-                            <b onClick={()=>setMen(!men)}>
-                                <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
-                                <ul className={men ? "men active" : "men"}>
-                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
-                                    <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
-                                    <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
-                                </ul>
-                            </b>
+        <>    
+        <Sidebar exp={exp} sb={sb} set={setSb} />
+        <div className={`about ${sb ? 'activate' : ''}`}>
+            <div className="content">
+                <div className={`hdr ${sb ? 'activate' : ''}`}>
+                        <div className="beg">
+                            <CgMenuRight onClick={e=>setSb(!sb)} />
+                            <h4>Dashboard</h4>
                         </div>
+
+                        <b onClick={()=>setMen(!men)}>
+                            <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
+                            <ul className={men ? "men active" : "men"}>
+                                <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
+                                <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
+                                <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
+                            </ul>
+                        </b>
+                </div>
     
-                        <div className="submitted">
-                            <div className='img'>
+                <div className="submitted">
+                    <div className='img'>
                                 <img src='/Uploads/view.svg' />
-                            </div>
-                            {
-                                uData  ? 
-                                    <>
+                    </div>
+                    {
+                        uData  ? 
+                            <>
                                         <div className='dprt'>
                                             <h4>Internal Quality Assurance Cell (IQAC)</h4>
                                             <h4>Department : {uData ? uData[0].department : null} - Students</h4>
@@ -452,7 +246,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/placements/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
         
-                                                            <button onClick={e=>Pla(id)}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Pla(id,'placements')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -479,7 +273,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_publications/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button onClick={e=>Pub(id)}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Pla(id,'s_publications')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -504,7 +298,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_paper_presentation/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button onClick={e=>Ppr(id)}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Pla(id,'s_paper_presentation')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -531,7 +325,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_conference/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button onClick={e=>conference(id)}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Pla(id,'s_conference')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -555,9 +349,9 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/fellowship/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                            <Link className="edit" to={`/forms/student/s_competition/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Com(id)}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Pla(id)}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -580,7 +374,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_training/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
         
-                                                            <button id={id} onClick={e=>Tra(id)}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Pla(id,'s_training')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -604,7 +398,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_projectwork/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Pw(id)}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Pla(id,'s_projectwork')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -626,7 +420,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_exams/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Ex(id)}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Pla(id,'s_exams')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -651,7 +445,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_onlinecourses/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Oc(id)}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Pla(id,'s_onlinecourses')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -675,7 +469,7 @@ function Viewstudents(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/student/s_achievementss/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Ac(id)}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Pla(id,'s_achievements')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
         
@@ -683,13 +477,13 @@ function Viewstudents(){
                                                 )
                                             }): <p className="no">No datas</p>}
                                         </div>
-                                    </>
-                                : ''
-                            }
-                        </div>
+                            </>
+                        : ''
+                    }
+                </div>
     
-                    </div>
             </div>
+        </div>
         </>
     )
 }

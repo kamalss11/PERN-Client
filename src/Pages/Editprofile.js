@@ -5,11 +5,13 @@ import * as Yup from 'yup'
 import Sidebar from "../Components/Sidebar";
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
-import { CgProfile } from 'react-icons/cg'
+import { CgMenuRight } from 'react-icons/cg'
+import {FaUserCircle} from 'react-icons/fa'
 
 function Editprofile(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
+    const [sb,setSb] = useState(false)
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     console.log(uData)
 
@@ -72,26 +74,31 @@ function Editprofile(){
     },[])
     return(
         <>
-            <Sidebar />
-            <div className="about">
-                <div className="content">
-                    <div className="hdr">
-                        <h3>Dashboard</h3>
+        <Sidebar pactive={'active'} sb={sb} set={setSb} />
+        <div className={`about ${sb ? 'activate' : ''}`}>
+            <div className="content">
+                <div className={`hdr ${sb ? 'activate' : ''}`}>
+                        <div className="beg">
+                            <CgMenuRight onClick={e=>setSb(!sb)} />
+                            <h4>Dashboard</h4>
+                        </div>
+
                         <b onClick={()=>setMen(!men)}>
                             <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
                             <ul className={men ? "men active" : "men"}>
-                                <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
+                                <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
                                 <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
                                 <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
                             </ul>
                         </b>
-                    </div>
+                </div>
 
-                    <div className="pro-data" style={{padding:"20px"}}>
+                <div className="pro-data" style={{padding:"20px"}}>
                         <Formik
                             initialValues = {{
                                 name: `${uData ? uData[0].name : ''}`,
                                 department: `${uData ? uData[0].department : ''}`,
+                                email: `${uData ? uData[0].email : ''}`,
                                 password : '',
                                 cpassword : '',
                                 ppassword : '',
@@ -154,17 +161,13 @@ function Editprofile(){
                                     placeholder="Enter your name"
                                 />
 
-                                {/* <MySelect name="department">
-                                    <option value="">--- Department ---</option>
-                                    <option value="BCA">BCA</option>
-                                    <option value="B.Sc(CS-A)">B.Sc(CS-A)</option>
-                                    <option value="B.Sc(CS-B)">B.Sc(CS-B)</option>
-                                    <option value="B.Sc(CT)">B.Sc(CT)</option>
-                                    <option value="B.Sc(IT)">B.Sc(IT)</option>
-                                    <option value="M.Sc(SS)">M.Sc(SS)</option>
-                                    <option value="BDA">BDA</option>
-                                    <option value="B.Voc(Networking and Mobile Application)">B.Voc(Networking and Mobile Application)</option>
-                                </MySelect> */}
+                                <TextInput
+                                    id="email"
+                                    name="email"
+                                    type="text"
+                                    label="Email"
+                                    placeholder="Enter your email"
+                                />
 
                                 <div className="btn">
                                     <button type="submit">Update</button>
@@ -255,9 +258,9 @@ function Editprofile(){
                                 </div>
                             </Form>
                         </Formik>
-                    </div>
                 </div>
             </div>
+        </div>
         </>
     )
 }

@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { Formik,Form,useField } from 'formik'
 import * as Yup from 'yup'
 import { Link,useHistory } from 'react-router-dom'
@@ -6,10 +6,11 @@ import '../CSS/LS.css'
 import {IoPerson} from 'react-icons/io5'
 import {AiFillLock} from 'react-icons/ai'
 import {TiArrowSortedUp} from 'react-icons/ti'
-import {RiUser3Fill} from 'react-icons/ri'
+import {AiFillCloseCircle} from 'react-icons/ai'
 
 function Signin(){
     const history = useHistory()
+    const [ers,Seters] = useState()
 
     const callAboutPage = async () => {
         try{
@@ -26,11 +27,8 @@ function Signin(){
             console.log(datas)
 
             if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
+                history.push('/dashboard')
             }
-
-            history.push('/dashboard')
         }catch(err){
             console.log(err)
         }
@@ -72,7 +70,7 @@ function Signin(){
                 </div>
             </div>
 
-            <div className='bg2' style={{height: '800px'}}>
+            <div className='bg2' style={{height: '500px'}}>
                 <div className="signUp" style={{top: '-25%'}}>
                     {/* <div className='rd'></div>
                     <div className='rd'></div>
@@ -111,15 +109,16 @@ function Signin(){
                                 })
 
                                 const data = await res.json()
-                                console.log(data,'Signin')
                                 if(res.status === 400 || !data){
-                                    window.alert(`${data.error}`)
+                                    Seters(data.error)
                                 }
                                 else{
-                                    window.alert("Logged in Successfull")
                                     setSubmitting(false);
                                     resetForm()
-                                    history.push('/dashboard')
+                                    if(data.login[0].roll === 'User') 
+                                        history.push('/dashboard')  
+                                    else
+                                        history.push('/super_admin') 
                                 }
                             }, 400);
                         }}
@@ -129,6 +128,8 @@ function Signin(){
                                 {/* <h3>Internal Quality Assurance Cell - (IQAC)</h3><br /> */}
                                 <h3>SignIn</h3>
                             </div>
+
+                            {ers ? <p className='se'><AiFillCloseCircle />{ers}</p> : null}
 
                             <TextInput
                                 icon={<IoPerson/>}

@@ -14,6 +14,7 @@ import {FaUserCircle} from 'react-icons/fa'
 
 function Viewstaffs(){
     const [exp,setExp] = useState('exp')
+    const [sb,setSb] = useState(false)
     const [drp,setDrp] = useState(false)
     const [uData,setUdata] = useState()
     const [research_projects,Setresearch_projects] = useState()    
@@ -175,114 +176,10 @@ function Viewstaffs(){
         }
     }
     // Delete Research Projects
-    const Rrp = async(id)=>{
+    const Rrp = async(id,table)=>{
         console.log(id)
         try{
-            const res = await fetch(`/forms/research/research_projects/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Delete Patents
-    const Rp = async(id)=>{
-        try{
-            const res = await fetch(`/forms/research/patents/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                }),
-                credentials: 'include',
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Awards for innovation
-    const Rafi = async(id)=>{
-        try{
-            const res = await fetch(`/forms/research/awards_for_innovation/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // M.Phil /Ph.D
-    const Rdeg = async(id)=>{
-        try{
-            const res = await fetch(`/forms/research/deg/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Fellowship
-    const Rf = async(id)=>{
-        try{
-            const res = await fetch(`/forms/research/fellowship/delete/${id}`,{
+            const res = await fetch(`/forms/research/${table}/delete/${id}`,{
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
@@ -306,61 +203,9 @@ function Viewstaffs(){
     }
 
     // Collaborative Activities
-    const Cca = async(id)=>{
+    const Cca = async(id,table)=>{
         try{
-            const res = await fetch(`/forms/collaborations/collab_activ/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Linkages
-    const Cl = async(id)=>{
-        try{
-            const res = await fetch(`/forms/collaborations/linkages/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Mou
-    const Cm = async(id)=>{
-        try{
-            const res = await fetch(`/forms/collaborations/mou/delete/${id}`,{
+            const res = await fetch(`/forms/collaborations/${table}/delete/${id}`,{
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
@@ -384,139 +229,9 @@ function Viewstaffs(){
     }
 
     // Conference
-    const Ec = async(id)=>{
+    const Ec = async(id,table)=>{
         try{
-            const res = await fetch(`/forms/events/conference/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Guest Lectures
-    const Egl = async(id)=>{
-        try{
-            const res = await fetch(`/forms/events/guest_lectures/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Extension Activities
-    const Eea = async(id)=>{
-        try{
-            const res = await fetch(`/forms/events/extension_activities/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Industrial Visits
-    const Eiv = async(id)=>{
-        try{
-            const res = await fetch(`/forms/events/industrial_visits/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Evs
-    const Eevs = async(id)=>{
-        try{
-            const res = await fetch(`/forms/events/evs/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Departmental Activities
-    const Eda = async(id)=>{
-        try{
-            const res = await fetch(`/forms/events/departmental_activities/delete/${id}`,{
+            const res = await fetch(`/forms/events/${table}/delete/${id}`,{
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
@@ -566,319 +281,9 @@ function Viewstaffs(){
     }
 
     // Honours
-    const Fh = async(id)=>{
+    const Fh = async(id,table)=>{
         try{
-            const res = await fetch(`/forms/faculty/honours/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Exams
-    const Fe = async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/exams/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Books Published
-    const Fbp = async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/books_published/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Chapters contributed
-    const Fcc = async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/chapters_contributed/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Conference Proceeding
-    const Fcp = async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/conference_proceeding/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Paper Presentation
-    const Fpp = async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/paper_presentation/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Journal Publications
-    const Fjp = async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/journal_publications/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Conference
-    const Fcon= async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/conference/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Resource Person
-    const Frp= async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/resource_person/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Financial Support
-    const Ffs= async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/financial_support/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Development Programmes
-    const Fdp= async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/development_programmes/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    const Foc= async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/online_courses/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    const Fec= async(id)=>{
-        try{
-            const res = await fetch(`/forms/faculty/e_content/delete/${id}`,{
+            const res = await fetch(`/forms/faculty/${table}/delete/${id}`,{
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
@@ -920,34 +325,34 @@ function Viewstaffs(){
         callAboutPage()
     },[])
     return (
-        <>
-            <Sidebar exp={exp} />
-
-            <div className={`about`}>
-                    <div className="content">
-                        <div className="hdr">
-                            <div className="beg">
-                                <CgMenuRight />
-                                <h4>Dashboard</h4>
-                            </div>
-                            <b onClick={()=>setMen(!men)}>
-                                <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
-                                <ul className={men ? "men active" : "men"}>
-                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
-                                    <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
-                                    <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
-                                </ul>
-                            </b>
+        <>            
+        <Sidebar exp={exp} sb={sb} set={setSb} />
+        <div className={`about ${sb ? 'activate' : ''}`}>
+            <div className="content">
+                <div className={`hdr ${sb ? 'activate' : ''}`}>
+                        <div className="beg">
+                            <CgMenuRight onClick={e=>setSb(!sb)} />
+                            <h4>Dashboard</h4>
                         </div>
+
+                        <b onClick={()=>setMen(!men)}>
+                            <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
+                            <ul className={men ? "men active" : "men"}>
+                                <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
+                                <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
+                                <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
+                            </ul>
+                        </b>
+                </div>
     
-                        <div className="submitted">
-                            <div className='img'>
-                                <img src='/Uploads/view.svg' />
-                            </div>
-                            {
-                                uData  ? 
-                                    <>
-                                        <div className='dprt'>
+                <div className="submitted">
+                    <div className='img'>
+                        <img src='/Uploads/view.svg' />
+                    </div>
+                    {
+                        uData  ? 
+                            <>
+                            <div className='dprt'>
                                             <h4>Internal Quality Assurance Cell (IQAC)</h4>
                                             <h4>Department : {uData ? uData[0].department : null} - Staffs</h4>
                                             {
@@ -961,8 +366,8 @@ function Viewstaffs(){
                                                     }
                                                 </> : null
                                             }
-                                        </div>
-                                        <div className='select'>
+                            </div>
+                            <div className='select'>
                                             <p><b>Filter by Period</b></p>
                                             <p className='msg' onClick={e=>setDrp(!drp)}>{pvalue ? pvalue : ''}<IoMdArrowDropdownCircle className={`${drp ? 'active' : ''}`} /></p>
                                             <div className={`${drp ? 'active' : ''}`}>
@@ -982,17 +387,13 @@ function Viewstaffs(){
                                                 <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`);setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
                                                 <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`);setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
                                             </div>
-                                        </div><br />
-                                            
-                                        {uData[0].roll === "IQAC"  ? 
-                                            <Link to="/admin" style={{color: "#f56036"}}>Move to Admin</Link>
-                                        : null
-                                        }
-                                        <div className="research">
-                                            <h3>Research</h3>
+                            </div><br />
+                                         
+                            <div className="research">
+                                <h3>Research</h3>
         
-                                            <h4>1.1 Research Projects {research_projects ? `- ( ${research_projects.length} )` : null}</h4>  
-                                            {research_projects ? research_projects.map((r,i)=>
+                                <h4>1.1 Research Projects {research_projects ? `- ( ${research_projects.length} )` : null}</h4>  
+                                {research_projects ? research_projects.map((r,i)=>
                                             { const {n,title,no,file,amount_sanctioned,fileno,amount_received,date_sanctioned,funding_agency,id,date} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1009,16 +410,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/research/research_projects/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
         
-                                                            <button onClick={e=>Rrp(id)}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Rrp(id,'research_projects')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Patents */}
+                                {/* Patents */}
         
-                                            <h4>1.2 Patents {patents ? `- ( ${patents.length} )` : null}</h4>  
-                                            {patents ? patents.map((r,i)=>{
+                                <h4>1.2 Patents {patents ? `- ( ${patents.length} )` : null}</h4>  
+                                {patents ? patents.map((r,i)=>{
                                             const {n,title,field,fileno,date_awarded_patent,royalty_received,providing_agency,country,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1035,16 +436,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/research/patents/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button onClick={e=>Rp(id)}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>Rrp(id,'patents')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Awards for Innovation */}
+                                {/* Awards for Innovation */}
         
-                                            <h4>1.3 Awards for Innovation {awards_for_innovation ? `- ( ${awards_for_innovation.length} )` : null}</h4>  
-                                            {awards_for_innovation ? awards_for_innovation.map((r,i)=>{
+                                <h4>1.3 Awards for Innovation {awards_for_innovation ? `- ( ${awards_for_innovation.length} )` : null}</h4>  
+                                {awards_for_innovation ? awards_for_innovation.map((r,i)=>{
                                             const {n,awardee_name,designation,award_category,title,awarding_agency,venue,level,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1061,16 +462,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/research/awards_for_innovation/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button onClick={e=>Rafi(id)}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>Rrp(id,'awards_for_innovation')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Ph.D / M.Phil */}
+                                {/* Ph.D / M.Phil */}
         
-                                            <h4>1.4 Ph.D / M.Phil {degree ? `- ( ${degree.length} )` : null}</h4>  
-                                            {degree ? degree.map((r,i)=>{
+                                <h4>1.4 Ph.D / M.Phil {degree ? `- ( ${degree.length} )` : null}</h4>  
+                                {degree ? degree.map((r,i)=>{
                                             const {n,deg,guide_name,title,external,venue,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1085,16 +486,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/research/deg/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button onClick={e=>Rdeg(id)}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>Rrp(id,'degree')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Fellowships */}
+                                {/* Fellowships */}
         
-                                            <h4>1.5 Fellowship {fellowship ? `- ( ${fellowship.length} )` : null}</h4>  
-                                            {fellowship ? fellowship.map((r,i)=>{
+                                <h4>1.5 Fellowship {fellowship ? `- ( ${fellowship.length} )` : null}</h4>  
+                                {fellowship ? fellowship.map((r,i)=>{
                                             const {n,fellowship,date_sanctioned,funding_agency,sanctioned_amount,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1108,24 +509,24 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/research/fellowship/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Rf(id)}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Rrp(id,'fellowship')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
-                                            }): <p className="no">No datas</p>}
-                                        </div>
+                                }): <p className="no">No datas</p>}
+                            </div>
         
-                                        <div className="research">
-                                            <h3>Collaborations</h3>
+                            <div className="research">
+                                <h3>Collaborations</h3>
         
-                                            {/* Collaborative Activities */}
+                                {/* Collaborative Activities */}
         
-                                            <h4>2.1 Collaborative Activities {collab_activ ? `- ( ${collab_activ.length} )` : null
-                                            }</h4>  
-                                            {collab_activ ? collab_activ.map((r,i)=>{
-                                            const {n,activity,participant,financial_support,period,id,date,file} = r
-                                                return(
-                                                    <div key={i} className="research_projects">
+                                <h4>2.1 Collaborative Activities {collab_activ ? `- ( ${collab_activ.length} )` : null
+                                }</h4>  
+                                {collab_activ ? collab_activ.map((r,i)=>{
+                                    const {n,activity,participant,financial_support,period,id,date,file} = r
+                                        return(
+                                            <div key={i} className="research_projects">
                                                         <p><b>Name of the Faculty :</b> {n ? n : 'NIL'}</p>
                                                         <p><b>Name of the activity :</b> {activity ? activity : 'NIL'}</p>
                                                         <p><b>Participant :</b> {participant ? participant : 'NIL'}</p>
@@ -1136,17 +537,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/collaborations/collaborative_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
         
-                                                            <button id={id} onClick={e=>Cca(id)}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Cca(id,'collab_activ')}><MdDelete /> Delete</button>
                                                         </div>
-                                                    </div>
-                                                )
-                                            }): <p className="no">No datas</p>}
+                                            </div>
+                                        )
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Linkages */}
+                                {/* Linkages */}
         
-                                            <h4>2.2 Linkages {linkages ? `- ( ${linkages.length} )` : null
-                                            }</h4>  
-                                            {linkages ? linkages.map((r,i)=>{
+                                <h4>2.2 Linkages {linkages ? `- ( ${linkages.length} )` : null}</h4>  
+                                {linkages ? linkages.map((r,i)=>{
                                             const {n,title,partnering_agency,period,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1159,17 +559,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/collaborations/linkages/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Cl(id)}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Cca(id,'linkages')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* MoU(s) Signed */}
+                                {/* MoU(s) Signed */}
         
-                                            <h4>2.3 MoU(s) Signed {mou ? `- ( ${mou.length} )` : null
-                                            }</h4>  
-                                            {mou ? mou.map((r,i)=>{
+                                <h4>2.3 MoU(s) Signed {mou ? `- ( ${mou.length} )` : null}</h4>  
+                                {mou ? mou.map((r,i)=>{
                                             const {n,organization,date_signed,period,participants,purpose,total,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1185,20 +584,20 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/collaborations/mou/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Cm(id)}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Cca(id,'mou')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
-                                            }): <p className="no">No datas</p>}
-                                        </div>
+                                }): <p className="no">No datas</p>}
+                            </div>
         
-                                        <div className="research">
-                                            <h3>Events/Programmes/Visits Organized</h3>
+                            <div className="research">
+                                <h3>Events/Programmes/Visits Organized</h3>
         
-                                            {/* Conference */}
+                                {/* Conference */}
         
-                                            <h4>3.1 Conference / Seminar / Symposium / Workshop organized {conference ? `- ( ${conference.length} )` : null}</h4> 
-                                            {conference ? conference.map((r,i)=>{
+                                <h4>3.1 Conference / Seminar / Symposium / Workshop organized {conference ? `- ( ${conference.length} )` : null}</h4> 
+                                {conference ? conference.map((r,i)=>{
                                             const {n,con_sem,title,sponsoring_agency,resource_person,venue,objective,outcome,level,total,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1217,16 +616,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/events/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Ec(id)}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Ec(id,'conference')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Guest Lectures */}
+                                {/* Guest Lectures */}
         
-                                            <h4>3.2 Guest Lectures {guest_lectures ? `- ( ${guest_lectures.length} )` : null}</h4> 
-                                            {guest_lectures ? guest_lectures.map((r,i)=>{
+                                <h4>3.2 Guest Lectures {guest_lectures ? `- ( ${guest_lectures.length} )` : null}</h4> 
+                                {guest_lectures ? guest_lectures.map((r,i)=>{
                                             const {n,resource_person,designation,topic,venue,objective,outcome,total,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1243,18 +642,18 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/events/guest_lectures/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Egl(id)}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Ec(id,'guest_lectures')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
                                                     
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Extension Activities */}
+                                {/* Extension Activities */}
         
-                                            <h4>3.3 Extension Activities {extension_activities ? `- ( ${extension_activities.length} )` : null}</h4> 
-                                            {extension_activities ? extension_activities.map((r,i)=>{
+                                <h4>3.3 Extension Activities {extension_activities ? `- ( ${extension_activities.length} )` : null}</h4> 
+                                {extension_activities ? extension_activities.map((r,i)=>{
                                             const {n,activities,collaborations,venue,total,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1268,16 +667,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/events/extension_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Eea(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Ec(id,'extension_activities')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}                                    
+                                }): <p className="no">No datas</p>}                                    
         
-                                            {/* Industrial Visits */}
+                                {/* Industrial Visits */}
         
-                                            <h4>3.4 Industrial Visits {industrial_visits ? `- ( ${industrial_visits.length} )` : null}</h4> 
-                                            {industrial_visits ? industrial_visits.map((r,i)=>{
+                                <h4>3.4 Industrial Visits {industrial_visits ? `- ( ${industrial_visits.length} )` : null}</h4> 
+                                {industrial_visits ? industrial_visits.map((r,i)=>{
                                             const {n,classes,date,address,total,outcome,id,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1291,16 +690,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/events/industrial_visits/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Eiv(id)}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Ec(id,'industrial_visits')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Environmental Science (EVS) Visit */}
+                                {/* Environmental Science (EVS) Visit */}
         
-                                            <h4>3.5 Environmental Science (EVS) Visit {evs ? `- ( ${evs.length} )` : null}</h4> 
-                                            {evs ? evs.map((r,i)=>{
+                                <h4>3.5 Environmental Science (EVS) Visit {evs ? `- ( ${evs.length} )` : null}</h4> 
+                                {evs ? evs.map((r,i)=>{
                                             const {n,date,place,total,activity,id,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1313,16 +712,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/events/evs/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Eevs(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Ec(id,'evs')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Other Departmental Activities */}
+                                {/* Other Departmental Activities */}
         
-                                            <h4>3.6 Other Departmental Activities {departmental_activities ? `- ( ${departmental_activities.length} )` : null}</h4> 
-                                            {departmental_activities ? departmental_activities.map((r,i)=>{
+                                <h4>3.6 Other Departmental Activities {departmental_activities ? `- ( ${departmental_activities.length} )` : null}</h4> 
+                                {departmental_activities ? departmental_activities.map((r,i)=>{
                                             const {n,activity,guest,topic,total,venue,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1337,14 +736,14 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/events/departmental_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Eda(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Ec(id,'departmental_activities')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
-                                        </div>
+                                }): <p className="no">No datas</p>}
+                            </div>
         
-                                        <div className="research">
+                            <div className="research">
                                             <h3>Consultancy Projects/Services</h3>
         
                                             {/* Projects Services */}
@@ -1372,15 +771,15 @@ function Viewstaffs(){
                                                     
                                                 )
                                             }): <p className="no">No datas</p>}
-                                        </div>
+                            </div>
         
-                                        <div className="research">
-                                            <h3>Faculty Details</h3>
+                            <div className="research">
+                                <h3>Faculty Details</h3>
         
-                                            {/* Honours and Recognitions */}
+                                {/* Honours and Recognitions */}
         
-                                            <h4>5.1 Honours and Recognitions {honours ? `- ( ${honours.length} )` : null}</h4> 
-                                            {honours ? honours.map((r,i)=>{
+                                <h4>5.1 Honours and Recognitions {honours ? `- ( ${honours.length} )` : null}</h4> 
+                                {honours ? honours.map((r,i)=>{
                                             const {n,award_honour,details,venue,level,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1394,16 +793,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/honours/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'honours')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Exams */}
+                                {/* Exams */}
         
-                                            <h4>5.2 Qualifying in State/ National/ International level examinations {exams ? `- ( ${exams.length} )` : null}</h4> 
-                                            {exams ? exams.map((r,i)=>{
+                                <h4>5.2 Qualifying in State/ National/ International level examinations {exams ? `- ( ${exams.length} )` : null}</h4> 
+                                {exams ? exams.map((r,i)=>{
                                             const {n,exam,exam_rollno,date,id,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1415,16 +814,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/exams/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fe(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'exams')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Books Published */}
+                                {/* Books Published */}
         
-                                            <h4>5.3 Books Published {books_published ? `- ( ${books_published.length} )` : null}</h4> 
-                                            {books_published ? books_published.map((r,i)=>{
+                                <h4>5.3 Books Published {books_published ? `- ( ${books_published.length} )` : null}</h4> 
+                                {books_published ? books_published.map((r,i)=>{
                                             const {n,name,publisher,level,isbn_no,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1438,18 +837,18 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/books_published/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fbp(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'books_published')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
                                                     
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
                                             
-                                            {/* Chapters Contributed */}
+                                {/* Chapters Contributed */}
         
-                                            <h4>5.4 Chapters Contributed {chapters_contributed ? `- ( ${chapters_contributed.length} )` : null}</h4> 
-                                            {chapters_contributed ? chapters_contributed.map((r,i)=>{
+                                <h4>5.4 Chapters Contributed {chapters_contributed ? `- ( ${chapters_contributed.length} )` : null}</h4> 
+                                {chapters_contributed ? chapters_contributed.map((r,i)=>{
                                             const {n,title,chapter,editor,publisher,level,isbn_no,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1465,16 +864,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/chapters_contributed/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fcc(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'chapters_contributed')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Conference Proceeding */}
+                                {/* Conference Proceeding */}
         
-                                            <h4>5.5 Conference Proceeding {conference_proceeding ? `- ( ${conference_proceeding.length} )` : null}</h4> 
-                                            {conference_proceeding ? conference_proceeding.map((r,i)=>{
+                                <h4>5.5 Conference Proceeding {conference_proceeding ? `- ( ${conference_proceeding.length} )` : null}</h4> 
+                                {conference_proceeding ? conference_proceeding.map((r,i)=>{
                                             const {n,con,publication,level,isbn_no,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1488,18 +887,18 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/conference_proceeding/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fcp(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'conference_proceeding')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
                                                     
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Paper Presentation */}
+                                {/* Paper Presentation */}
         
-                                            <h4>5.6 Paper Presentation {paper_presentation ? `- ( ${paper_presentation.length} )` : null}</h4> 
-                                            {paper_presentation ? paper_presentation.map((r,i)=>{
+                                <h4>5.6 Paper Presentation {paper_presentation ? `- ( ${paper_presentation.length} )` : null}</h4> 
+                                {paper_presentation ? paper_presentation.map((r,i)=>{
                                             const {n,con,title,financial_support,venue,level,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1514,16 +913,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/paper_presentation/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fpp(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'paper_presentation')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                           
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Journal Publication */}
+                                {/* Journal Publication */}
         
-                                            <h4>5.7 Journal Publication {journal_publications ? `- ( ${journal_publications.length} )` : null}</h4> 
-                                            {journal_publications ? journal_publications.map((r,i)=>{
+                                <h4>5.7 Journal Publication {journal_publications ? `- ( ${journal_publications.length} )` : null}</h4> 
+                                {journal_publications ? journal_publications.map((r,i)=>{
                                             const {n,title,jou,issn_no,volume,sci,impact,level,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1541,18 +940,18 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/journal_publications/edit`}><button id={id} onClick={e=>window.localStorage.setItem('edit',id)}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fjp(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'journal_publications')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
                                                     
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
                                             
-                                            {/* Conference / Seminar / Symposium / Workshop Attended */}
+                                {/* Conference / Seminar / Symposium / Workshop Attended */}
         
-                                            <h4>5.8 Conference / Seminar / Symposium / Workshop Attended {fconference ? `- ( ${fconference.length} )` : null}</h4> 
-                                            {fconference ? fconference.map((r,i)=>{
+                                <h4>5.8 Conference / Seminar / Symposium / Workshop Attended {fconference ? `- ( ${fconference.length} )` : null}</h4> 
+                                {fconference ? fconference.map((r,i)=>{
                                             const {n,con,title,venue,level,financial_support,programme_outcome,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1568,16 +967,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fcon(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'fconference')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* As a Resource Person */}
+                                {/* As a Resource Person */}
         
-                                            <h4>5.9 As a Resource Person {resource_person ? `- ( ${resource_person.length} )` : null}</h4> 
-                                            {resource_person ? resource_person.map((r,i)=>{
+                                <h4>5.9 As a Resource Person {resource_person ? `- ( ${resource_person.length} )` : null}</h4> 
+                                {resource_person ? resource_person.map((r,i)=>{
                                             const {n,sem,topic,event,venue,level,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1592,16 +991,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/resource_person/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Frp(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'resource_person')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Financial Support */}
+                                {/* Financial Support */}
         
-                                            <h4>5.10 Financial Support {financial_support ? `- ( ${financial_support.length} )` : null}</h4> 
-                                            {financial_support ? financial_support.map((r,i)=>{
+                                <h4>5.10 Financial Support {financial_support ? `- ( ${financial_support.length} )` : null}</h4> 
+                                {financial_support ? financial_support.map((r,i)=>{
                                             const {n,f,amount_support,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1613,17 +1012,17 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/financial_support/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Ffs(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'financial_support')}}><MdDelete /> Delete</button>
                                                             
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Professional Development Programmes */}
+                                {/* Professional Development Programmes */}
         
-                                            <h4>5.11 Professional Development Programmes {development_programmes ? `- ( ${development_programmes.length} )` : null}</h4> 
-                                            {development_programmes ? development_programmes.map((r,i)=>{
+                                <h4>5.11 Professional Development Programmes {development_programmes ? `- ( ${development_programmes.length} )` : null}</h4> 
+                                {development_programmes ? development_programmes.map((r,i)=>{
                                             const {n,training,title,venue,financial_support,level,id,date,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1638,16 +1037,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/development_programmes/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fdp(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'development_programmes')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                           
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* Online Courses */}
+                                {/* Online Courses */}
         
-                                            <h4>5.12 Online Courses {online_courses ? `- ( ${online_courses.length} )` : null}</h4> 
-                                            {online_courses ? online_courses.map((r,i)=>{
+                                <h4>5.12 Online Courses {online_courses ? `- ( ${online_courses.length} )` : null}</h4> 
+                                {online_courses ? online_courses.map((r,i)=>{
                                             const {n,training,title,date,financial_support,level,id,duration,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1662,16 +1061,16 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/online_courses/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Foc(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'online_courses')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
+                                }): <p className="no">No datas</p>}
         
-                                            {/* E_Content */}
+                                {/* E_Content */}
         
-                                            <h4>5.13 E-Content {e_content ? `- ( ${e_content.length} )` : null}</h4> 
-                                            {e_content ? e_content.map((r,i)=>{
+                                <h4>5.13 E-Content {e_content ? `- ( ${e_content.length} )` : null}</h4> 
+                                {e_content ? e_content.map((r,i)=>{
                                             const {n,module,platform,date,id,file} = r
                                                 return(
                                                     <div key={i} className="research_projects">
@@ -1683,19 +1082,19 @@ function Viewstaffs(){
                                                         <div className="btn">
                                                             <Link className="edit" to={`/forms/faculty/e_content/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Fec(id)}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Fh(id,'e_content')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
-                                            }): <p className="no">No datas</p>}
-                                        </div>
-                                    </>
-                                : ''
-                            }
-                        </div>
+                                }): <p className="no">No datas</p>}
+                            </div>
+                            </>
+                        : ''
+                    }
+                </div>
     
-                    </div>
             </div>
+        </div>
         </>
     )
 }

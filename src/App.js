@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CSS/App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, useParams } from 'react-router-dom'
 // Components
 import Signin from './Pages//Signin'
 import Signup from './Pages/Signup'
@@ -118,6 +118,23 @@ import Edit_Placements from './Forms/Students/Edit_place';
 import Placements from './Forms/Students/Placements';
 import Edit_publi from './Forms/Students/Edit_publi';
 import Publications from './Forms/Students/Publications';
+import SPpr from './Forms/Students/paper_presentation';
+import Edit_Paper_presentation from './Forms/Students/Edit_ppresen';
+import SConference from './Forms/Students/Conference';
+import Edit_conf from './Forms/Students/Edit_conf';
+import SComp from './Forms/Students/Competition';
+import Edit_compet from './Forms/Students/Edit_compet';
+import STraining from './Forms/Students/Training';
+import Edit_Trai from './Forms/Students/Edit_trai';
+import SPrjct from './Forms/Students/Projectwr';
+import Edit_prj from './Forms/Students/Edit_prjct';
+import SExams from './Forms/Students/Exams';
+import Edit_exms from './Forms/Students/Edit_exms';
+import SOncou from './Forms/Students/On_cou';
+import Edit_onc from './Forms/Students/Edit_onc';
+import SAchiv from './Forms/Students/Achivement';
+import Edit_achiv from './Forms/Students/Edit_achiv';
+import Not from './Pages/Not';
 
 function App() {
   const Routing = ()=>{
@@ -125,11 +142,15 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Signup />
-          </Route>
-          
-          <Route path="/signin"> 
             <Signin />
+          </Route>
+
+          <Route exact path="/signin">
+            <Signin />
+          </Route>
+
+          <Route exact path="/all_registers">
+            <Signup />
           </Route>
 
           <Route exact path="/dashboard">
@@ -164,7 +185,7 @@ function App() {
             <Forget_Password />
           </Route>
 
-          <Route exact path="/reset_password">
+          <Route path="/reset_password">
             <Reset_password />
           </Route>
 
@@ -180,11 +201,11 @@ function App() {
             <Super_admin />
           </Route>
 
-          <Route path="/super_admin/departments/staffs">            
+          <Route path="/super_admin/departments/staffs/:department">            
             <Staffs />
           </Route>
 
-          <Route path="/super_admin/departments/students">            
+          <Route path="/super_admin/departments/students/:department">            
             <Students />
           </Route>
 
@@ -592,9 +613,75 @@ function App() {
             <Edit_publi />
           </Route>
 
+          <Route exact path="/forms/student/paper_presentation">
+            <SPpr />
+          </Route>          
+
+          <Route path="/forms/student/paper_presentation/edit">
+            <Edit_Paper_presentation />
+          </Route>
+
+          <Route exact path="/forms/student/s_conference">
+            <SConference />
+          </Route>        
+
+          <Route path="/forms/student/s_conference/edit">
+            <Edit_conf />
+          </Route>
+
+          <Route exact path="/forms/student/s_competition">
+            <SComp />
+          </Route>     
+
+          <Route path="/forms/student/s_competition/edit">
+            <Edit_compet />
+          </Route>
+
+          <Route exact path="/forms/student/s_training">
+            <STraining />
+          </Route>     
+
+          <Route path="/forms/student/s_training/edit">
+            <Edit_Trai />
+          </Route>
+
+          <Route exact path="/forms/student/s_projectwork">
+            <SPrjct />
+          </Route>  
+
+          <Route path="/forms/student/s_projectwork/edit">
+            <Edit_prj />
+          </Route>
+
+          <Route exact path="/forms/student/s_exams">
+            <SExams />
+          </Route>  
+
+          <Route path="/forms/student/s_exams/edit">
+            <Edit_exms />
+          </Route>
+
+          <Route exact path="/forms/student/s_onlinecourses">
+            <SOncou />
+          </Route>
+
+          <Route path="/forms/student/s_onlinecourses/edit">
+            <Edit_onc />
+          </Route>
+
+          <Route exact path="/forms/student/s_achievements">
+            <SAchiv />
+          </Route>
+
+          <Route path="/forms/student/s_achievements/edit">
+            <Edit_achiv />
+          </Route>
+          
           <Route path="/logout">
             <Logout />
           </Route>
+          
+          <Route component={Not} />
         </Switch>
       </Router>
     )

@@ -3,10 +3,9 @@ import {Link, useHistory} from 'react-router-dom'
 import '../CSS/About.css'
 import '../CSS/Super_admin.css'
 import {RiLockPasswordLine} from 'react-icons/ri'
-import {AiFillEdit,AiOutlineLogout} from 'react-icons/ai'
-import { CgProfile } from 'react-icons/cg'
-import {AiOutlineBars} from 'react-icons/ai'
-import Sa_sidebar from '../Components/Sa_sidebar'
+import {AiOutlineLogout} from 'react-icons/ai'
+import {CgMenuRight} from 'react-icons/cg'
+import Sa_sidebar from '../Components/Sidebar'
 import Department_list from '../Datas/Department_list'
 import Student_details from '../Datas/student_details'
 import research from '../Datas/research'
@@ -14,6 +13,8 @@ import callob from '../Datas/callaborations'
 import events from '../Datas/events'
 import prjser from '../Datas/projects_services'
 import faculty from '../Datas/faculties'
+import {FaUserCircle} from 'react-icons/fa'
+import {IoMdArrowDropdownCircle} from 'react-icons/io'
 
 
 function Super_admin(){
@@ -24,6 +25,7 @@ function Super_admin(){
     const [uData,setUdata] = useState()
     const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
     const [men,setMen] = useState(false)
+    const [sb,setSb] = useState(false)
     const callAboutPage = async () => {
         try{
             const res = await fetch('/dashboard',{
@@ -58,27 +60,27 @@ function Super_admin(){
     },[])
     return(
         <>
-            <Sa_sidebar />
-
-            <div className={`about`}>
+            <Sa_sidebar dactive="active" sb={sb} set={setSb} />
+            <div className={`about ${sb ? 'activate' : ''}`}>
                 <div className="content">
-                    <div className="hdr">
-                        <div className="beg">
-                            <AiOutlineBars />
-                            <h3>Super Admin</h3>
-                        </div>
-                        <b onClick={()=>setMen(!men)}>
-                            <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
-                            <ul className={men ? "men active" : "men"}>
-                                <li><Link to="/dashboard/profile"><CgProfile />Profile</Link></li>
-                                <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
-                                <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
-                            </ul>
-                        </b>
+                    <div className={`hdr ${sb ? 'activate' : ''}`}>
+                            <div className="beg">
+                                <CgMenuRight onClick={e=>setSb(!sb)} />
+                                <h4>Dashboard</h4>
+                            </div>
+
+                            <b onClick={()=>setMen(!men)}>
+                                <p> <span>Hello,</span> {uData ? uData[0].name : ''}</p>
+                                <ul className={men ? "men active" : "men"}>
+                                    <li><Link to="/dashboard/profile"><FaUserCircle />Profile</Link></li>
+                                    <li><Link to={editprofile}><RiLockPasswordLine />Change password</Link></li>
+                                    <li><Link to="/logout"><AiOutlineLogout />Logout</Link></li>
+                                </ul>
+                            </b>
                     </div>
                 
                     <div className='details'>
-                        <h3>Internal Quality Assurance Cell(IQAC) - Reports</h3>
+                        <h4>Internal Quality Assurance Cell ( IQAC ) - Reports</h4>
 
                         <div className='tab' style={{display: 'flex',justifyContent: 'center'}}>
                             <ul className='shdr'>
@@ -109,8 +111,9 @@ function Super_admin(){
                             </div> : 
                             <div className='dprt'>
                                 <ul className='dlist'>
-                                    <li onClick={e=>setStaff(!staff)}>Staffs</li>
+                                    <li onClick={e=>setStaff(!staff)}>Staffs<IoMdArrowDropdownCircle className={`${staff ? 'active' : ''}`}/></li>
                                         <div className={staff ? 'tb1 active' : 'tb1'}>
+                                            <h4>Research</h4>
                                             {
                                                 research.map((l,i)=>{
                                                     const{id,name,s_a} = l
@@ -122,6 +125,8 @@ function Super_admin(){
                                                 })
                                             }
 
+                                            <h4>Collaborations</h4>
+
                                             {
                                                 callob.map((l,i)=>{
                                                     const{id,name,s_a} = l
@@ -132,6 +137,8 @@ function Super_admin(){
                                                     )
                                                 })
                                             }
+                                            
+                                            <h4>Events/Programmes/Visits Organized</h4>
 
                                             {
                                                 events.map((l,i)=>{
@@ -143,6 +150,8 @@ function Super_admin(){
                                                     )
                                                 })
                                             }
+                                            
+                                            <h4>Consultancy Projects/Services</h4>
 
                                             {
                                                 prjser.map((l,i)=>{
@@ -155,6 +164,8 @@ function Super_admin(){
                                                 })
                                             }
 
+                                            <h4>Faculty Details</h4>
+
                                             {
                                                 faculty.map((l,i)=>{
                                                     const{id,name,s_a} = l
@@ -166,8 +177,9 @@ function Super_admin(){
                                                 })
                                             }
                                         </div>
-                                    <li onClick={e=>setStudent(!student)}>Students</li>
+                                    <li onClick={e=>setStudent(!student)}>Students <IoMdArrowDropdownCircle className={`${student ? 'active' : ''}`}/></li>
                                         <div className={student ? 'tb2 active' : 'tb2'}>
+                                            <h4>Student Details</h4>
                                             {
                                                 Student_details.map((l,i)=>{
                                                     const{id,name,s_a} = l
