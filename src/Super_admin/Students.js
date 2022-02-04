@@ -6,6 +6,7 @@ import '../CSS/LS.css'
 import MaterialTable from 'material-table'
 import {FaFileWord} from 'react-icons/fa'
 import {IoMdArrowDropdownCircle,IoMdArrowRoundBack} from 'react-icons/io'
+import Department_list from '../Datas/Department_list'
 
 function Students(){
     const export_all = ()=>{
@@ -38,7 +39,19 @@ function Students(){
         else link.click();  // other browsers
         document.body.removeChild(link);
     }
+    const history = useHistory()
     const {department} = useParams()
+    function departments(dprt){
+        return Department_list.some(function (d){
+            return d.name === dprt
+        })
+    }
+    var tf = departments(department)
+    console.log(tf)
+
+    if(!tf){
+        history.push('/super_admin')
+    }
     const [data,setData] = useState()
     const [placements,setPlacements] = useState([])
     const [publications,setPublications] = useState([])
@@ -50,7 +63,6 @@ function Students(){
     const [exams,setExams] = useState([])
     const [online_courses,setOnline_courses] = useState([])
     const [achievements,setAchievements] = useState([])
-    const history = useHistory()
     const [pvalue,setPvalue] = useState('All')
     const [drp,setDrp] = useState(false)
     const [msg,setMsg] = useState('All')
@@ -93,13 +105,6 @@ function Students(){
 
     const callAboutPage = async () => {
         try{
-            if(!window.localStorage.getItem('dprt') || window.localStorage.getItem('dprt') === ''){
-                history.push('/super_admin')
-            }
-            // else{
-            //     history.replace(`super_admin/departments/staffs/${window.localStorage.getItem('dprt')}`)
-            // }
-
             const res = await fetch('/dashboard',{
                 method: "GET",
                 headers: {
@@ -117,7 +122,6 @@ function Students(){
                 history.push('/signin')
             }
             else{
-                console.log(localStorage.getItem('dprt'))
                 const ad = await fetch(`/super_admin/departments/students/${department}`,{
                     method: "GET",
                     headers: {

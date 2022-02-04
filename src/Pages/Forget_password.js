@@ -6,11 +6,13 @@ import '../CSS/LS.css'
 import {RiUser3Fill} from 'react-icons/ri'
 import {MdEmail} from 'react-icons/md'
 import {RiCloseCircleFill} from 'react-icons/ri'
+import {TiArrowSortedUp} from 'react-icons/ti'
 import {AiFillCheckCircle} from 'react-icons/ai'
 
 
 function Forget_Password(){
     const [msg,setMsg] = useState()
+    const [btnld,Setbtnld] = useState(false)
     const [ms,setMs] = useState()
     const history = useHistory()
 
@@ -32,10 +34,9 @@ function Forget_Password(){
                 const error = new Error(res.error)
                 throw error
             }
-
-            history.push('/dashboard')
         }catch(err){
             console.log(err)
+            history.push('/dashboard')
         }
     }
 
@@ -58,8 +59,6 @@ function Forget_Password(){
             </>
         )
     }
-
-
     useEffect(() => {
         callAboutPage()
     },[])
@@ -94,6 +93,7 @@ function Forget_Password(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             localStorage.setItem('email',values.email)
+                            Setbtnld(!btnld)
                             setTimeout(async () => {
                                 const res = await fetch('/forget_password',{
                                     method: "POST",
@@ -109,12 +109,13 @@ function Forget_Password(){
                                 setMsg(data.msg)
                                 setMs(data.s)
                                 console.log(data,'Signin')
-                                if(res.status === 400 || !data){
-                                    window.alert(`${data.error}`)
+                                if(res.status === 422 || !data){
+                                    Setbtnld(false)
+                                    resetForm(true)
                                 }
                                 else{
                                     setSubmitting(false);
-                                    resetForm()
+                                    resetForm(true)
                                 }
                             }, 400);
                         }}
@@ -122,11 +123,12 @@ function Forget_Password(){
                         <Form method="POST" className="form">
                             <div style={{textAlign:'center'}}>
                                 {/* <h3>Internal Quality Assurance Cell - (IQAC)</h3><br /> */}
-                                {msg ? <p className='err se'><RiCloseCircleFill />{msg}</p> : ''}
-                                {ms ? <p className='suc se'><AiFillCheckCircle />{ms}</p> : ''}
                                 <h3>Forget Password</h3>
                             </div>
 
+                            {msg ? <p className='err se'><RiCloseCircleFill />{msg}</p> : ''}
+                            {ms ? <p className='suc se'><AiFillCheckCircle />{ms}</p> : ''}
+                            
                             <TextInput icon={<MdEmail/>}
                                 name="email"
                                 type="text"
@@ -134,12 +136,21 @@ function Forget_Password(){
                             />
 
                             <div className="btn">
-                                <button type="submit">Next</button>
-                            </div>
+                                {
+                                    btnld ? 
+                                    <button style={{pointerEvents: 'none'}}><i class="fa fa-spinner fa-spin"></i> Loading
+                                    </button> : 
 
-                            <p className="ls"><Link to="/signin">Login ?</Link></p>
+                                    <button type="submit">Next <TiArrowSortedUp />
+                                    </button>
+                                }
+                            </div>
                         </Form>
-                    </Formik>                                    
+                    </Formik>        
+                      
+                    <p className='bt'>
+                        <Link to={'/'}>Login ?</Link>
+                    </p>                                 
                 </div>
             </div>
         </>

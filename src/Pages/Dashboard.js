@@ -16,7 +16,7 @@ function Dashboard(){
     const [uData,setUdata] = useState()  
     const [men,setMen] = useState(false)
     const [sb,setSb] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const history = useHistory()
 
@@ -35,13 +35,12 @@ function Dashboard(){
             console.log(datas)
             setUdata(datas.user)
 
-            if(datas.user[0].roll === 'SuperAdmin'){
-                history.push('/super_admin')
+            if(res.status != 200){
+                history.push('/signin')
             }
 
-            if(!res.status === 200){
-                window.alert(`${res.error}`)
-                history.push('/signin')
+            if(datas.user[0].roll === 'SuperAdmin'){
+                history.push('/super_admin')
             }
         }catch(err){
             console.log(err)

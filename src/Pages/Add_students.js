@@ -13,7 +13,7 @@ import stu from '../Datas/student_details'
 function Add_students(){
     const [uData,setUdata] = useState()   
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()

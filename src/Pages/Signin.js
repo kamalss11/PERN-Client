@@ -10,6 +10,7 @@ import {AiFillCloseCircle} from 'react-icons/ai'
 
 function Signin(){
     const history = useHistory()
+    const [btnld,Setbtnld] = useState(false)
     const [ers,Seters] = useState()
 
     const callAboutPage = async () => {
@@ -27,6 +28,9 @@ function Signin(){
             console.log(datas)
 
             if(!res.status === 200){
+                console.log(datas.error)
+            }
+            else if(datas.user){
                 history.push('/dashboard')
             }
         }catch(err){
@@ -60,7 +64,7 @@ function Signin(){
     return(
         <>
             <div className='bg1'>
-                <nav>
+                <nav style={{justifyContent:'center'}}>
                     <h2 className='logo'>IQAC</h2>
                 </nav>
 
@@ -97,6 +101,7 @@ function Signin(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
+                                Setbtnld(!btnld)
                                 const res = await fetch('/signin',{
                                     method: "POST",
                                     headers: {
@@ -110,6 +115,7 @@ function Signin(){
 
                                 const data = await res.json()
                                 if(res.status === 400 || !data){
+                                    Setbtnld(false)
                                     Seters(data.error)
                                 }
                                 else{
@@ -146,7 +152,14 @@ function Signin(){
                             />
 
                             <div className="btn">
-                                <button type="submit">SignIn <TiArrowSortedUp /></button>
+                                {
+                                    btnld ? 
+                                    <button style={{pointerEvents: 'none'}}><i class="fa fa-spinner fa-spin"></i> Loading
+                                    </button> : 
+
+                                    <button type="submit">SignIn <TiArrowSortedUp />
+                                    </button>
+                                }
                             </div>
                         </Form>
                     </Formik>     

@@ -15,6 +15,7 @@ import {AiFillCloseCircle} from 'react-icons/ai'
 
 function Signup(){
     const history = useHistory()
+    const [btnld,Setbtnld] = useState(false)
     const [ers,Seters] = useState()
     const [select1,setSelect1] = useState('Select Department')
     const [drp1,Setdrp1] = useState(false)
@@ -23,30 +24,33 @@ function Signup(){
     const [drp2,Setdrp2] = useState(false)
     const [er2,setEr2] = useState(false)
 
-    const callAboutPage = async () => {
-        try{
-            const res = await fetch('/dashboard',{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
+    // const callAboutPage = async () => {
+    //     try{
+    //         const res = await fetch('/dashboard',{
+    //             method: "GET",
+    //             headers: {
+    //                 Accept: 'application/json',
+    //                 "Content-Type": "application/json"
+    //             },
+    //             credentials: 'include'
+    //         })
 
-            const datas = await res.json()
+    //         const datas = await res.json()
 
-            if(!res.status === 200){
-                history.push('/dashboard')
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
+    //         if(!res.status === 200){
+    //             console.log(datas.error)
+    //         }
+    //         else{
+    //             history.push('/dashboard')
+    //         }
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // }
 
-    useEffect(() => {
-        callAboutPage()
-    },[])
+    // useEffect(() => {
+    //     callAboutPage()
+    // },[])
 
     const TextInput = ({ label,...props }) => {
         const [field,meta] = useField(props)
@@ -139,14 +143,18 @@ function Signup(){
                             }
 
                             onSubmit={(values, { setSubmitting,resetForm }) => {
+                                Setbtnld(!btnld)
                                 if(select1 === 'Select Department' && select2 === 'Select Roll'){
+                                    Setbtnld(false)
                                     setEr1(true)
                                     setEr2(true)
                                 }
                                 else if(select1 === 'Select Department'){
+                                    Setbtnld(false)
                                     setEr1(true)
                                 }
                                 else if(select2 === 'Select Roll'){
+                                    Setbtnld(false)
                                     setEr2(true)
                                 }
                                 else{
@@ -168,6 +176,7 @@ function Signup(){
             
                                         const data = await res.json()
                                         if(res.status === 422 || !data){
+                                            Setbtnld(false)
                                             Seters(data.error)
                                         }
                                         else{
@@ -245,7 +254,14 @@ function Signup(){
                                 />
 
                                 <div className="btn">
-                                    <button type="submit">SignUp <TiArrowSortedUp /></button>
+                                    {
+                                        btnld ? 
+                                        <button style={{pointerEvents: 'none'}}><i class="fa fa-spinner fa-spin"></i> Loading
+                                        </button> : 
+
+                                        <button type="submit">SignUp <TiArrowSortedUp />
+                                        </button>
+                                    }
                                 </div>
                             </Form>
                         </Formik>   

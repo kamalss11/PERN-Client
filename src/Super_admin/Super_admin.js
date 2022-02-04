@@ -23,7 +23,7 @@ function Super_admin(){
     const [student,setStudent] = useState(false)
     const [tabind,setTabind] = useState(1)
     const [uData,setUdata] = useState()
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     const [men,setMen] = useState(false)
     const [sb,setSb] = useState(false)
     const callAboutPage = async () => {
@@ -92,7 +92,7 @@ function Super_admin(){
 
                         {
                             tabind == 1 ? 
-                            <div className='dprt'>
+                            <div style={{margin: '0 10px'}} className='dprt'>
                                 <ul className='dlist'>
                                     {
                                         Department_list.map((l,i)=>{
@@ -100,8 +100,8 @@ function Super_admin(){
                                             return(
                                                 <li key={id}>{name} 
                                                     <div>
-                                                        <Link onClick={(e)=>{window.localStorage.setItem('dprt',name)}} to={staffs}>Staffs</Link>
-                                                        <Link onClick={(e)=>{window.localStorage.setItem('dprt',name)}} to={students}>Students</ Link>
+                                                        <Link target={'_blank'} onClick={(e)=>{window.localStorage.setItem('dprt',name)}} to={staffs}>Staffs</Link>
+                                                        <Link target={'_blank'} onClick={(e)=>{window.localStorage.setItem('dprt',name)}} to={students}>Students</ Link>
                                                     </div>
                                                 </li>
                                             )
@@ -109,9 +109,9 @@ function Super_admin(){
                                     }
                                 </ul>
                             </div> : 
-                            <div className='dprt'>
+                            <div style={{margin: '0 10px'}} className='dprt'>
                                 <ul className='dlist'>
-                                    <li onClick={e=>setStaff(!staff)}>Staffs<IoMdArrowDropdownCircle className={`${staff ? 'active' : ''}`}/></li>
+                                    <li className='ss' onClick={e=>setStaff(!staff)}>Staffs<IoMdArrowDropdownCircle className={`${staff ? 'active' : ''}`}/></li>
                                         <div className={staff ? 'tb1 active' : 'tb1'}>
                                             <h4>Research</h4>
                                             {
@@ -177,7 +177,7 @@ function Super_admin(){
                                                 })
                                             }
                                         </div>
-                                    <li onClick={e=>setStudent(!student)}>Students <IoMdArrowDropdownCircle className={`${student ? 'active' : ''}`}/></li>
+                                    <li className='ss' onClick={e=>setStudent(!student)}>Students <IoMdArrowDropdownCircle className={`${student ? 'active' : ''}`}/></li>
                                         <div className={student ? 'tb2 active' : 'tb2'}>
                                             <h4>Student Details</h4>
                                             {

@@ -1,18 +1,24 @@
 import React,{useEffect,useState} from 'react'
 import { Formik,Form,useField } from 'formik'
 import * as Yup from 'yup'
-import { Link,useHistory } from 'react-router-dom'
+import { Link,useHistory, useParams } from 'react-router-dom'
 import '../CSS/LS.css'
 import {RiUser3Fill} from 'react-icons/ri'
 import {AiFillLock} from 'react-icons/ai'
+import {RiCloseCircleFill} from 'react-icons/ri'
+import {AiFillCheckCircle} from 'react-icons/ai'
 
 function Reset_password(){
     const history = useHistory()
+    const {token} = useParams()
     const [uData,setUdata] = useState()
+    const [msg,setMsg] = useState()
+    const [ms,setMs] = useState()
+    const [btnld,Setbtnld] = useState(false)
 
     const callAboutPage = async () => {
         try{
-            const res = await fetch('/dashboard',{
+            const res = await fetch('/reset_password',{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -23,12 +29,16 @@ function Reset_password(){
 
             const datas = await res.json()
             console.log(datas)
-            setUdata(datas.user)
+            setUdata(datas.rp)
+
+            if(datas.rp[0].token != token){
+                alert('The Link you have entered is not valid')
+                history.push('/forget_password')
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
                 throw error
-                history.push('signin')
             }
         }catch(err){
             history.push('/dashboard')
@@ -55,8 +65,6 @@ function Reset_password(){
             </>
         )
     }
-
-
     useEffect(() => {
         callAboutPage()
     },[])
@@ -99,6 +107,7 @@ function Reset_password(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
+                                Setbtnld(!btnld)
                                 const res = await fetch('/reset_password',{
                                     method: "PUT",
                                     headers: {
@@ -113,9 +122,11 @@ function Reset_password(){
 
                                 const data = await res.json()
                                 console.log(data)
+                                setMsg(data.error)
+                                setMs(data.dd)
                                 if(res.status === 400 || !data){
-                                    window.alert(`${data.error}`)
-                                    history.push('/forget_password')
+                                    Setbtnld(false)
+                                    // history.push('/forget_password')
                                 }
                                 else{
                                     window.localStorage.setItem('email','')
@@ -132,6 +143,9 @@ function Reset_password(){
                                 <h3>Reset Password</h3>
                             </div>
 
+                            {msg ? <p className='err se'><RiCloseCircleFill />{msg}</p> : ''}
+                            {ms ? <p className='suc se'><AiFillCheckCircle />{ms}</p> : ''}
+
                             <TextInput icon={<AiFillLock />}
                                 name="npassword"
                                 type="password"
@@ -145,12 +159,20 @@ function Reset_password(){
                             />
 
                             <div className="btn">
-                                <button type="submit">Submit</button>
-                            </div>
+                                {
+                                    btnld ? 
+                                    <button style={{pointerEvents: 'none'}}><i class="fa fa-spinner fa-spin"></i> Loading
+                                    </button> : 
 
-                            <p className="ls"><Link to="/signin">Login ?</Link></p>
+                                    <button type="submit">Submit</button>
+                                }
+                            </div>
                         </Form>
-                    </Formik>                                    
+                    </Formik>         
+                      
+                    <p className='bt'>
+                        <Link to={'/'}>Login ?</Link>
+                    </p>                                   
                 </div>
             </div>
         </>

@@ -12,7 +12,7 @@ function Editprofile(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [sb,setSb] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
 
     const history = useHistory()
@@ -117,7 +117,10 @@ function Editprofile(){
                                     ['BCA','B.Sc(CS-A)','B.Sc(CS-B)','B.Sc(CT)','B.Sc(IT)','M.Sc(SS)','BDA','B.Voc(Networking and Mobile Application)'],
                                     'Invalid'
                                     )
-                                    .required('Required')
+                                    .required('Required'),
+                                    email: Yup.string()
+                                        .email('Invalid Email')
+                                        .required('Required'),
                                 })
                             }
 

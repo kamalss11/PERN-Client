@@ -46,7 +46,7 @@ function Viewstaffs(){
     const [online_courses,Setonline_courses] = useState()       
     const [e_content,Sete_content] = useState()    
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [msg,setMsg] = useState('All')
     const [pvalue,setPvalue] = useState('All')
@@ -114,7 +114,6 @@ function Viewstaffs(){
             }
 
             if(!res.status === 200){
-                window.alert(`${res.error}`)
                 history.push('/signin')
             }
         }catch(err){
@@ -175,11 +174,11 @@ function Viewstaffs(){
             history.push('/signin')
         }
     }
-    // Delete Research Projects
-    const Rrp = async(id,table)=>{
+    // Delete Table
+    const Del = async(id,table)=>{
         console.log(id)
         try{
-            const res = await fetch(`/forms/research/${table}/delete/${id}`,{
+            const res = await fetch(`/forms/${table}/delete/${id}`,{
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
@@ -200,125 +199,6 @@ function Viewstaffs(){
         }catch(err){
             console.log(err)
         }
-    }
-
-    // Collaborative Activities
-    const Cca = async(id,table)=>{
-        try{
-            const res = await fetch(`/forms/collaborations/${table}/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Conference
-    const Ec = async(id,table)=>{
-        try{
-            const res = await fetch(`/forms/events/${table}/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Proejcts Services
-    const Cps = async(id)=>{
-        try{
-            const res = await fetch(`/forms/consultancy/projects_services/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    // Honours
-    const Fh = async(id,table)=>{
-        try{
-            const res = await fetch(`/forms/faculty/${table}/delete/${id}`,{
-                method: "PUT",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email : `${uData.email}`
-                })
-            })
-
-            callAboutPage()
-    
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    const MySelect = ({ label, ...props }) => {
-        const [field, meta] = useField(props);
-        return (
-          <div className="fields">
-            <label htmlFor={props.id || props.name}>{label}</label><br />
-            <select {...field} {...props} />
-            {
-                meta.touched && meta.error ?(
-                    <p className="error">{meta.error}</p>
-                ):null
-            }
-          </div>
-        )
     }
 
     useEffect(() => {
@@ -408,9 +288,12 @@ function Viewstaffs(){
                                                         <p><b>Date of Happened :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/research/research_projects/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                            <button onClick={e=>history.push({
+                                                                pathname: `/forms/research/research_projects/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
         
-                                                            <button onClick={e=>Rrp(id,'research_projects')}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Del(id,'research_projects')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -434,9 +317,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/research/patents/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                            <button onClick={e=>history.push({
+                                                                pathname: `/forms/research/patents/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button onClick={e=>Rrp(id,'patents')}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>Del(id,'patents')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -460,9 +345,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/research/awards_for_innovation/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/research/awards_for_innovation/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button onClick={e=>Rrp(id,'awards_for_innovation')}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>Del(id,'awards_for_innovation')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -484,9 +371,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/research/deg/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/research/deg/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button onClick={e=>Rrp(id,'degree')}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>Del(id,'degree')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -507,9 +396,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/research/fellowship/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/research/fellowship/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Rrp(id,'fellowship')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'fellowship')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -535,9 +426,11 @@ function Viewstaffs(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p> 
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/collaborations/collaborative_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/collaborations/collaborative_activities/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
         
-                                                            <button id={id} onClick={e=>Cca(id,'collab_activ')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'collab_activ')}><MdDelete /> Delete</button>
                                                         </div>
                                             </div>
                                         )
@@ -557,9 +450,11 @@ function Viewstaffs(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/collaborations/linkages/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/collaborations/linkages/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Cca(id,'linkages')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'linkages')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -582,9 +477,12 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/collaborations/mou/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Cca(id,'mou')}><MdDelete /> Delete</button>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/collaborations/mou/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
+                                                            
+                                                            <button id={id} onClick={e=>Del(id,'mou')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -614,9 +512,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/events/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/events/conference/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Ec(id,'conference')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'conference')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -640,9 +540,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/events/guest_lectures/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/events/guest_lectures/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Ec(id,'guest_lectures')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'guest_lectures')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
@@ -665,9 +567,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/events/extension_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/events/extension_activities/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Ec(id,'extension_activities')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'extension_activities')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -688,9 +592,12 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/events/industrial_visits/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>Ec(id,'industrial_visits')}><MdDelete /> Delete</button>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/events/industrial_visits/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
+                                                            
+                                                            <button id={id} onClick={e=>Del(id,'industrial_visits')}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -710,9 +617,12 @@ function Viewstaffs(){
                                                         <p><b>Date of happen :</b> {date ? date: 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/events/evs/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Ec(id,'evs')}}><MdDelete /> Delete</button>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/events/evs/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
+                                                            
+                                                            <button id={id} onClick={e=>{Del(id,'evs')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -734,9 +644,12 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/events/departmental_activities/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Ec(id,'departmental_activities')}}><MdDelete /> Delete</button>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/events/departmenta_activities/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
+                                                            
+                                                            <button id={id} onClick={e=>{Del(id,'departmental_activities')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -762,9 +675,12 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/consultancy/projects_services/edit`}onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
                                                             
-                                                            <button id={id} onClick={e=>{Cps(id)}}><MdDelete /> Delete</button>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/consultancy/projects_services/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
+                                                            
+                                                            <button id={id} onClick={e=>{Del(id,'projects_services')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
@@ -791,9 +707,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/honours/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/honours/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'honours')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'honours')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -812,9 +730,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/exams/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/exams/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'exams')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'exams')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -835,9 +755,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/books_published/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/books_published/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'books_published')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'books_published')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
@@ -862,9 +784,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/chapters_contributed/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/chapters_contributed/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'chapters_contributed')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'chapters_contributed')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -885,9 +809,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/conference_proceeding/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/conference_proceeding/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'conference_proceeding')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'conference_proceeding')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
@@ -911,9 +837,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/paper_presentation/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/paper_presentation/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'paper_presentation')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'paper_presentation')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                           
                                                 )
@@ -938,9 +866,11 @@ function Viewstaffs(){
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/journal_publications/edit`}><button id={id} onClick={e=>window.localStorage.setItem('edit',id)}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/journal_publications/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'journal_publications')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'journal_publications')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
@@ -965,9 +895,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/conference/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/conference/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'fconference')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'fconference')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -989,9 +921,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/resource_person/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/resource_person/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'resource_person')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'resource_person')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -1010,9 +944,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/financial_support/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/financial_support/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'financial_support')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'financial_support')}}><MdDelete /> Delete</button>
                                                             
                                                         </div>
                                                     </div>                                            
@@ -1035,9 +971,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/development_programmes/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/development_programmes/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'development_programmes')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'development_programmes')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                           
                                                 )
@@ -1059,9 +997,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/online_courses/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/online_courses/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'online_courses')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'online_courses')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -1080,9 +1020,11 @@ function Viewstaffs(){
                                                         <p><b>Date of Happen :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/faculty/e_content/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit /> Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/faculty/e_content/edit`,
+                                                                state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>{Fh(id,'e_content')}}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'e_content')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )

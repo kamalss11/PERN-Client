@@ -6,6 +6,7 @@ import '../CSS/LS.css'
 import MaterialTable from 'material-table'
 import {FaFileWord} from 'react-icons/fa'
 import {IoMdArrowDropdownCircle,IoMdArrowRoundBack} from 'react-icons/io'
+import Department_list from '../Datas/Department_list'
 
 function Staffs(){
     const export_all = ()=>{
@@ -38,7 +39,20 @@ function Staffs(){
         else link.click();  // other browsers
         document.body.removeChild(link);
     }
+    const history = useHistory()
     const {department} = useParams()
+    function departments(dprt){
+        return Department_list.some(function (d){
+            return d.name === dprt
+        })
+    }
+    var tf = departments(department)
+    console.log(tf)
+
+    if(!tf){
+        history.push('/super_admin')
+    }
+
     const [pvalue,setPvalue] = useState('All')
     const [drp,setDrp] = useState(false)
     const [msg,setMsg] = useState('All')
@@ -71,12 +85,11 @@ function Staffs(){
     const [fdp,setFdp] = useState([])
     const [foc,setFoc] = useState([])
     const [fe,setFe] = useState([])
-    const history = useHistory()
     console.log(data)   
 
     const call_period = async (prd) => {
         try{
-            const res = await fetch(`/period/${prd}/${window.localStorage.getItem('dprt')}`,{
+            const res = await fetch(`/period/${prd}/${department}`,{
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -128,14 +141,7 @@ function Staffs(){
     }
 
     const callAboutPage = async () => {
-        try{
-            if(!window.localStorage.getItem('dprt') || window.localStorage.getItem('dprt') === ''){
-                history.push('/super_admin')
-            }
-            // else{
-            //     history.replace(`super_admin/departments/staffs/${window.localStorage.getItem('dprt')}`)
-            // }
-            
+        try{            
             const res = await fetch('/dashboard',{
                 method: "GET",
                 headers: {
@@ -153,8 +159,7 @@ function Staffs(){
                 history.push('/signin')
             }
             else{
-                console.log(localStorage.getItem('dprt'))
-                const ad = await fetch(`/super_admin/departments/staffs/${window.localStorage.getItem('dprt')}`,{
+                const ad = await fetch(`/super_admin/departments/staffs/${department}`,{
                     method: "GET",
                     headers: {
                         Accept: 'application/json',

@@ -31,7 +31,7 @@ function Viewstudents(){
     const [msg,setMsg] = useState('All')
     const [pvalue,setPvalue] = useState('All')
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
 
     const callAboutPage = async () => {
@@ -122,10 +122,10 @@ function Viewstudents(){
         }
     }
     // Delete Placements
-    const Pla = async(id,table)=>{
+    const Del = async(id,table)=>{
         console.log(id)
         try{
-            const res = await fetch(`/forms/student/palcements/delete/${id}`,{
+            const res = await fetch(`/forms/${table}/delete/${id}`,{
                 method: "PUT",
                 headers: {
                     Accept: 'application/json',
@@ -244,9 +244,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/placements/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/placements/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
         
-                                                            <button onClick={e=>Pla(id,'placements')}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Del(id,'placements')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -271,9 +274,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_publications/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_publications/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button onClick={e=>Pla(id,'s_publications')}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Del(id,'s_publications')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -296,9 +302,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_paper_presentation/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_paper_presentation/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button onClick={e=>Pla(id,'s_paper_presentation')}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Del(id,'s_paper_presentation')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -323,9 +332,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_conference/edit`} onClick={e=>window.localStorage.setItem("edit",id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_conference/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button onClick={e=>Pla(id,'s_conference')}><MdDelete />Delete</button>
+                                                            <button onClick={e=>Del(id,'s_conference')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -349,9 +361,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p> 
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_competition/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_competition/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Pla(id)}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Del(id)}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -372,9 +387,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>   
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_training/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_training/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
         
-                                                            <button id={id} onClick={e=>Pla(id,'s_training')}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'s_training')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -396,9 +414,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>   
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_projectwork/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_projectwork/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Pla(id,'s_projectwork')}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'s_projectwork')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -418,9 +439,12 @@ function Viewstudents(){
                                                         <p><b>Date:</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>   
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_exams/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_exams/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Pla(id,'s_exams')}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'s_exams')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -443,9 +467,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>   
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_onlinecourses/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                        <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_onlinecourses/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Pla(id,'s_onlinecourses')}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'s_onlinecourses')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -467,9 +494,12 @@ function Viewstudents(){
                                                         <p><b>Date :</b> {date ? date : 'NIL'}</p>
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>   
                                                         <div className="btn">
-                                                            <Link className="edit" to={`/forms/student/s_achievementss/edit`} onClick={e=>window.localStorage.setItem('edit',id)}><button id={id}><MdEdit />Edit</button></Link>
+                                                            <button onClick={e=>history.push({
+                                                                pathname: `/forms/student/s_achivements/edit`,
+                                                                state: {id: id}
+                                                            })} type='link' id={id}><MdEdit />Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Pla(id,'s_achievements')}><MdDelete />Delete</button>
+                                                            <button id={id} onClick={e=>Del(id,'s_achievements')}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
         

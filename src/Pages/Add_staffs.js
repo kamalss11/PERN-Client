@@ -18,7 +18,7 @@ function Add_staffs(){
     const [uData,setUdata] = useState()   
     const [men,setMen] = useState(false)
     const [sb,setSb] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const history = useHistory()
 

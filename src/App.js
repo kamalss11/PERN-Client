@@ -185,7 +185,7 @@ function App() {
             <Forget_Password />
           </Route>
 
-          <Route path="/reset_password">
+          <Route exact path="/reset_password/:token">
             <Reset_password />
           </Route>
 
@@ -193,7 +193,7 @@ function App() {
             <Profile />
           </Route>
 
-          <Route path="/dashboard/editprofile">
+          <Route exact path="/dashboard/editprofile">
             <Editprofile />
           </Route>
 
@@ -201,11 +201,11 @@ function App() {
             <Super_admin />
           </Route>
 
-          <Route path="/super_admin/departments/staffs/:department">            
+          <Route exact path="/super_admin/departments/staffs/:department">            
             <Staffs />
           </Route>
 
-          <Route path="/super_admin/departments/students/:department">            
+          <Route exact path="/super_admin/departments/students/:department">            
             <Students />
           </Route>
 
@@ -367,7 +367,7 @@ function App() {
             <Researchprojects />
           </Route>
 
-          <Route path="/forms/research/research_projects/edit">
+          <Route exact path="/forms/research/research_projects/edit">
             <Edit_research_projects />
           </Route>
 
@@ -375,7 +375,7 @@ function App() {
             <Patents />
           </Route>
 
-          <Route path="/forms/research/patents/edit">
+          <Route exact path="/forms/research/patents/edit">
             <Edit_patents />
           </Route>
 
@@ -383,7 +383,7 @@ function App() {
             <Awards />
           </Route>
 
-          <Route path="/forms/research/awards_for_innovation/edit">
+          <Route exact path="/forms/research/awards_for_innovation/edit">
             <Edit_awards />
           </Route>
 
@@ -391,7 +391,7 @@ function App() {
             <Deg />
           </Route>
 
-          <Route path="/forms/research/deg/edit">
+          <Route exact path="/forms/research/deg/edit">
             <Edit_phd />
           </Route>
 
@@ -399,7 +399,7 @@ function App() {
             <Fellowship />
           </Route>
 
-          <Route path="/forms/research/fellowship/edit">
+          <Route exact path="/forms/research/fellowship/edit">
             <Edit_fellowship />
           </Route>
 
@@ -409,7 +409,7 @@ function App() {
             <Activities />
           </Route>
 
-          <Route path="/forms/collaborations/collaborative_activities/edit">
+          <Route exact path="/forms/collaborations/collaborative_activities/edit">
             <Edit_activities />
           </Route>
 
@@ -417,7 +417,7 @@ function App() {
             <Linkages />
           </Route>
 
-          <Route path="/forms/collaborations/linkages/edit">
+          <Route exact path="/forms/collaborations/linkages/edit">
             <Edit_linkages />
           </Route>
 
@@ -425,7 +425,7 @@ function App() {
             <Mou />
           </Route>
 
-          <Route path="/forms/collaborations/mou/edit">
+          <Route exact path="/forms/collaborations/mou/edit">
             <Edit_mou />
           </Route>
 
@@ -435,7 +435,7 @@ function App() {
             <Conference />
           </Route>
 
-          <Route path="/forms/events/conference/edit">
+          <Route exact path="/forms/events/conference/edit">
             <Edit_conference />
           </Route>
 
@@ -443,7 +443,7 @@ function App() {
             <Lectures />
           </Route>
 
-          <Route path="/forms/events/guest_lectures/edit">
+          <Route exact path="/forms/events/guest_lectures/edit">
             <Edit_lectures />
           </Route>
 
@@ -451,7 +451,7 @@ function App() {
             <Extension />
           </Route>
 
-          <Route path="/forms/events/extension_activities/edit">
+          <Route exact path="/forms/events/extension_activities/edit">
             <Edit_extension />
           </Route>
 
@@ -459,7 +459,7 @@ function App() {
             <Visits />
           </Route>
 
-          <Route path="/forms/events/industrial_visits/edit">
+          <Route exact path="/forms/events/industrial_visits/edit">
             <Edit_visits />
           </Route>
 
@@ -467,7 +467,7 @@ function App() {
             <Evs />
           </Route>
 
-          <Route path="/forms/events/evs/edit">
+          <Route exact path="/forms/events/evs/edit">
             <Edit_evs />
           </Route>
 
@@ -475,7 +475,7 @@ function App() {
             <Departmental />
           </Route>
 
-          <Route path="/forms/events/departmental_activities/edit">
+          <Route exact path="/forms/events/departmental_activities/edit">
             <Edit_departmental />
           </Route>
 
@@ -485,7 +485,7 @@ function App() {
             <Projects_services />
           </Route>
 
-          <Route path="/forms/consultancy/projects_services/edit">
+          <Route exact path="/forms/consultancy/projects_services/edit">
             <Edit_pro />
           </Route>
 
@@ -495,7 +495,7 @@ function App() {
             <Honours />
           </Route>
 
-          <Route path="/forms/faculty/honours/edit">
+          <Route exact path="/forms/faculty/honours/edit">
             <Edit_honours />
           </Route>
 
@@ -503,7 +503,7 @@ function App() {
             <Exams />
           </Route>
 
-          <Route path="/forms/faculty/exams/edit">
+          <Route exact path="/forms/faculty/exams/edit">
             <Edit_exams />
           </Route>
 
@@ -511,7 +511,7 @@ function App() {
             <Books_published />
           </Route>
 
-          <Route path="/forms/faculty/books_published/edit">
+          <Route exact path="/forms/faculty/books_published/edit">
             <Edit_books />
           </Route>
 
@@ -519,7 +519,7 @@ function App() {
             <Chapters_contributed />
           </Route>
 
-          <Route path="/forms/faculty/chapters_contributed/edit">
+          <Route exact path="/forms/faculty/chapters_contributed/edit">
             <Edit_chapters />
           </Route>
 
@@ -527,7 +527,7 @@ function App() {
             <Conference_proceeding />
           </Route>
 
-          <Route path="/forms/faculty/conference_proceeding/edit">
+          <Route exact path="/forms/faculty/conference_proceeding/edit">
             <Edit_confep />
           </Route>
 
@@ -535,7 +535,7 @@ function App() {
             <Paper_presentation />
           </Route>
 
-          <Route path="/forms/faculty/paper_presentation/edit">
+          <Route exact path="/forms/faculty/paper_presentation/edit">
             <Edit_paper />
           </Route>
 
@@ -543,7 +543,7 @@ function App() {
             <Journal_publications />
           </Route>
 
-          <Route path="/forms/faculty/journal_publications/edit">
+          <Route exact path="/forms/faculty/journal_publications/edit">
             <Edit_journal />
           </Route>
 
@@ -551,7 +551,7 @@ function App() {
             <Conferences />
           </Route>
 
-          <Route path="/forms/faculty/conference/edit">
+          <Route exact path="/forms/faculty/conference/edit">
             <Edit_conferene />
           </Route>
 
@@ -559,7 +559,7 @@ function App() {
             <Resource_person />
           </Route>
 
-          <Route path="/forms/faculty/resource_person/edit">
+          <Route exact path="/forms/faculty/resource_person/edit">
             <Edit_resource /> 
           </Route>
 
@@ -567,7 +567,7 @@ function App() {
             <Financial_support />
           </Route>
 
-          <Route path="/forms/faculty/financial_support/edit">
+          <Route exact path="/forms/faculty/financial_support/edit">
             <Edit_financial />
           </Route>
 
@@ -575,7 +575,7 @@ function App() {
             <Development_programmes />
           </Route>
 
-          <Route path="/forms/faculty/development_programmes/edit">
+          <Route exact path="/forms/faculty/development_programmes/edit">
             <Edit_development />
           </Route>
 
@@ -583,7 +583,7 @@ function App() {
             <Online_courses />
           </Route>
 
-          <Route path="/forms/faculty/online_courses/edit">
+          <Route exact path="/forms/faculty/online_courses/edit">
             <Edit_onlinecourses />
           </Route>
 
@@ -591,7 +591,7 @@ function App() {
             <E_content />
           </Route>
 
-          <Route path="/forms/faculty/e_content/edit">
+          <Route exact path="/forms/faculty/e_content/edit">
             <Edit_econtent />
           </Route>
 
@@ -601,7 +601,7 @@ function App() {
             <Placements />
           </Route>
 
-          <Route path="/forms/student/placements/edit">
+          <Route exact path="/forms/student/placements/edit">
             <Edit_Placements />
           </Route>
 
@@ -609,7 +609,7 @@ function App() {
             <Publications />
           </Route>
 
-          <Route path="/forms/student/s_publications/edit">
+          <Route exact path="/forms/student/s_publications/edit">
             <Edit_publi />
           </Route>
 
@@ -617,7 +617,7 @@ function App() {
             <SPpr />
           </Route>          
 
-          <Route path="/forms/student/paper_presentation/edit">
+          <Route exact path="/forms/student/paper_presentation/edit">
             <Edit_Paper_presentation />
           </Route>
 
@@ -625,7 +625,7 @@ function App() {
             <SConference />
           </Route>        
 
-          <Route path="/forms/student/s_conference/edit">
+          <Route exact path="/forms/student/s_conference/edit">
             <Edit_conf />
           </Route>
 
@@ -633,7 +633,7 @@ function App() {
             <SComp />
           </Route>     
 
-          <Route path="/forms/student/s_competition/edit">
+          <Route exact path="/forms/student/s_competition/edit">
             <Edit_compet />
           </Route>
 
@@ -641,7 +641,7 @@ function App() {
             <STraining />
           </Route>     
 
-          <Route path="/forms/student/s_training/edit">
+          <Route exact path="/forms/student/s_training/edit">
             <Edit_Trai />
           </Route>
 
@@ -649,7 +649,7 @@ function App() {
             <SPrjct />
           </Route>  
 
-          <Route path="/forms/student/s_projectwork/edit">
+          <Route exact path="/forms/student/s_projectwork/edit">
             <Edit_prj />
           </Route>
 
@@ -657,7 +657,7 @@ function App() {
             <SExams />
           </Route>  
 
-          <Route path="/forms/student/s_exams/edit">
+          <Route exact path="/forms/student/s_exams/edit">
             <Edit_exms />
           </Route>
 
@@ -665,7 +665,7 @@ function App() {
             <SOncou />
           </Route>
 
-          <Route path="/forms/student/s_onlinecourses/edit">
+          <Route exact path="/forms/student/s_onlinecourses/edit">
             <Edit_onc />
           </Route>
 
@@ -673,11 +673,11 @@ function App() {
             <SAchiv />
           </Route>
 
-          <Route path="/forms/student/s_achievements/edit">
+          <Route exact path="/forms/student/s_achievements/edit">
             <Edit_achiv />
           </Route>
           
-          <Route path="/logout">
+          <Route exact path="/logout">
             <Logout />
           </Route>
           

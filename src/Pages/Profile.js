@@ -11,7 +11,7 @@ function Profile(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [sb,setSb] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     const history = useHistory()
     const callAboutPage = async () => {
         try{
@@ -66,7 +66,7 @@ function Profile(){
                         <div className="hdrs">
                             <h3>Profile</h3>
                             {
-                                uData ? <button id={uData[0].user_id} onClick={()=> history.push(`/dashboard/editprofile/${uData[0].user_id}`)}><MdEdit />Edit </button> : ''
+                                uData ? <button id={uData[0].user_id} onClick={()=> history.push(`/dashboard/editprofile`)}><MdEdit />Edit </button> : ''
                             }
                         </div>
 
