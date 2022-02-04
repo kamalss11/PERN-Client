@@ -23,14 +23,14 @@ function Sidebar({sa,Formdatas,research,callob,events,consultancy,faculty,exp,st
                         if(name === 'Dashboard'){
                             return(
                                 <li key={id}>
-                                    <Link className={`${dactive ? 'active' : ''}`} to={`${sa ? '/super_admin' : url}`}>{icon} {name}</Link>
+                                    <Link className={`${dactive ? 'active' : ''}`} to={`${sa ? '/super_admin' : url}`}>{icon}<p>{name}</p></Link>
                                 </li>
                             )
                         }
                         else{
                             return(
                                 <li key={id}>
-                                    <Link className={`${pactive ? 'active' : ''}`} to={url}>{icon} {name}</Link>
+                                    <Link className={`${pactive ? 'active' : ''}`} to={url}>{icon} <p>{name}</p></Link>
                                 </li>
                             )
                         }
@@ -38,14 +38,14 @@ function Sidebar({sa,Formdatas,research,callob,events,consultancy,faculty,exp,st
                 }
  
                 {exp ?  <li className="forms" style={{cursor:" pointer"}}>
-                    <Link to={'/dashboard/staffs_export'} className="expall"><TiExport />Exports</Link>
+                    <Link to={'/dashboard/staffs_export'} className="expall"><TiExport /><p>Exports</p></Link>
                 </li> : null}
                 
                 {stu ?  <li className="forms" style={{cursor:" pointer"}}>
-                    <Link to={'/dashboard/students_export'} className="expall"><TiExport />Exports</Link>
+                    <Link to={'/dashboard/students_export'} className="expall"><TiExport /><p>Exports</p></Link>
                 </li> : null}
 
-                <ul>
+                {/* <ul>
                     { 
                         Formdatas ? 
                         Formdatas.map((fname)=>{
@@ -130,10 +130,10 @@ function Sidebar({sa,Formdatas,research,callob,events,consultancy,faculty,exp,st
                             }
                         }) : null
                     }
-                </ul>
+                </ul> */}
 
                 <li>
-                    <Link to='/logout'><AiOutlineLogout /> Logout</Link>
+                    <Link to='/logout'><AiOutlineLogout /><p>Logout</p></Link>
                 </li>
             </ul>
 

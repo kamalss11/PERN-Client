@@ -46,7 +46,7 @@ function Adminlogin(){
 
     const [msg,setMsg] = useState('All')
     const [data,setData] = useState()
-    const editprofile = `/dashboard/editprofile/${data ? data[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     const [rps,setRps] = useState([])
     const [rpat,setRpat] = useState([])
     const [rawd,setRawd] = useState([])

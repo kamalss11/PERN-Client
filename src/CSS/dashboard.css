@@ -30,7 +30,7 @@
 
 .dprt h4{
     line-height: 33px;
-    color: var(--gray2);
+    color: var(--sidebar);
 }
 
 .dprt .rp{
@@ -39,7 +39,7 @@
 }
 
 .dprt .rp.p{
-    color: var(--pink);
+    color: var(--sidebar);
 }
 
 .dprt img{
@@ -65,7 +65,7 @@
 }
 
 .submitted .add h3{
-    color: var(--pink);
+    color: var(--sidebar);
     margin: 25px 0;
 }
 
@@ -92,7 +92,7 @@
 .modules ul li{
     padding: 10px;
     text-align: center;
-    border: 1px solid var(--pink);
+    border: 1px solid var(--sidebar);
     color: var(--fntgry);
     width: 130px;
     cursor: pointer;
@@ -100,7 +100,7 @@
 }
 
 .modules ul li.active{
-    color: var(--white);
+    color: var(--yellow);
     font-weight: bold;
 }
 
@@ -110,7 +110,7 @@
     top: 0;
     left: 0;
     height: 100%;
-    background: var(--pink);
+    background: var(--sidebar);
     box-shadow: 0 5px 20px rgb(0 0 0 / 20%);
     z-index: -1;
     transition: .6s;
@@ -137,14 +137,13 @@
 }
 
 .da .links li a svg{
-    color: var(--pink);
+    color: var(--yellow);
     font-size: 22px;
     margin-right: 15px;
 }
 
 .about{
     margin-left: 240px;
-    margin-top: 100px;
     transition: .5s;
 }
 
@@ -153,7 +152,7 @@
 }
 
 .about .content{
-    margin: 0 10px;
+    margin: 120px 10px 0;
 }
 
 .about .content .hdr{
@@ -169,6 +168,12 @@
     width: calc(100% - 240px);
     z-index: 10;
     color: var(--fntgry);
+    transition: .4s;
+}
+
+.about .content .hdr.activate{
+    width: 100%;
+    left: 0;
 }
 
 .about .content .hdr .beg{
@@ -239,6 +244,7 @@
 .about .content .hdr b ul.men li a svg{
     font-size: 17px;
     margin-right: 10px;
+    color: var(--yellow);
 }
 
 .hdr p span{
@@ -274,7 +280,7 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 25px;
-    color: var(--pink);
+    color: var(--sidebar) !important;
     transition: .6s;
 }
 
@@ -286,13 +292,14 @@
     position: absolute;
     left: 0;
     width: 100%;
-    background: var(--sidebar);
+    background: var(--sidebar) !important;
     box-shadow: 0 0 10px rgba(0,0,0,.1);
     border-radius: 10px;
     height: 0;
     pointer-events: none;
     overflow: scroll;
     color: var(--white);
+    z-index: 15;
     transition: .6s;
 }
 
@@ -314,10 +321,11 @@
     background: none;
     border-radius: 0;
     color: var(--white);
-    transition: .6s;
+    transition: .4s;
 }
 
 .select div p:hover{
+    color: var(--yellow);
     background: rgba(255,255,255,.3);
     box-shadow: 0 0 10px rgba(0,0,0,.1);
 }
@@ -384,7 +392,7 @@
 .about .content .pro-data p{
     line-height: 50px;
     font-size: 14px;
-    color: var(--gray3);
+    color: var(--sidebar);
 }
 
 .about .content .pro-data .img{
@@ -413,7 +421,7 @@
     background: none;
     cursor: pointer;
     border: none;
-    background: var(--pink);
+    background: var(--sidebar);
     color: var(--white);
     box-shadow: 0 0 15px rgb(0 0 0 / 20%);
     font-size: 13px;
@@ -423,6 +431,8 @@
 
 .about .content .pro-data .hdrs button svg{
     font-size: 15px;
+    color: var(--yellow);
+    margin-right: 5px;
 }
 
 .about .content form{
@@ -431,7 +441,7 @@
 
 .about .content form h3{
     text-align: center;
-    color: var(--gray2)
+    color: var(--gray)
 }
 
 .about .content form p{
@@ -452,6 +462,7 @@
 .about .content form .fields label{
     font-size: 12px;
     font-weight: bold;
+    color: var(--sidebar);
 }
 
 .about .content form .fields input,.about .content form .fields select{
@@ -459,11 +470,13 @@
     padding: 10px;
     font-size: 15px;
     border: none;
-    border-bottom: 1px solid var(--fntbgclr);
+    outline: none;
+    color: var(--fntgry);
+    border-bottom: 1px solid #6a737c4f;
 }
 
 .about .content form .fields p.error{
-    color: var(--error);
+    color: var(--red);
     font-size: 11px;
     margin: 4px;
 }
@@ -476,7 +489,7 @@
     margin: 20px 0;
     border-radius: 5px;
     cursor: pointer;
-    background: var(--pink);
+    background: var(--sidebar);
     box-shadow: 0 0 15px rgb(0 0 0 / 20%);
     color: var(--white);
     padding: 15px;
@@ -485,7 +498,7 @@
 
 .research h4{
     margin: 15px 0 15px 10px;
-    color: var(--gray3);
+    color: var(--sidebar);
 }
 
 .research h3{
@@ -504,7 +517,7 @@
 .research .research_projects p{
     font-size: 14px;
     line-height: 28px;
-    color: var(--gray3);
+    color: var(--fntgry);
     padding: 10px 0;
 }
 
@@ -534,19 +547,20 @@
 .research .research_projects .btn button svg{
     font-size: 17px;
     margin-right: 10px;
+    transform: rotate(0);
 }
 
-.research .research_projects .btn a.edit button{
-    background: linear-gradient(87deg,#2dce89,#2dcecc) !important;    
+.research .research_projects .btn button:nth-child(1){
+    background: var(--edit) !important;    
 }
 
 .research .research_projects .btn button{
-    background: #ff002f9e;
+    background: var(--delete);
 }
 
 .research p.no{
     margin-bottom: 35px;
-    color: var(--pink);
+    color: var(--sidebar);
     text-align: center;
     font-weight: bold;
 }
@@ -650,7 +664,12 @@ table td{
         left: -100%;
     }
 
-    .sidebar.sidebar.activate{
+    .sidebar.activate{
         left: 0;
+    }
+    
+    .about .content .hdr{
+        left: 0;
+        width: 100%;
     }
 }
