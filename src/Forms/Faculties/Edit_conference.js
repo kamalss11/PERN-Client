@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_conferene(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [con,setCon] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -30,20 +31,23 @@ function Edit_conferene(){
                 credentials: 'include'
             })
 
-            const datas = await res.json()
-            setUdata(datas.user)
-
-            const mo = await fetch(`/forms/faculty/fconference/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })            
-            
-            const m = await mo.json()
-            setCon(m)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/fconference/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setCon(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -118,6 +122,7 @@ function Edit_conferene(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${con ? con[0].n : ''}`,
                             con: `${con ? con[0].con : ''}`,
                             title: `${con ? con[0].title : ''}`,
                             venue: `${con ? con[0].venue : ''}`,
@@ -149,6 +154,7 @@ function Edit_conferene(){
                                 console.log(img,values.date)
                                 dat.append('image',img)
                                 dat.append('id',con[0].id)
+                                dat.append('n',values.n)
                                 dat.append('con',values.con)
                                 dat.append('title',values.title)
                                 dat.append('venue',values.venue)
@@ -168,6 +174,14 @@ function Edit_conferene(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Conference / Seminar / Symposium / Workshop Attended</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <MySelect name="con" label="Type">
                                 <option value="">--Select--</option>

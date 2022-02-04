@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory, useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_Placements(){
+    const location = useLocation()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [img,setimg] = useState()
     const [place,setPlace] = useState()
-    const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -38,18 +39,23 @@ function Edit_Placements(){
                 throw error
             }
 
-            const place = await fetch(`/forms/student/placements/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const r = await place.json()
-            console.log(r)
-            setPlace(r)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/placements/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setPlace(r)
+            }
         }catch(err){
             console.log(err)
             history.push('/signin')

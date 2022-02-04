@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -9,14 +9,15 @@ import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
-function Edit_research_projects(){
+function Edit_research_projects(props){
+    const location = useLocation()
+    const history = useHistory()
     const [uData,setUdata] = useState()
     const [rp,setRp] = useState()
     const [men,setMen] = useState(false)
     const [img,setimg] = useState()
-    const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
-    const history = useHistory()
     const [sb,setSb] = useState(false)
 
     const callAboutPage = async () => {
@@ -38,18 +39,23 @@ function Edit_research_projects(){
                 throw error
             }
 
-            const rps = await fetch(`/forms/research/research_projects/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const r = await rps.json()
-            console.log(r)
-            setRp(r)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/research_projects/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setRp(r)
+            }
         }catch(err){
             console.log(err)
             history.push('/signin')
@@ -58,6 +64,7 @@ function Edit_research_projects(){
 
     useEffect(() => {
         callAboutPage()
+        // console.log(location.state.id)
     },[])
 
     const TextInput = ({ label,...props }) => {
@@ -120,6 +127,7 @@ function Edit_research_projects(){
 
                     <Formik
                         initialValues = {{
+                            n: `${rp ? rp[0].n :  ''}`,
                             image: `${rp ? rp[0].file :  ''}`,
                             title: `${rp ? rp[0].title : ''}`,
                             no: `${rp ? rp[0].no : ''}`,
@@ -158,7 +166,7 @@ function Edit_research_projects(){
                                 let dat = new FormData()
                                 dat.append('image',img)
                                 dat.append('id',rp[0].id)
-                                dat.append('n',uData[0].name)
+                                dat.append('n',values.n)
                                 dat.append('title',values.title)
                                 dat.append('no',values.no)
                                 dat.append('amount_sanctioned',values.amount_sanctioned)
@@ -179,8 +187,17 @@ function Edit_research_projects(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Research Projects</h3>
+
                             <TextInput
-                                id="tite"
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
+
+                            <TextInput
+                                id="title"
                                 name="title"
                                 type="text"
                                 label="Title of the project"

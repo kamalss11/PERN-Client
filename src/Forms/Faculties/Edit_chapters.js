@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_chapters(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [chp,setChp] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_chapters(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const mo = await fetch(`/forms/faculty/chapters_contributed/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const m = await mo.json()
-            setChp(m)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/chapters_contributed/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setChp(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -118,6 +125,7 @@ function Edit_chapters(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${chp ? chp[0].n : ''}`,
                             title: `${chp ? chp[0].title : ''}`,
                             chapter: `${chp ? chp[0].chapter : ''}`,
                             editor: `${chp ? chp[0].editor : ''}`,
@@ -149,6 +157,7 @@ function Edit_chapters(){
                                 console.log(img,values.date)
                                 dat.append('image',img)
                                 dat.append('id',chp[0].id)
+                                dat.append('n',values.n)
                                 dat.append('title',values.title)
                                 dat.append('chapter',values.chapter)
                                 dat.append('editor',values.editor)
@@ -168,6 +177,14 @@ function Edit_chapters(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Chapters Contributed</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <TextInput
                                 id="title"

@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_patents(){
+    const location = useLocation()
     const [uData,setUdata] = useState()
     const [img,setimg] = useState()
     const [pat,setpat] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,18 +34,23 @@ function Edit_patents(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const pa = await fetch(`/forms/research/patents/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const patents = await pa.json()
-            console.log(patents)
-            setpat(patents)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/patents/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setpat(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -104,6 +110,7 @@ function Edit_patents(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${pat ? pat[0].n : ''}`,
                             title: `${pat ? pat[0].title : ''}`,
                             field: `${pat ? pat[0].field : ''}`,
                             fileno: `${pat ? pat[0].fileno : ''}`,
@@ -134,6 +141,7 @@ function Edit_patents(){
                             setTimeout(async () => {
                                 let dat = new FormData()
                                 dat.append('image',img)
+                                dat.append('n',values.n)
                                 dat.append('id',pat[0].id)
                                 dat.append('title',values.title)
                                 dat.append('field',values.field)
@@ -155,6 +163,14 @@ function Edit_patents(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Patents</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
                             <TextInput
                                 id="title"
                                 name="title"

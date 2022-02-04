@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory, useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_lectures(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [lec,setLec] = useState()
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_lectures(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const d = await fetch(`/forms/events/guest_lectures/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const de = await d.json()
-            setLec(de)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/guest_lectures/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setLec(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -103,6 +110,7 @@ function Edit_lectures(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${lec ? lec[0].n : ''}`,
                             resource_person: `${lec ? lec[0].resource_person : ''}`,
                             designation: `${lec ? lec[0].designation : ''}`,
                             topic: `${lec ? lec[0].topic : ''}`,
@@ -136,6 +144,7 @@ function Edit_lectures(){
                                 console.log(img)
                                 dat.append('image',img)
                                 dat.append('id',lec[0].id)
+                                dat.append('n',values.n)
                                 dat.append('resource_person',values.resource_person)
                                 dat.append('designation',values.designation)
                                 dat.append('topic',values.topic)
@@ -156,6 +165,13 @@ function Edit_lectures(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Guest Lectures organized</h3>
+
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the faculty"
+                            />
 
                             <TextInput
                                 id="resource_person"

@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_evs(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [evs,setEvs] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_evs(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const e = await fetch(`/forms/events/evs/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const ev = await e.json()
-            setEvs(ev)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/evs/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setEvs(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -103,6 +110,7 @@ function Edit_evs(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${evs ? evs[0].n : ''}`,
                             date: `${evs ? evs[0].date : ''}`,
                             place: `${evs ? evs[0].place : ''}`,
                             total: `${evs ? evs[0].total : ''}`,
@@ -129,6 +137,7 @@ function Edit_evs(){
                                 console.log(img)
                                 dat.append('image',img)
                                 dat.append('id',evs[0].id)
+                                dat.append('n',values.n)
                                 dat.append('date',values.date)
                                 dat.append('place',values.place)
                                 dat.append('total',values.total)
@@ -145,6 +154,13 @@ function Edit_evs(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Environmental Science (EVS) Visit</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the faculty"
+                            />
 
                             <TextInput
                                 id="place"

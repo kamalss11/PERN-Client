@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_mou(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [mou,setMou] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_mou(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const mo = await fetch(`/forms/collaborations/mou/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const m = await mo.json()
-            setMou(m)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/mou/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setMou(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -103,6 +110,7 @@ function Edit_mou(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${mou ? mou[0].n : ''}`,
                             organization: `${mou ? mou[0].organization : ''}`,
                             date_signed: `${mou ? mou[0].date_signed : ''}`,
                             period: `${mou ? mou[0].period : ''}`,
@@ -134,6 +142,7 @@ function Edit_mou(){
                                 console.log(img)
                                 dat.append('image',img)
                                 dat.append('id',mou[0].id)
+                                dat.append('n',values.n)
                                 dat.append('organization',values.organization)
                                 dat.append('date_signed',values.date_signed)
                                 dat.append('period',values.period)
@@ -153,6 +162,14 @@ function Edit_mou(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit MoU(s) Signed</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <TextInput
                                 id="organization"

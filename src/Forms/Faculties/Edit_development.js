@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_development(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [dev,Setdev] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_development(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const mo = await fetch(`/forms/faculty/development_programmes/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })            
-            
-            const m = await mo.json()
-            Setdev(m)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/development_programmes/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                Setdev(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -118,6 +125,7 @@ function Edit_development(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${dev ? dev[0].n : ''}`,
                             training: `${dev ? dev[0].training : ''}`,
                             title: `${dev ? dev[0].title : ''}`,
                             venue: `${dev ? dev[0].venue : ''}`,
@@ -147,6 +155,7 @@ function Edit_development(){
                                 console.log(img,values.date)
                                 dat.append('image',img)
                                 dat.append('id',dev[0].id)
+                                dat.append('n',values.n)
                                 dat.append('training',values.training)
                                 dat.append('title',values.title)
                                 dat.append('venue',values.venue)
@@ -165,6 +174,14 @@ function Edit_development(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Professional Development Programmes</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <MySelect name="training" label="Type">
                                 <option value="">--Select--</option>

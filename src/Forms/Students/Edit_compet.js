@@ -8,13 +8,15 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
+import { useLocation } from 'react-router-dom'
 
 function Edit_compet(){
+    const location = useLocation()
     const [ppr,setPpr] = useState()
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
     const [img,setimg] = useState()
-    const editprofile = `/dashboard/editprofile/${uData ? uData._id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -38,18 +40,23 @@ function Edit_compet(){
                 throw error
             }
 
-            const ppr = await fetch(`/forms/student/s_competition/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const r = await ppr.json()
-            console.log(r)
-            setPpr(r)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/s_competition/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setPpr(r)
+            }
         }catch(err){
             console.log(err)
             history.push('/signin')

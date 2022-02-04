@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_fellowship(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [fell,setFell] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_fellowship(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const fe = await fetch(`/forms/research/fellowship/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const fel = await fe.json()
-            setFell(fel)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/fellowship/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setFell(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -118,6 +125,7 @@ function Edit_fellowship(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${fell ? fell[0].n : ''}`,
                             fellowship: `${fell ? fell[0].fellowship : ''}`,
                             date_sanctioned: `${fell ? fell[0].date_sanctioned : ''}`,
                             funding_agency: `${fell ? fell[0].funding_agency : ''}`,
@@ -144,6 +152,7 @@ function Edit_fellowship(){
                                 let dat = new FormData()
                                 console.log(img)
                                 dat.append('image',img)
+                                dat.append('n',values.n)
                                 dat.append('id',fell[0].id)
                                 dat.append('fellowship',values.fellowship)
                                 dat.append('date_sanctioned',values.date_sanctioned)
@@ -162,6 +171,14 @@ function Edit_fellowship(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Fellowship</h3>
+
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <MySelect name="fellowship" label="Fellowship">
                                 <option value="">--Fellowship--</option>

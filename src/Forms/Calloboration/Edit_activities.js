@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_activities(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [act,setAct] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_activities(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const ac = await fetch(`/forms/collaborations/collab_activ/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const a = await ac.json()
-            setAct(a)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/collab_activ/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setAct(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -103,6 +110,7 @@ function Edit_activities(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${act ? act[0].n: ''}`,
                             activity: `${act ? act[0].activity: ''}`,
                             participant: `${act ? act[0].participant : ''}`,
                             financial_support: `${act ? act[0].financial_support : ''}`,
@@ -115,7 +123,7 @@ function Edit_activities(){
 
                         validationSchema = {
                             Yup.object({                                     
-                                name: Yup.string()
+                                activity: Yup.string()
                                     .required('Required'),
                                 participant: Yup.string(),
                                 financial_support: Yup.string(),
@@ -125,10 +133,12 @@ function Edit_activities(){
 
                         onSubmit={(values, { setSubmitting,resetForm }) => {
                             setTimeout(async () => {
+                                console.log('Poda')
                                 let dat = new FormData()
                                 console.log(img)
                                 dat.append('image',img)
                                 dat.append('id',act[0].id)
+                                dat.append('n',values.n)
                                 dat.append('activity',values.activity)
                                 dat.append('participant',values.participant)
                                 dat.append('financial_support',values.financial_support)
@@ -146,6 +156,14 @@ function Edit_activities(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Collaborative Activities</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <TextInput
                                 id="activity"
@@ -189,7 +207,7 @@ function Edit_activities(){
                             />
 
                             <div className="btn">
-                                <button onClick={e=>console.log(e)} type="submit">Update</button>
+                                <button type="submit">Update</button>
                             </div>
                         </Form>
                     </Formik>

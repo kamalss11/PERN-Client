@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_econtent(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [econ,setecon] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_econtent(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const mo = await fetch(`/forms/faculty/e_content/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })            
-            
-            const m = await mo.json()
-            setecon(m)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/e_content/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setecon(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -103,6 +110,7 @@ function Edit_econtent(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${econ ? econ[0].n : ''}`,
                             module: `${econ ? econ[0].module : ''}`,
                             platform: `${econ ? econ[0].platform : ''}`,
                             date: `${econ ? econ[0].date : ''}`,
@@ -127,6 +135,7 @@ function Edit_econtent(){
                                 console.log(img,values.date)
                                 dat.append('image',img)
                                 dat.append('id',econ[0].id)
+                                dat.append('n',values.n)
                                 dat.append('module',values.module)
                                 dat.append('platform',values.platform)
                                 dat.append('date',values.date)
@@ -142,6 +151,14 @@ function Edit_econtent(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit e - Content</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <TextInput
                                 id="module"

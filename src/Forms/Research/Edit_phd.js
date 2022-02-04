@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_phd(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [deg,setDeg] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,18 +34,23 @@ function Edit_phd(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const d = await fetch(`/forms/research/degree/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-
-            const de = await d.json()
-            setDeg(de)
-            console.log(de)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/patents/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setDeg(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -119,6 +125,7 @@ function Edit_phd(){
                     <div className="fo">
                     <Formik
                         initialValues = {{
+                            n: `${deg ? deg[0].n : ''}`,
                             deg: `${deg ? deg[0].deg : ''}`,
                             guide_name: `${deg ? deg[0].guide_name : ''}`,
                             title: `${deg ? deg[0].title : ''}`,
@@ -148,6 +155,7 @@ function Edit_phd(){
                                 console.log(img)
                                 dat.append('image',img)
                                 dat.append('id',deg[0].id)
+                                dat.append('n',values.n)
                                 dat.append('deg',values.deg)
                                 dat.append('guide_name',values.guide_name)
                                 dat.append('title',values.title)
@@ -168,6 +176,14 @@ function Edit_phd(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Ph.D / M.Phil</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <MySelect name="deg" label="Degree">
                                 <option value="">--Degree--</option>

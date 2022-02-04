@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Formik,Form,useField } from 'formik'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,useLocation} from 'react-router-dom'
 import * as Yup from 'yup'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
@@ -10,11 +10,12 @@ import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
 
 function Edit_resource(){
+    const location = useLocation()
     const [img,setimg] = useState()
     const [uData,setUdata] = useState()
     const [rps,setRps] = useState()
     const [men,setMen] = useState(false)
-    const editprofile = `/dashboard/editprofile/${uData ? uData[0].user_id : ''}`
+    const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
@@ -33,17 +34,23 @@ function Edit_resource(){
             const datas = await res.json()
             setUdata(datas.user)
 
-            const mo = await fetch(`/forms/faculty/resource_person/edit/${window.localStorage.getItem('edit')}`,{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })            
-            
-            const m = await mo.json()
-            setRps(m)
+            if(!location.state){
+                history.push('/dashboard/view_staffs')
+            }
+            else{
+                const rps = await fetch(`/forms/research_projects/edit/${location.state.id}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+    
+                const r = await rps.json()
+                console.log(r)
+                setRps(r)
+            }
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -119,6 +126,7 @@ function Edit_resource(){
                     <Formik
                     
                         initialValues = {{
+                            n: `${rps ? rps[0].n : ''}`,
                             sem: `${rps ? rps[0].sem : ''}`,
                             topic: `${rps ? rps[0].topic : ''}`,
                             event: `${rps ? rps[0].event : ''}`,
@@ -148,6 +156,7 @@ function Edit_resource(){
                                 console.log(img,values.date)
                                 dat.append('image',img)
                                 dat.append('id',rps[0].id)
+                                dat.append('n',values.n)
                                 dat.append('sem',values.sem)
                                 dat.append('topic',values.topic)
                                 dat.append('event',values.event)
@@ -166,6 +175,14 @@ function Edit_resource(){
                     >
                         <Form method="PUT" className="form">
                             <h3>Edit Resource Person</h3>
+                            
+                            <TextInput
+                                id="n"
+                                name="n"
+                                type="text"
+                                label="Name of the Faculty"
+                                // placeholder="Title of the project"
+                            />
 
                             <MySelect name="sem" label="Type">
                                 <option value="">--Select--</option>
