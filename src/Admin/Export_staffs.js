@@ -1264,8 +1264,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1275,7 +1274,8 @@ function Adminlogin(){
                             {field:'amount_sanctioned',title:'Amount Sanctioned',filterPlaceholder:'Filter by Amount Sanctioned'},
                             {field:'amount_received',title:'Amount Received',filterPlaceholder:'Filter by Amount Received'},
                             {field:'funding_agency',title:'Funding Agency',filterPlaceholder:'Filter by Funding Agency'},
-                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
+                            {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},
+                            {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
                         ]} data={rps} title="Research Projects" />
                         
@@ -1289,8 +1289,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1314,8 +1313,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1339,8 +1337,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1361,8 +1358,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1385,8 +1381,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1407,8 +1402,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1427,8 +1421,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1451,8 +1444,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1478,8 +1470,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1503,8 +1494,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1525,8 +1515,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1546,8 +1535,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1567,8 +1555,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1592,8 +1579,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1617,8 +1603,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1639,8 +1624,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1659,8 +1643,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1681,8 +1664,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1705,8 +1687,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1727,8 +1708,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1750,8 +1730,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1775,8 +1754,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1799,8 +1777,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1822,8 +1799,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1842,8 +1818,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1865,8 +1840,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1888,8 +1862,7 @@ function Adminlogin(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1899,7 +1872,7 @@ function Adminlogin(){
                         ]} data={fe} title="E content" />
                         
                     }    
-                </div>                    
+                </div>              
             </div>    
         </div>
     )
