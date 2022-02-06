@@ -26,6 +26,8 @@ function Super_admin(){
     const editprofile = `/dashboard/editprofile`
     const [men,setMen] = useState(false)
     const [sb,setSb] = useState(false)
+    const [act,setAct] = useState(false)
+    const [act2,setAct2] = useState(false)
     const callAboutPage = async () => {
         try{
             const res = await fetch('/dashboard',{
@@ -100,8 +102,8 @@ function Super_admin(){
                                             return(
                                                 <li key={id}>{name} 
                                                     <div>
-                                                        <Link target={'_blank'} onClick={(e)=>{window.localStorage.setItem('dprt',name)}} to={staffs}>Staffs</Link>
-                                                        <Link target={'_blank'} onClick={(e)=>{window.localStorage.setItem('dprt',name)}} to={students}>Students</ Link>
+                                                        <Link target={'_blank'} to={staffs}>Staffs</Link>
+                                                        <Link target={'_blank'} to={students}>Students</ Link>
                                                     </div>
                                                 </li>
                                             )
@@ -111,7 +113,7 @@ function Super_admin(){
                             </div> : 
                             <div style={{margin: '0 10px'}} className='dprt'>
                                 <ul className='dlist'>
-                                    <li className='ss' onClick={e=>setStaff(!staff)}>Staffs<IoMdArrowDropdownCircle className={`${staff ? 'active' : ''}`}/></li>
+                                    <li className={`${act ? 'ss active': 'ss'}`} onClick={()=>{setStaff(!staff);setAct(!act);setAct2(false);setStudent(false)}}>Staffs<IoMdArrowDropdownCircle className={`${staff ? 'active' : ''}`}/></li>
                                         <div className={staff ? 'tb1 active' : 'tb1'}>
                                             <h4>Research</h4>
                                             {
@@ -177,7 +179,7 @@ function Super_admin(){
                                                 })
                                             }
                                         </div>
-                                    <li className='ss' onClick={e=>setStudent(!student)}>Students <IoMdArrowDropdownCircle className={`${student ? 'active' : ''}`}/></li>
+                                    <li className={`${act2 ? 'ss active': 'ss'}`} onClick={()=>{setStudent(!student);setAct2(!act2);setAct(false);setStaff(false)}}>Students <IoMdArrowDropdownCircle className={`${student ? 'active' : ''}`}/></li>
                                         <div className={student ? 'tb2 active' : 'tb2'}>
                                             <h4>Student Details</h4>
                                             {

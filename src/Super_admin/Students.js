@@ -620,8 +620,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -642,8 +641,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -668,8 +666,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
+                            backgroundColor: '#283d7f',
                             color: '#fff'
                         }}} columns={[
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -692,7 +689,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
+                            backgroundColor: '#283d7f',
                             backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
@@ -718,7 +715,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
+                            backgroundColor: '#283d7f',
                             backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
@@ -743,7 +740,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
+                            backgroundColor: '#283d7f',
                             backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
@@ -765,7 +762,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
+                            backgroundColor: '#283d7f',
                             backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
@@ -788,7 +785,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
+                            backgroundColor: '#283d7f',
                             backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
@@ -809,7 +806,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
+                            backgroundColor: '#283d7f',
                             backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
@@ -833,7 +830,7 @@ function Students(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#0093E9',
+                            backgroundColor: '#283d7f',
                             backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[

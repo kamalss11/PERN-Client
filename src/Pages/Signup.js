@@ -12,6 +12,8 @@ import {TiArrowSortedUp} from 'react-icons/ti'
 import {IoMdArrowDropdownCircle} from 'react-icons/io'
 import {RiUser3Fill} from 'react-icons/ri'
 import {AiFillCloseCircle} from 'react-icons/ai'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css';
 
 function Signup(){
     const history = useHistory()
@@ -23,6 +25,7 @@ function Signup(){
     const [select2,setSelect2] = useState('Select Roll')
     const [drp2,Setdrp2] = useState(false)
     const [er2,setEr2] = useState(false)
+    const [value, onChange] = useState(new Date());
 
     // const callAboutPage = async () => {
     //     try{
@@ -121,7 +124,8 @@ function Signup(){
                                 name: '',
                                 email: '',
                                 password: '',
-                                confirm_Password: ''
+                                confirm_Password: '',
+                                date: ''
                             }}
                             validationSchema = {
                                 Yup.object({
@@ -252,6 +256,8 @@ function Signup(){
                                     type="password"
                                     placeholder="Re-enter Password"
                                 />
+                                
+                                <DatePicker calendarClassName='class1' selected={value} onChange={onChange} value={value} />
 
                                 <div className="btn">
                                     {
