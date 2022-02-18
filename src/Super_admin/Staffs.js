@@ -7,6 +7,9 @@ import MaterialTable from 'material-table'
 import {FaFileWord} from 'react-icons/fa'
 import {IoMdArrowDropdownCircle,IoMdArrowRoundBack} from 'react-icons/io'
 import Department_list from '../Datas/Department_list'
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 function Staffs(){
     const export_all = ()=>{
@@ -87,7 +90,7 @@ function Staffs(){
     const [fe,setFe] = useState([])
     console.log(data)   
 
-    const call_period = async (prd) => {
+    const call_period = async (prd,value) => {
         try{
             const res = await fetch(`/period/${prd}/${department}`,{
                 method: "GET",
@@ -129,6 +132,8 @@ function Staffs(){
             setFdp(s_admin.development_programmes)
             setFoc(s_admin.online_courses)
             setFe(s_admin.e_content)
+            
+            toast.info(value,{autoClose:1000})
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -1240,22 +1245,22 @@ function Staffs(){
                 <p><b>Filter by Period</b></p>
                 <p className='msg' onClick={e=>setDrp(!drp)}>{pvalue ? pvalue : ''}<IoMdArrowDropdownCircle style={{color: '#0093E9'}} className={`${drp ? 'active' : ''}`} /></p>
                 <div className={`${drp ? 'active' : ''}`} style={{backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'}}>
-                    <p onClick={e=>{callAboutPage();setMsg('All');setPvalue('All');setDrp(!drp)}}>All</p>
-                    <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`);setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
-                    <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`);setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>October - December(2019)</p>
-                    <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`);setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('July - September(2019)');setDrp(!drp)}}>January - March(2020)</p>
-                    <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`);setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
-
-                    <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`);setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
-                    <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`);setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
-                    <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`);setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
-                    <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`);setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
-
-                    <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`);setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
-                    <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`);setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
-                    <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`);setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
-                    <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`);setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
+                backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'}}>
+                <p onClick={e=>{callAboutPage();setMsg('All');toast.info("All",{autoClose:1000});setPvalue('All');setDrp(!drp)}}>All</p>
+                <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`,'July - September(2019)');setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
+                <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`,'October - December(2019)');setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('October - December(2019)');setDrp(!drp)}}>October - December(2019)</p>
+                <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`,'January - March(2020)');setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('January - March(2020)');setDrp(!drp)}}>January - March(2020)</p>
+                <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`,'April - June(2020)');setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
+            
+                <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`,'July - September(2020)');setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
+                <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`,'October - December(2020)');setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
+                <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`,'January - March(2021)');setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
+                <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`,'April - June(2021)');setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
+            
+                <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`,'July - September(2021)');setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
+                <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`,'October - December(2021)');setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
+                <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`,'January - March(2022)');setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
+                <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`,'April - June(2022)');setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
                 </div>
             </div><br />
 
@@ -1274,7 +1279,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field: 'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1287,7 +1293,7 @@ function Staffs(){
                             {field:'fileno',title:'Fileno',filterPlaceholder:'Filter by File No'},
                             {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={rps} title="Research Projects" />
+                        ]} data={rps} title={`Research Projects ( ${rps ? rps.length : '0'} )`} />
                         
                     }    
                 </div>
@@ -1299,7 +1305,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1311,7 +1318,7 @@ function Staffs(){
                             {field:'royalty_received',title:'Royalty Received',filterPlaceholder:'Filter by Royalty Received'},
                             {field:'country',title:'Country',filterPlaceholder:'Filter by Country'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={rpat} title="Patents"  />
+                        ]} data={rpat} title={`Patents ( ${rpat ? rpat.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1323,7 +1330,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1335,7 +1343,7 @@ function Staffs(){
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={rawd} title="Awards for Innovation"  />
+                        ]} data={rawd} title={`Awards for Innovation ( ${rawd ? rawd.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1347,7 +1355,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1356,7 +1365,7 @@ function Staffs(){
                             {field:'external',title:'External',filterPlaceholder:'Filter by External'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={rdeg} title="Ph.D/M.Phil"  />
+                        ]} data={rdeg} title={`Ph.D/M.Phil ( ${rdeg ? rdeg.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1368,7 +1377,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1377,7 +1387,7 @@ function Staffs(){
                             {field:'funding_agency',title:'Funding Agency',filterPlaceholder:'Filter by Funding Agency'},
                             {field:'sanctioned_amount',title:'Amount Sanctioned',filterPlaceholder:'Filter by Amount Sanctioned'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={rfel} title="Fellowship"  />
+                        ]} data={rfel} title={`Fellowship ( ${rfel ? rfel.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1391,7 +1401,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1400,7 +1411,7 @@ function Staffs(){
                             {field:'financial_support',title:'Financial support',filterPlaceholder:'Filter by Financial support'},
                             {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={ca} title="Collaborative Activities"  />
+                        ]} data={ca} title={`Collaborative Activities ( ${ca ? ca.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1412,14 +1423,15 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'partnering_agency',title:'Partnering Agency',filterPlaceholder:'Filter by Partnering Agency'},
                             {field:'period',title:'Period',filterPlaceholder:'Filter by Period'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={clink} title="Linkages"  />
+                        ]} data={clink} title={`Linkages ( ${clink ? clink.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1431,7 +1443,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'name',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1442,7 +1455,7 @@ function Staffs(){
                             {field:'purpose',title:'Purpose',filterPlaceholder:'Filter by Purpose'},
                             {field:'total',title:'Total no. of beneficiaries',filterPlaceholder:'Filter by total'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={cmou} title="Mou's Signed"  />
+                        ]} data={cmou} title={`Mou's Signed ( ${cmou ? cmou.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1454,7 +1467,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1468,7 +1482,7 @@ function Staffs(){
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={econ} title="Conference / Seminar / Symposium / Workshop organized"  />
+                        ]} data={econ} title={`Conference / Seminar / Symposium / Workshop organized ( ${econ ? econ.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1480,7 +1494,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1492,7 +1507,7 @@ function Staffs(){
                             {field:'outcome',title:'Outcome',filterPlaceholder:'Filter by Outcome'},
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={egl} title="Guest Lectures"  />
+                        ]} data={egl} title={`Guest Lectures ( ${egl ? egl.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1504,7 +1519,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1513,7 +1529,7 @@ function Staffs(){
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={eea} title="Extension Activities"  />
+                        ]} data={eea} title={`Extension Activities ( ${eea ? eea.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1525,7 +1541,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1533,7 +1550,7 @@ function Staffs(){
                             {field:'total',title:'Total',filterPlaceholder:'Filter by Total'},
                             {field:'outcome',title:'Outcome',filterPlaceholder:'Filter by Outcome'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={eev} title="Industrial Visits"  />
+                        ]} data={eev} title={`Industrial Visits ( ${eev ? eev.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1545,7 +1562,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1553,7 +1571,7 @@ function Staffs(){
                             {field:'total',title:'Total no. Students',filterPlaceholder:'Filter by Total'},
                             {field:'activity',title:'Nature of activity',filterPlaceholder:'Filter by activity'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={eevs} title="Evs Visits"  />
+                        ]} data={eevs} title={`Evs Visits ( ${eevs ? eevs.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1565,7 +1583,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1575,7 +1594,7 @@ function Staffs(){
                             {field:'total',title:'Total no. Students',filterPlaceholder:'Filter by Total'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={eda} title="Departmental Activities"  />
+                        ]} data={eda} title={`Departmental Activities ( ${eda ? eda.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1589,7 +1608,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1599,7 +1619,7 @@ function Staffs(){
                             {field:'date_sanction',title:'Date sanction',filterPlaceholder:'Filter by Date sanction'},
                             {field:'sponsor',title:'Sponsors',filterPlaceholder:'Filter by Sponsors'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={cps} title="Projects Services"  />
+                        ]} data={cps} title={`Projects Services ( ${cps ? cps.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1613,7 +1633,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1622,7 +1643,7 @@ function Staffs(){
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fhnr} title="Honours and Recognitions"  />
+                        ]} data={fhnr} title={`Honours and Recognitions ( ${fhnr ? fhnr.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1634,14 +1655,15 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'exam',title:'Exam ',filterPlaceholder:'Filter by Exam'},
                             {field:'exam_rollno',title:'Exam Rollno',filterPlaceholder:'Filter by Exam Rollno'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fexm} title="Qualifying in state/ national/ international level examinations"  />
+                        ]} data={fexm} title={`Qualifying in state/ national/ international level examinations ( ${fexm ? fexm.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1653,7 +1675,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1662,7 +1685,7 @@ function Staffs(){
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fbp} title="Books Published"  />
+                        ]} data={fbp} title={`Books Published ( ${fbp ? fbp.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1674,7 +1697,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1685,7 +1709,7 @@ function Staffs(){
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fcc} title="Chapters Contributed"  />
+                        ]} data={fcc} title={`Chapters Contributed ( ${fcc ? fcc.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1697,7 +1721,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1706,7 +1731,7 @@ function Staffs(){
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'isbn_no',title:'ISBN No',filterPlaceholder:'Filter by ISBN No'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fcp} title="Conferece Proceeding"  />
+                        ]} data={fcp} title={`Conferece Proceeding ( ${fcp ? fcp.length : '0'} )`}  />
                         
                     }    
                 </div>   
@@ -1718,7 +1743,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1728,7 +1754,7 @@ function Staffs(){
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},  
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fpp} title="Paper Presentation"  />
+                        ]} data={fpp} title={`Paper Presentation ( ${fpp ? fpp.length : '0'} )`}  />
                         
                     }    
                 </div>  
@@ -1740,7 +1766,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1752,7 +1779,7 @@ function Staffs(){
                             {field:'sci',title:'Sci',filterPlaceholder:'Filter by Sci'},
                             {field:'volume',title:'Volume',filterPlaceholder:'Filter by Volume'},  {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fjp} title="Journal Publications"  />
+                        ]} data={fjp} title={`Journal Publications ( ${fjp ? fjp.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1764,7 +1791,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1775,7 +1803,7 @@ function Staffs(){
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},
                             {field:'programme_outcome',title:'Programme Outcome',filterPlaceholder:'Filter by Programme Outcome'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fcon} title="Conference"  />
+                        ]} data={fcon} title={`Conference ( ${fcon ? fcon.length : '0'} )`}  />
                         
                     }    
                 </div>
@@ -1787,7 +1815,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1797,7 +1826,7 @@ function Staffs(){
                             {field:'venue',title:'Venue',filterPlaceholder:'Filter by Venue'},
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={frp} title="Resource Person" />
+                        ]} data={frp} title={`Resource Person ( ${frp ? frp.length : '0'} )`} />
                         
                     }    
                 </div>
@@ -1809,14 +1838,15 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'f',title:'C',filterPlaceholder:'Filter by C'},
                             {field:'amount_support',title:'Amount Support',filterPlaceholder:'Filter by Amount Support'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={ffs} title="Financial Support" />
+                        ]} data={ffs} title={`Financial Support ( ${ffs ? ffs.length : '0'} )`} />
                         
                     }    
                 </div>
@@ -1828,7 +1858,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1838,7 +1869,7 @@ function Staffs(){
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fdp} title="Development Programmes" />
+                        ]} data={fdp} title={`Development Programmes ( ${fdp ? fdp.length : '0'} )`} />
                         
                     }    
                 </div>
@@ -1850,7 +1881,8 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
@@ -1860,7 +1892,7 @@ function Staffs(){
                             {field:'level',title:'Level',filterPlaceholder:'Filter by Level'},
                             {field:'financial_support',title:'Financial Support',filterPlaceholder:'Filter by Financial Support'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={foc} title="Online Courses" />
+                        ]} data={foc} title={`Online Courses ( ${foc ? foc.length : '0'} )`} />
                         
                     }    
                 </div>
@@ -1872,14 +1904,15 @@ function Staffs(){
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
-                            backgroundColor: '#283d7f',
+                            backgroundColor: '#0093E9',
+                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)',
                             color: '#fff'
                         }}} columns={[
                             {field:'n',title:'Name',filterPlaceholder:'Filter by Name'},
                             {field:'platform',title:'Platform',filterPlaceholder:'Filter by Platform'},
                             {field:'module',title:'Module',filterPlaceholder:'Filter by Module'},{field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={fe} title="E content" />
+                        ]} data={fe} title={`E - content ( ${fe ? fe.length : '0'} )`} />
                         
                     }    
                 </div>                    

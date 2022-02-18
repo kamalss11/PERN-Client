@@ -6,6 +6,9 @@ import '../../../CSS/LS.css'
 import MaterialTable from 'material-table'
 import {FaFileWord} from 'react-icons/fa'
 import {IoMdArrowDropdownCircle,IoMdArrowRoundBack} from 'react-icons/io'
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 function Exams(){
     const export_all = ()=>{
@@ -46,7 +49,7 @@ function Exams(){
     const [msg,setMsg] = useState('All')
     console.log(data)   
 
-    const call_period = async (prd) => {
+    const call_period = async (prd,value) => {
         try{
             const res = await fetch(`/period/overall/students/${prd}/s_exams`,{
                 method: "GET",
@@ -61,6 +64,8 @@ function Exams(){
             console.log(s_admin)
 
             setPlacements(s_admin.placements)
+            
+            toast.info(value,{autoClose:1000})
 
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -74,13 +79,6 @@ function Exams(){
 
     const callAboutPage = async () => {
         try{
-            if(!window.localStorage.getItem('dprt') || window.localStorage.getItem('dprt') === ''){
-                history.push('/super_admin')
-            }
-            // else{
-            //     history.replace(`super_admin/departments/staffs/${window.localStorage.getItem('dprt')}`)
-            // }
-
             const res = await fetch('/dashboard',{
                 method: "GET",
                 headers: {
@@ -156,7 +154,7 @@ function Exams(){
                     }
                 </div>
                 <h2>Student Details</h2>
-                <h4>1.8 Students qualifying in state/ national/ international level examinations</h4>
+                <h4>1.8 Students qualifying in state/ national/ international level examinations ( Total - {placements ? placements.length : '0'} )</h4>
                 <table>
                 <tbody>
                 <tr>
@@ -211,24 +209,23 @@ function Exams(){
             <div className='select'>
             <p><b>Filter by Period</b></p>
             <p className='msg' onClick={e=>setDrp(!drp)}>{pvalue ? pvalue : ''}<IoMdArrowDropdownCircle style={{color: '#0093E9'}} className={`${drp ? 'active' : ''}`} /></p>
-            <div className={`${drp ? 'active' : ''}`} style={{backgroundColor: '#0093E9',
-                            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'}}>
-                    <p onClick={e=>{callAboutPage();setMsg('All');setPvalue('All');setDrp(!drp)}}>All</p>
-                    <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`);setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
-                    <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`);setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>October - December(2019)</p>
-                    <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`);setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('July - September(2019)');setDrp(!drp)}}>January - March(2020)</p>
-                    <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`);setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
+                <div className={`${drp ? 'active exp' : ' exp'}`} style={{backgroundColor: 'rgb(0, 147, 233)' ,backgroundImage: 'linear-gradient(160deg, rgb(0, 147, 233) 0%, rgb(128, 208, 199) 100%)', color: 'rgb(255, 255, 255)',zIndex:20}}>
+                <p onClick={e=>{callAboutPage();setMsg('All');toast.info("All",{autoClose:1000});setPvalue('All');setDrp(!drp)}}>All</p>
+                <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`,'July - September(2019)');setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
+                <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`,'October - December(2019)');setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('October - December(2019)');setDrp(!drp)}}>October - December(2019)</p>
+                <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`,'January - March(2020)');setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('January - March(2020)');setDrp(!drp)}}>January - March(2020)</p>
+                <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`,'April - June(2020)');setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
 
-                    <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`);setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
-                    <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`);setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
-                    <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`);setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
-                    <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`);setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
+                <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`,'July - September(2020)');setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
+                <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`,'October - December(2020)');setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
+                <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`,'January - March(2021)');setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
+                <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`,'April - June(2021)');setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
 
-                    <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`);setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
-                    <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`);setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
-                    <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`);setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
-                    <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`);setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
-            </div>
+                <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`,'July - September(2021)');setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
+                <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`,'October - December(2021)');setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
+                <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`,'January - March(2022)');setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
+                <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`,'April - June(2022)');setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
+                </div>
             </div><br />
 
             <div className="tables">
@@ -257,7 +254,7 @@ function Exams(){
                             {field:'e_roll',title:'Examination Roll No. / Register Number',filterPlaceholder:'Filter by Examination Roll No. / Register Number'},
                             {field:'file',title:'File',render:rowData=><Link to={`/Uploads/${rowData.file}`} target='_blank'>{rowData.file}</Link>,filterPlaceholder:'Filter by File'},
                             {field:'date',title:'Date',filterPlaceholder:'Filter by Date'}
-                        ]} data={placements} title="Students qualifying in state/ national/ international level examinations"  />
+                        ]} data={placements} title={`Students qualifying in state/ national/ international level examinations ( Total - ${placements ? placements.length : '0'} )`}  />
                         
                     }    
                 </div>
