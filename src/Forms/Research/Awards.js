@@ -7,7 +7,10 @@ import {FaUserCircle} from 'react-icons/fa'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Axios from 'axios'
+toast.configure()
 
 function Patent(){
     const [img,setimg] = useState()
@@ -153,7 +156,7 @@ function Patent(){
                                 Axios.post('http://localhost:3000/forms/research/awards_for_innovation',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
-                                    alert("Data Inserted"),
+                                    toast.success("Data Inserted"),
                                     history.push("/dashboard/view_staffs"))
                                 .catch(err => console.log(err))
                             }, 400);
