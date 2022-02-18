@@ -278,13 +278,17 @@
     position: relative;
 }
 
+.Toastify__toast-body > div:last-child{
+    font-size: 13px;
+}
+
 .select p.msg svg{
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 25px;
-    color: var(--sidebar) !important;
+    color: var(--sidebar);
     transition: .6s;
 }
 
@@ -296,14 +300,14 @@
     position: absolute;
     left: 0;
     width: 100%;
-    background: var(--sidebar) !important;
+    background: var(--sidebar);
     box-shadow: 0 0 10px rgba(0,0,0,.1);
     border-radius: 10px;
     height: 0;
     pointer-events: none;
     overflow: scroll;
     color: var(--white);
-    z-index: 15;
+    z-index: 9;
     transition: .6s;
 }
 
@@ -332,6 +336,10 @@
     color: var(--yellow);
     background: rgba(255,255,255,.3);
     box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+.select div.exp p:hover{
+    color: var(--white);
 }
 
 .boxes{
@@ -499,6 +507,14 @@
     color: var(--white);
     padding: 15px;
     border: none;
+    display: flex;
+    align-items: center;
+}
+
+.about .content form .btn button i{
+    font-size: 14px;
+    color: var(--yellow);
+    margin-left: 10px;
 }
 
 .research h4{

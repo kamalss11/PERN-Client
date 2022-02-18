@@ -1,9 +1,11 @@
 .details{
-    margin: 85px 0 10px;
+    margin: 0px 0 10px;
 }
 
-.details h3{
+.details h4{
+    margin: 10px 0;
     text-align: center;
+    color: var(--sidebar);
 }
 
 .details .tab{
@@ -11,17 +13,27 @@
 }
 
 .shdr{
+    margin: 20px 0;
     position: relative;
     display: flex;
     align-items: center;
+    border: 1px solid var(--sidebar);
 }
 
 .shdr li{
+    font-size: 14px;
     cursor: pointer;
     padding: 15px 0;
     width: 140px;
     text-align: center;
-    transition: 1s;
+    color: var(--fntgry);
+    transition: .5s;
+}
+
+.shdr li.active{
+    font-weight: bold;
+    color: var(--yellow);
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
 }
 
 .shdr li.slide{
@@ -29,9 +41,7 @@
     top: 0;
     height: 100%;
     width: 140px;
-    background-color: lightskyblue;
-    color: black;
-    transition: .5s;
+    background: var(--sidebar);
     z-index: -1;
 }
 
@@ -40,7 +50,7 @@
 }
 
 .shdr li:nth-child(2).active ~ .slide{
-    left: 140px;
+    left: 140px;   
 }
 
 .dprt .dlist li{
@@ -48,30 +58,91 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px;
-    border: .5px solid gray;
+    padding: 18px;
+    color: var(--fntgry);
+    background: var(--white);
+    box-shadow: 0 0 20px rgba(0,0,0,.1);
     border-radius: 5px;
-    margin: 10px 0;
+    margin: 20px 0;
+    position: relative;
+}
+
+.dprt .dlist li::before{
+    content: "";
+    font-size: 1rem;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 10px solid var(--yellow);
+    /* left: 13px;
+    top: -9px; */
+    left: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .4s;
+}
+
+.dprt .dlist li.ss{
+    cursor: pointer;
+}
+
+.dprt .dlist li.ss.active::before{
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.dprt .dlist li.ss svg{
+    font-size: 20px;
+    color: var(--sidebar);
+    transition: .4s;
+}
+
+.dprt .dlist li.ss svg.active{
+    transform: rotate(180deg);
 }
 
 .dprt .dlist li div a{
-    padding: 5px 10px;
-    border-radius: 7px;
-    background-color: brown;
-    color: wheat;
+    padding: 8px 15px;
+    border-radius: 3px;
+    background-color: var(--sidebar);
+    color: var(--white);
     margin: 0 7px;
     font-size: 13px;
+    transition: .4s;
+}
+
+.dprt .dlist li div a:hover{
+    color: var(--yellow);
 }
 
 .tb1,.tb2{
     height: 0;
     opacity: 0;
-    transition: .5s;
     pointer-events: none;
+    padding: 15px 20px;
+    box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+    background: var(--white);
+    text-align: left;
+    transition: .5s;
+}
+
+.tb1 a,.tb2 a{
+    display: block;
+    font-size: 15px;
+    line-height: 30px;
+    color: var(--fntgry);
 }
 
 .tb1.active,.tb2.active{
-    height: 532px;
     opacity: 1;
     pointer-events: all;
+}
+
+.tb1.active{
+    height: 1815px;
+}
+
+.tb2.active{
+    height: 620px;
 }
