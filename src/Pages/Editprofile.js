@@ -7,10 +7,13 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import { CgMenuRight } from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
+import { toast } from "react-toastify";
 
 function Editprofile(){
     const [uData,setUdata] = useState()
     const [men,setMen] = useState(false)
+    const [btnld,Setbtnld] = useState(false)
+    const [btnld2,Setbtnld2] = useState(false)
     const [sb,setSb] = useState(false)
     const editprofile = `/dashboard/editprofile`
     console.log(uData)
@@ -126,6 +129,7 @@ function Editprofile(){
 
                             onSubmit={(values, { setSubmitting,resetForm }) => {
                                 setTimeout(async () => {
+                                    Setbtnld(true)
                                     const res = await fetch(`/dashboard/editprofile/${uData[0].user_id}`,{
                                         method: "PUT",
                                         headers: {
@@ -133,21 +137,20 @@ function Editprofile(){
                                         },
                                         body: JSON.stringify({
                                             name : values.name,
-                                            password: values.password,
-                                            cpassword: values.cpassword,
-                                            ppassword: values.ppassword,
-                                            hashpassword: values.hashpassword
+                                            email : values.email
                                         })
                                     })
         
                                     const data = await res.json()
                                     if(res.status === 422 || !data){
-                                        window.alert(`${data.error}`)
+                                        toast.error(`${data.error}`,{autoClose:1000})
+                                        Setbtnld(false)
                                     }
                                     else{
                                         setSubmitting(false);
                                         resetForm()
-                                        alert("Profile Updated")
+                                        Setbtnld(false)
+                                        toast.success('Profile Updated',{autoClose:1000})
                                         history.push("/dashboard/profile")
                                     }
                                 }, 400);
@@ -167,13 +170,20 @@ function Editprofile(){
                                 <TextInput
                                     id="email"
                                     name="email"
-                                    type="text"
+                                    type="email"
                                     label="Email"
                                     placeholder="Enter your email"
                                 />
 
                                 <div className="btn">
-                                    <button type="submit">Update</button>
+                                    {
+                                        btnld ? 
+                                        <button style={{pointerEvents: 'none'}}><i class="fa fa-spinner fa-spin"></i> Updating
+                                        </button> : 
+
+                                        <button type="submit">Update <i class="fas fa-user-edit"></i>
+                                        </button>
+                                    }
                                 </div>
                             </Form>
                         </Formik>
@@ -207,6 +217,7 @@ function Editprofile(){
 
                             onSubmit={(values, { setSubmitting,resetForm }) => {
                                 setTimeout(async () => {
+                                    Setbtnld2(true)
                                     const res = await fetch(`/dashboard/editprofile/${uData[0].user_id}`,{
                                         method: "PUT",
                                         headers: {
@@ -222,12 +233,14 @@ function Editprofile(){
         
                                     const data = await res.json()
                                     if(res.status === 422 || !data){
-                                        window.alert(`${data.error}`)
+                                        toast.error(`${data.error}`,{autoClose:1000})
+                                        Setbtnld2(false)
                                     }
                                     else{
                                         setSubmitting(false);
                                         resetForm()
-                                        alert("Password Updated")
+                                        Setbtnld2(false)
+                                        toast.success('Password Changed',{autoClose:1000})
                                         history.push("/logout")
                                     }
                                 }, 400);
@@ -257,7 +270,14 @@ function Editprofile(){
                                 />  
 
                                 <div className="btn">
-                                    <button type="submit">Update</button>
+                                    {
+                                        btnld2 ? 
+                                        <button style={{pointerEvents: 'none'}}><i class="fa fa-spinner fa-spin"></i> Updating
+                                        </button> : 
+
+                                        <button type="submit">Update <i class="fas fa-user-edit"></i>
+                                        </button>
+                                    }
                                 </div>
                             </Form>
                         </Formik>

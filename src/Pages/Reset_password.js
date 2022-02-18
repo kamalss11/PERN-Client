@@ -7,6 +7,10 @@ import {RiUser3Fill} from 'react-icons/ri'
 import {AiFillLock} from 'react-icons/ai'
 import {RiCloseCircleFill} from 'react-icons/ri'
 import {AiFillCheckCircle} from 'react-icons/ai'
+import {TiArrowSortedUp} from 'react-icons/ti'
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 function Reset_password(){
     const history = useHistory()
@@ -129,7 +133,7 @@ function Reset_password(){
                                     // history.push('/forget_password')
                                 }
                                 else{
-                                    window.localStorage.setItem('email','')
+                                    toast.success('Password Updated',{autoClose:1000})
                                     setSubmitting(false);
                                     resetForm()
                                     history.push('/signin')
@@ -164,7 +168,7 @@ function Reset_password(){
                                     <button style={{pointerEvents: 'none'}}><i class="fa fa-spinner fa-spin"></i> Loading
                                     </button> : 
 
-                                    <button type="submit">Submit</button>
+                                    <button type="submit">Submit <TiArrowSortedUp /></button>
                                 }
                             </div>
                         </Form>

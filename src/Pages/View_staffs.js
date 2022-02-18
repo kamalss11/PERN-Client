@@ -10,6 +10,9 @@ import {AiOutlineLogout} from 'react-icons/ai'
 import { CgMenuRight  } from 'react-icons/cg'
 import {MdDelete,MdEdit} from 'react-icons/md'
 import {FaUserCircle} from 'react-icons/fa'
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 
 function Viewstaffs(){
@@ -122,7 +125,7 @@ function Viewstaffs(){
         }
     }
 
-    const call_period = async (prd) => {
+    const call_period = async (prd,val) => {
         try{
             const res = await fetch(`/period/${prd}/${uData[0].department}`,{
                 method: "GET",
@@ -135,6 +138,11 @@ function Viewstaffs(){
 
             const datas = await res.json()
             console.log(datas)
+
+            if(!res.status === 200){
+                const error = new Error(res.error)
+                throw error
+            }
 
             Setresearch_projects(datas.research_projects)
             Setpatents(datas.patents)
@@ -152,6 +160,7 @@ function Viewstaffs(){
             Setdepartmental_activities(datas.departmental_activities)
             Setprojects_services(datas.projects_services)
             Sethonours(datas.honours)
+            toast.info(val,{autoClose:1000})
             Setexams(datas.exams)
             Setbooks_published(datas.books_published)
             Setchapters_contributed(datas.chapters_contributed)
@@ -164,11 +173,6 @@ function Viewstaffs(){
             Setdevelopment_programmes(datas.development_programmes)
             Setonline_courses(datas.online_courses)
             Sete_content(datas.e_content)
-
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
         }catch(err){
             console.log(err)
             history.push('/signin')
@@ -191,6 +195,7 @@ function Viewstaffs(){
             })
 
             callAboutPage()
+            toast.error("Deleted",{autoClose:1000})
     
             if(!res.status === 200){
                 const error = new Error(res.error)
@@ -251,21 +256,21 @@ function Viewstaffs(){
                                             <p><b>Filter by Period</b></p>
                                             <p className='msg' onClick={e=>setDrp(!drp)}>{pvalue ? pvalue : ''}<IoMdArrowDropdownCircle className={`${drp ? 'active' : ''}`} /></p>
                                             <div className={`${drp ? 'active' : ''}`}>
-                                                <p onClick={e=>{callAboutPage();setMsg('All');setPvalue('All');setDrp(!drp)}}>All</p>
-                                                <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`);setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
-                                                <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`);setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>October - December(2019)</p>
-                                                <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`);setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('July - September(2019)');setDrp(!drp)}}>January - March(2020)</p>
-                                                <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`);setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
+                                                <p onClick={e=>{callAboutPage();setMsg('All');toast.info("All",{autoClose:1000});setPvalue('All');setDrp(!drp)}}>All</p>
+                                                <p onClick={e=>{call_period(`'2019-07-01' and '2019-09-30'`,'July - September(2019)');setMsg(`July (01/07/2019) to September (30/09/2019)`);setPvalue('July - September(2019)');setDrp(!drp)}}>July - September(2019)</p>
+                                                <p onClick={e=>{call_period(`'2019-10-01' and '2019-12-31'`,'October - December(2019)');setMsg(`October (01/10/2019) to December (30/12/2019)`);setPvalue('October - December(2019)');setDrp(!drp)}}>October - December(2019)</p>
+                                                <p onClick={e=>{call_period(`'2020-01-01' and '2020-03-31'`,'January - March(2020)');setMsg(`January (01/01/2020) to March (31/03/2020)`);setPvalue('January - March(2020)');setDrp(!drp)}}>January - March(2020)</p>
+                                                <p onClick={e=>{call_period(`'2020-04-01' and '2020-06-30'`,'April - June(2020)');setMsg(`April (01/04/2020) to June (30/06/2020)`);setPvalue('April - June(2020)');setDrp(!drp)}}>April - June(2020)</p>
 
-                                                <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`);setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
-                                                <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`);setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
-                                                <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`);setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
-                                                <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`);setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
+                                                <p onClick={e=>{call_period(`'2020-07-01' and '2020-09-30'`,'July - September(2020)');setMsg(`July (01/07/2020) to September (30/09/2020)`);setPvalue('July - September(2020)');setDrp(!drp)}}>July - September(2020)</p>
+                                                <p onClick={e=>{call_period(`'2020-10-01' and '2020-12-31'`,'October - December(2020)');setMsg(`October (01/10/2020) to December (30/12/2020)`);setPvalue('October - December(2020)');setDrp(!drp)}}>October - December(2020)</p>
+                                                <p onClick={e=>{call_period(`'2021-01-01' and '2021-03-31'`,'January - March(2021)');setMsg(`January (01/01/2021) to March (31/03/2021)`);setPvalue('January - March(2021)');setDrp(!drp)}}>January - March(2021)</p>
+                                                <p onClick={e=>{call_period(`'2021-04-01' and '2021-06-30'`,'April - June(2021)');setMsg(`April (01/04/2021) to June (30/06/2021)`);setPvalue('April - June(2021)');setDrp(!drp)}}>April - June(2021)</p>
 
-                                                <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`);setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
-                                                <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`);setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
-                                                <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`);setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
-                                                <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`);setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
+                                                <p onClick={e=>{call_period(`'2021-07-01' and '2021-09-30'`,'July - September(2021)');setMsg(`July (01/07/2021) to September (30/09/2021)`);setPvalue('July - September(2021)');setDrp(!drp)}}>July - September(2021)</p>
+                                                <p onClick={e=>{call_period(`'2021-10-01' and '2021-12-31'`,'October - December(2021)');setMsg(`October (01/10/2021) to December (30/12/2021)`);setPvalue('October - December(2021)');setDrp(!drp)}}>October - December(2021)</p>
+                                                <p onClick={e=>{call_period(`'2022-01-01' and '2022-03-31'`,'January - March(2022)');setMsg(`January (01/01/2022) to March (31/03/2022)`);setPvalue('January - March(2022)');setDrp(!drp)}}>January - March(2022)</p>
+                                                <p onClick={e=>{call_period(`'2022-04-01' and '2022-06-30'`,'April - June(2022)');setMsg(`April (01/04/2022) to June (30/06/2022)`);setPvalue('April - June(2022)');setDrp(!drp)}}>April - June(2022)</p>
                                             </div>
                             </div><br />
                                          
@@ -293,7 +298,7 @@ function Viewstaffs(){
                                                                 state: {id: id}
                                                             })} type='link' id={id}><MdEdit />Edit</button>
         
-                                                            <button onClick={e=>Del(id,'research_projects')}><MdDelete />Delete</button>
+                                                            <button onClick={e=>{Del(id,'research_projects')}}><MdDelete />Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -321,7 +326,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/research/patents/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button onClick={e=>Del(id,'patents')}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>{Del(id,'patents')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -349,7 +354,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/research/awards_for_innovation/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button onClick={e=>Del(id,'awards_for_innovation')}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>{Del(id,'awards_for_innovation')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -375,7 +380,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/research/deg/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button onClick={e=>Del(id,'degree')}><MdDelete /> Delete</button>
+                                                            <button onClick={e=>{Del(id,'degree')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -400,7 +405,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/research/fellowship/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Del(id,'fellowship')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'fellowship')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -430,7 +435,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/collaborations/collaborative_activities/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
         
-                                                            <button id={id} onClick={e=>Del(id,'collab_activ')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'collab_activ')}}><MdDelete /> Delete</button>
                                                         </div>
                                             </div>
                                         )
@@ -454,7 +459,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/collaborations/linkages/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Del(id,'linkages')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'linkages')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -482,7 +487,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/collaborations/mou/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Del(id,'mou')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'mou')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
                                                 )
@@ -516,7 +521,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/events/conference/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Del(id,'conference')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'conference')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )
@@ -544,7 +549,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/events/guest_lectures/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Del(id,'guest_lectures')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'guest_lectures')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>
         
@@ -597,7 +602,7 @@ function Viewstaffs(){
                                                                 pathname: `/forms/events/industrial_visits/edit`,
                                                                 state: {id: id}})} type='link' id={id}><MdEdit /> Edit</button>
                                                             
-                                                            <button id={id} onClick={e=>Del(id,'industrial_visits')}><MdDelete /> Delete</button>
+                                                            <button id={id} onClick={e=>{Del(id,'industrial_visits')}}><MdDelete /> Delete</button>
                                                         </div>
                                                     </div>                                            
                                                 )

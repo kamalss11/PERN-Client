@@ -135,7 +135,7 @@ function Signin(){
                                 <h3>SignIn</h3>
                             </div>
 
-                            {ers ? <p className='se'><AiFillCloseCircle />{ers}</p> : null}
+                            {ers ? <p className='se err'><AiFillCloseCircle />{ers}</p> : null}
 
                             <TextInput
                                 icon={<IoPerson/>}

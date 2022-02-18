@@ -12,7 +12,7 @@ function Not(){
                 <h2>404</h2>
                 <h4>Oops! Page Not Found</h4>
                 <p>The Page you were looking for doesn't exists.You may have mistyped the address or the page may have moved</p>
-                <Link to='/'>Back</Link>
+                <Link to='/'>Home</Link>
             </div>
             </div>
         </div>
