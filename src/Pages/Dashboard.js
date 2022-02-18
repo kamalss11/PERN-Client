@@ -36,7 +36,7 @@ function Dashboard(){
             setUdata(datas.user)
 
             if(res.status != 200){
-                history.push('/signin')
+                history.push('/all_registers')
             }
 
             if(datas.user[0].roll === 'SuperAdmin'){
