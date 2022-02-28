@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { Formik,Form,useField } from 'formik'
-import * as Yup from 'yup'
+import { useField } from 'formik'
 import { Link,useHistory,useParams } from 'react-router-dom'
 import '../CSS/LS.css'
 import MaterialTable from 'material-table'
@@ -42,6 +41,59 @@ function Students(){
         else link.click();  // other browsers
         document.body.removeChild(link);
     }
+    
+    const callAboutPage = async () => {
+        try{
+            const res = await fetch('/dashboard',{
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
+            })
+
+            const datas = await res.json()
+            console.log(datas)
+            setData(datas.user)
+
+            if(datas.user[0].roll != 'SuperAdmin'){
+                history.push('/signin')
+            }
+            else{
+                const ad = await fetch(`/super_admin/departments/students/${department}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include',
+                })
+    
+                const s_admin = await ad.json()
+                console.log(s_admin)
+
+                setPlacements(s_admin.placements)
+                setPublications(s_admin.publications)
+                setPaper(s_admin.paper_presentation)
+                setConference(s_admin.conference)
+                setCompetition(s_admin.competition)
+                setTraining(s_admin.training)
+                setProjectwork(s_admin.projectwork)
+                setExams(s_admin.exams)
+                setOnline_courses(s_admin.online_courses)
+                setAchievements(s_admin.achievements)
+            }
+            
+            if(!res.status === 200){
+                const error = new Error(res.error)
+                throw error
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     const history = useHistory()
     const {department} = useParams()
     function departments(dprt){
@@ -108,76 +160,9 @@ function Students(){
         }
     }
 
-    const callAboutPage = async () => {
-        try{
-            const res = await fetch('/dashboard',{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include',
-            })
-
-            const datas = await res.json()
-            console.log(datas)
-            setData(datas.user)
-
-            if(datas.user[0].roll != 'SuperAdmin'){
-                history.push('/signin')
-            }
-            else{
-                const ad = await fetch(`/super_admin/departments/students/${department}`,{
-                    method: "GET",
-                    headers: {
-                        Accept: 'application/json',
-                        "Content-Type": "application/json"
-                    },
-                    credentials: 'include',
-                })
-    
-                const s_admin = await ad.json()
-                console.log(s_admin)
-
-                setPlacements(s_admin.placements)
-                setPublications(s_admin.publications)
-                setPaper(s_admin.paper_presentation)
-                setConference(s_admin.conference)
-                setCompetition(s_admin.competition)
-                setTraining(s_admin.training)
-                setProjectwork(s_admin.projectwork)
-                setExams(s_admin.exams)
-                setOnline_courses(s_admin.online_courses)
-                setAchievements(s_admin.achievements)
-            }
-            
-            if(!res.status === 200){
-                const error = new Error(res.error)
-                throw error
-            }
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    const MySelect = ({ label, ...props }) => {
-        const [field, meta] = useField(props);
-        return (
-            <div className="fields">
-                <label htmlFor={props.id || props.name}>{label}</label>
-                <select {...field} {...props} />
-                {
-                    meta.touched && meta.error ?(
-                        <p className="error">{meta.error}</p>
-                    ):null
-                }
-            </div>
-        )
-    }
-
     useEffect(() => {
         callAboutPage()
-    },[])
+    },[history])
     return(
         <div className="iqac">
             <div id="docx" style={{display:'none'}}>

@@ -1,11 +1,11 @@
-import React,{ useContext, useEffect, useState} from 'react'
+import React,{ useEffect, useState} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import '../CSS/About.css'
 import '../CSS/Super_admin.css'
 import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import {CgMenuRight} from 'react-icons/cg'
-import Sa_sidebar from '../Components/Sidebar'
+import Sasidebar from '../Components/Sidebar'
 import Department_list from '../Datas/Department_list'
 import Student_details from '../Datas/student_details'
 import research from '../Datas/research'
@@ -18,7 +18,7 @@ import {IoMdArrowDropdownCircle} from 'react-icons/io'
 
 
 function Super_admin(){
-    const history = useHistory()
+    var history = useHistory()
     const [staff,setStaff] = useState(false)    
     const [student,setStudent] = useState(false)
     const [tabind,setTabind] = useState(1)
@@ -28,41 +28,41 @@ function Super_admin(){
     const [sb,setSb] = useState(false)
     const [act,setAct] = useState(false)
     const [act2,setAct2] = useState(false)
-    const callAboutPage = async () => {
-        try{
-            const res = await fetch('/dashboard',{
-                method: "GET",
-                headers: {
-                    Accept: 'application/json',
-                    "Content-Type": "application/json"
-                },
-                credentials: 'include'
-            })
-    
-            const datas = await res.json()
-            console.log(datas)
-            setUdata(datas.user)
-    
-            if(datas.user[0].roll != 'SuperAdmin'){
-                history.push('/signin')
-            }
-    
-            if(!res.status === 200){
-                window.alert(`${res.error}`)
-                history.push('/signin')
-            }
-        }catch(err){
-            console.log(err)
-            history.push('/signin')
-        }
-    }
     
     useEffect(()=>{
+        const callAboutPage = async () => {
+            try{
+                const res = await fetch('/dashboard',{
+                    method: "GET",
+                    headers: {
+                        Accept: 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: 'include'
+                })
+        
+                const datas = await res.json()
+                console.log(datas)
+                setUdata(datas.user)
+        
+                if(datas.user[0].roll !== 'SuperAdmin'){
+                    history.push('/signin')
+                }
+        
+                if(!res.status === 200){
+                    window.alert(`${res.error}`)
+                    history.push('/signin')
+                }
+            }catch(err){
+                console.log(err)
+                history.push('/signin')
+            }
+        }
         callAboutPage()
-    },[])
+    },[history])
     return(
         <>
-            <Sa_sidebar dactive="active" sb={sb} set={setSb} />
+            <Sasidebar dactive="active" sb={sb} set={setSb} />
             <div className={`about ${sb ? 'activate' : ''}`}>
                 <div className="content">
                     <div className={`hdr ${sb ? 'activate' : ''}`}>
@@ -86,14 +86,14 @@ function Super_admin(){
 
                         <div className='tab' style={{display: 'flex',justifyContent: 'center'}}>
                             <ul className='shdr'>
-                                <li onClick={e=>setTabind('1')} className={tabind == '1' ? 'active' : null}>Departments</li>
-                                <li onClick={e=>setTabind('2')} className={tabind == '2' ? 'active' : null}>Overall</li>
+                                <li onClick={e=>setTabind('1')} className={tabind === '1' ? 'active' : null}>Departments</li>
+                                <li onClick={e=>setTabind('2')} className={tabind === '2' ? 'active' : null}>Overall</li>
                                 <li className='slide'></li>
                             </ul>
                         </div>
 
                         {
-                            tabind == 1 ? 
+                            tabind === 1 ? 
                             <div style={{margin: '0 10px'}} className='dprt'>
                                 <ul className='dlist'>
                                     {

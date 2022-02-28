@@ -165,7 +165,7 @@ function Signin(){
                     </Formik>     
                       
                     <p className='bt'>
-                        <Link to={'/all_registers'}>Signup ?</Link>
+                        <Link to={'/forget_password'}>Forget Password ?</Link>
                     </p>                                  
                 </div>
             </div>
