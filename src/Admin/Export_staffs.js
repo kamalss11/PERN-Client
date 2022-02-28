@@ -1,6 +1,4 @@
 import React,{useEffect, useState} from 'react'
-import { Formik,Form,useField } from 'formik'
-import * as Yup from 'yup'
 import { Link,useHistory } from 'react-router-dom'
 import MaterialTable from 'material-table'
 import {FaFileWord} from 'react-icons/fa'
@@ -204,21 +202,6 @@ function Adminlogin(){
             console.log(err)
             history.push('/signin')
         }
-    }
-
-    const MySelect = ({ label, ...props }) => {
-        const [field, meta] = useField(props);
-        return (
-            <div className="fields">
-                <label htmlFor={props.id || props.name}>{label}</label>
-                <select {...field} {...props} />
-                {
-                    meta.touched && meta.error ?(
-                        <p className="error">{meta.error}</p>
-                    ):null
-                }
-            </div>
-        )
     }
 
     useEffect(() => {
