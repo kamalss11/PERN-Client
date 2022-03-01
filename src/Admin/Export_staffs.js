@@ -1242,7 +1242,7 @@ function Adminlogin(){
                 <div style={{display: 'flex',justifyContent: 'space-between',margin: '0 0 15px'}}>
                     <p style={{cursor:'pointer',color: '#0093E9'}} className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
                     
-                    <Link to="/super_admin" style={{color: "#ff7295", display:'flex',alignItems:'center'}}><IoMdArrowRoundBack />Back</Link>
+                    <Link to="/dashboard/view_staffs" style={{color: "#ff7295", display:'flex',alignItems:'center'}}><IoMdArrowRoundBack />Back</Link>
                 </div>
                 <h3>Research</h3>
                 

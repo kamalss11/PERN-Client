@@ -602,14 +602,15 @@ function Export_student(){
                 <div style={{display: 'flex',justifyContent: 'space-between',margin: '0 0 15px'}}>
                     <p style={{cursor:'pointer',color: '#0093E9'}} className="expall" onClick={e=>export_all()}><FaFileWord />Export All</p>
                     
-                    <Link to="/super_admin" style={{color: "#ff7295", display:'flex',alignItems:'center'}}><IoMdArrowRoundBack /> Back</Link>
+                    <Link to="/dashboard/view_students" style={{color: "#ff7295", display:'flex',alignItems:'center'}}><IoMdArrowRoundBack /> Back</Link>
                 </div>
                 <h3>Student Details</h3>
                 
                 {/* Placements */}
                 <div className="table">
                     {
-                        <MaterialTable options={{filtering:true,paging:true,pageSize:3,pageSizeOptions:[2,3,5,10,15,20,25],paginationType:'stepped',showFirstLastPageButtons:false,exportButton:{csv:true,pdf:true,excel:true},rowStyle: {
+                        <MaterialTable options={{filtering:true,paging:true,pageSize:3,
+                            paginationType:'stepped',showFirstLastPageButtons:false,exportButton:{csv:true,pdf:true,excel:true},rowStyle: {
                             backgroundColor: '#EEE',
                         },
                         headerStyle: {
