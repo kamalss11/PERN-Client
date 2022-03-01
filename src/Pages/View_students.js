@@ -169,7 +169,7 @@ function Viewstudents(){
     },[])
     return (
         <>    
-        <Sidebar exp={exp} sb={sb} set={setSb} />
+        <Sidebar stu={exp} sb={sb} set={setSb} />
         <div className={`about ${sb ? 'activate' : ''}`}>
             <div className="content">
                 <div className={`hdr ${sb ? 'activate' : ''}`}>

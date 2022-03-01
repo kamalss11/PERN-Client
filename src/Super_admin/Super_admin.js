@@ -86,8 +86,8 @@ function Super_admin(){
 
                         <div className='tab' style={{display: 'flex',justifyContent: 'center'}}>
                             <ul className='shdr'>
-                                <li onClick={e=>setTabind('1')} className={tabind === '1' ? 'active' : null}>Departments</li>
-                                <li onClick={e=>setTabind('2')} className={tabind === '2' ? 'active' : null}>Overall</li>
+                                <li onClick={e=>setTabind(1)} className={tabind === 1 ? 'active' : null}>Departments</li>
+                                <li onClick={e=>setTabind(2)} className={tabind === 2 ? 'active' : null}>Overall</li>
                                 <li className='slide'></li>
                             </ul>
                         </div>
