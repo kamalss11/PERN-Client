@@ -207,7 +207,7 @@ function Edit_Paper_presentation(){
                             <TextInput
                                 id="financial_support"
                                 name="financial_support"
-                                type="text"
+                                type="number"
                                 label="Financial support  from the College(Rs.)"
                             />
 

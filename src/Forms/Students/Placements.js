@@ -110,7 +110,6 @@ function Placements(){
                             date: '',
                             n: '',
                             annual_package: '',
-                            department: '',
                             image: ''
                         }}
 

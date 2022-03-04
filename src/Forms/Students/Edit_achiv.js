@@ -43,7 +43,7 @@ function Edit_achiv(){
                 history.push('/dashboard/view_staffs')
             }
             else{
-                const rps = await fetch(`/forms/s_onlinecourses/edit/${location.state.id}`,{
+                const rps = await fetch(`/forms/s_achievements/edit/${location.state.id}`,{
                     method: "GET",
                     headers: {
                         Accept: 'application/json',
