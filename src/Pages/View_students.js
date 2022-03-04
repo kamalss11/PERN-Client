@@ -63,7 +63,7 @@ function Viewstudents(){
                 })
     
                 const s_admin = await ad.json()
-                console.log(s_admin)
+                console.log(s_admin,'66')
 
                 setPlacements(s_admin.placements)
                 setPublications(s_admin.publications)
@@ -499,7 +499,7 @@ function Viewstudents(){
                                                         <p><b>File Uploaded :</b> { file ? <a href={`/Uploads/${file}`} target='_blank' type='application/pdf'>{file}</a> : 'NIL'}</p>   
                                                         <div className="btn">
                                                             <button onClick={e=>history.push({
-                                                                pathname: `/forms/student/s_achivements/edit`,
+                                                                pathname: `/forms/student/s_achievements/edit`,
                                                                 state: {id: id}
                                                             })} type='link' id={id}><MdEdit />Edit</button>
                                                             
