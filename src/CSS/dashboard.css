@@ -511,6 +511,12 @@
     align-items: center;
 }
 
+.about .content form .btn button svg{
+    color: var(--yellow);
+    margin-left: 10px;
+    transform: rotate(0deg) !important;
+}
+
 .about .content form .btn button i{
     font-size: 14px;
     color: var(--yellow);
