@@ -11,7 +11,10 @@ import { useState } from 'react'
 import {TiArrowSortedUp} from 'react-icons/ti'
 import {IoMdArrowDropdownCircle} from 'react-icons/io'
 import {RiUser3Fill} from 'react-icons/ri'
-import {AiFillCloseCircle} from 'react-icons/ai'
+// import {AiFillCloseCircle} from 'react-icons/ai'
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 function Signup(){
     const history = useHistory()
@@ -150,10 +153,12 @@ function Signup(){
                                         const data = await res.json()
                                         if(res.status === 422 || !data){
                                             Setbtnld(false)
-                                            Seters(data.error)
+                                            // Seters(data.error)
+                                            toast.error(data.error,{autoClose: 1000})
                                         }
                                         else{
-                                            window.alert("Registration Successfull")
+                                            // window.alert("Registration Successfull")
+                                            toast.success('Registration Successful',{autoClose:1000})
                                             setSubmitting(false);
                                             resetForm()
                                             history.push('/signin')
@@ -168,7 +173,7 @@ function Signup(){
                                     <h3>SignUp</h3>
                                 </div>
 
-                                {ers ? <p className='se err'><AiFillCloseCircle />{ers}</p> : null}
+                                {/* {ers ? <p className='se err'><AiFillCloseCircle />{ers}</p> : null} */}
 
                                 <TextInput icon={<IoPerson/>}
                                     name="name"

@@ -8,6 +8,9 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
+import 'react-toastify/dist/ReactToastify.css'
+import {toast} from 'react-toastify'
+toast.configure()
 
 function Edit_Paper_presentation(){
     const location = useLocation()
@@ -18,6 +21,7 @@ function Edit_Paper_presentation(){
     const editprofile = `/dashboard/editprofile`
     console.log(uData)
     const [sb,setSb] = useState(false)
+    const [up,Setup] = useState(false)
     const history = useHistory()
 
     const callAboutPage = async () => {
@@ -166,8 +170,7 @@ function Edit_Paper_presentation(){
                                 Axios.put('http://localhost:3000/forms/student/s_paper_presentation/edit',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
-                                    window.localStorage.setItem('edit',''),
-                                    alert("Data Updated"),
+                                    toast.success("Data Updated",{autoClose: 1000}),
                                     history.push("/dashboard/view_students"))
                                 .catch(err => console.log(err))
                             },600)
@@ -244,11 +247,14 @@ function Edit_Paper_presentation(){
                                 name="date"
                                 type="date"
                                 label="Date of Happen"
-                            />
+                            />                      
 
                             <div className="btn">
-                                {/* <button type="reset">Reset</button> */}
-                                <button type="submit">Save</button>
+                                {
+                                    up ? 
+                                    <button style={{pointerEvents: 'none'}}>Update <i class="fa fa-spinner fa-spin"></i></button> : 
+                                    <button onClick={e=>Setup(!up)} type="submit">Update <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg></button>
+                                }
                             </div>
                         </Form>
                     </Formik>

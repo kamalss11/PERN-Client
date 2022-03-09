@@ -6,8 +6,12 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
+import {IoSave} from 'react-icons/io5'
+import 'react-toastify/dist/ReactToastify.css'
+import {toast} from 'react-toastify'
 import {CgMenuRight} from 'react-icons/cg'
 import {FaUserCircle} from 'react-icons/fa'
+toast.configure()
 
 function Projects_services(){
     const [img,setimg] = useState()
@@ -17,6 +21,7 @@ function Projects_services(){
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
+    const [save,Setsave] = useState(false)
 
     const callAboutPage = async () => {
         try{
@@ -146,7 +151,7 @@ function Projects_services(){
                                 Axios.post('http://localhost:3000/forms/consultancy/projects_services',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
-                                    alert("Data Inserted"),
+                                    toast.success("Data Inserted",{autoClose:1000}),
                                     history.push("/dashboard/view_staffs"))
                                 .catch(err => console.log(err))
                             }, 400);
@@ -210,7 +215,12 @@ function Projects_services(){
                             />
 
                             <div className="btn">
-                                <button type="submit">Save</button>
+                                {/* <button type="reset">Reset</button> */}
+                                {
+                                    save ? 
+                                    <button style={{pointerEvents: 'none'}}>Save <i class="fa fa-spinner fa-spin"></i></button> : 
+                                    <button onClick={e=>Setsave(!save)} type="submit">Save <IoSave/></button> 
+                                }
                             </div>
                         </Form>
                     </Formik>

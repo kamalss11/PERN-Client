@@ -6,7 +6,9 @@ import '../CSS/LS.css'
 import {IoPerson} from 'react-icons/io5'
 import {AiFillLock} from 'react-icons/ai'
 import {TiArrowSortedUp} from 'react-icons/ti'
-import {AiFillCloseCircle} from 'react-icons/ai'
+import 'react-toastify/dist/ReactToastify.css'
+import {toast} from 'react-toastify'
+toast.configure()
 
 function Signin(){
     const history = useHistory()
@@ -117,8 +119,10 @@ function Signin(){
                                 if(res.status === 400 || !data){
                                     Setbtnld(false)
                                     Seters(data.error)
+                                    toast.error(data.error,{autoClose:1000})
                                 }
                                 else{
+                                    toast.success('Signin Successful',{autoClose:1000})
                                     setSubmitting(false);
                                     resetForm()
                                     if(data.login[0].roll === 'User') 
@@ -135,7 +139,7 @@ function Signin(){
                                 <h3>SignIn</h3>
                             </div>
 
-                            {ers ? <p className='se err'><AiFillCloseCircle />{ers}</p> : null}
+                            {/* {ers ? <p className='se err'><AiFillCloseCircle />{ers}</p> : null} */}
 
                             <TextInput
                                 icon={<IoPerson/>}

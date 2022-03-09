@@ -8,6 +8,10 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
+import {IoSave} from 'react-icons/io5'
+import 'react-toastify/dist/ReactToastify.css'
+import {toast} from 'react-toastify'
+toast.configure()
 
 function Paper_presentation(){
     const [uData,setUdata] = useState()
@@ -17,6 +21,7 @@ function Paper_presentation(){
     console.log(uData)
     const [sb,setSb] = useState(false)
     const history = useHistory()
+    const [save,Setsave] = useState(false)
 
     const callAboutPage = async () => {
         try{
@@ -146,7 +151,7 @@ function Paper_presentation(){
                                 Axios.post('http://localhost:3000/forms/student/s_paper_presentation',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
-                                    alert("Data Inserted"),
+                                    toast.success("Data Inserted",{autoClose:1000}),
                                     history.push("/dashboard/view_students"))
                                 .catch(err => console.log(err))
                             },600)
@@ -220,7 +225,11 @@ function Paper_presentation(){
 
                             <div className="btn">
                                 {/* <button type="reset">Reset</button> */}
-                                <button type="submit">Save</button>
+                                {
+                                    save ? 
+                                    <button style={{pointerEvents: 'none'}}>Save <i class="fa fa-spinner fa-spin"></i></button> : 
+                                    <button onClick={e=>Setsave(!save)} type="submit">Save <IoSave/></button> 
+                                }
                             </div>
                         </Form>
                     </Formik>

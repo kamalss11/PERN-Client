@@ -8,6 +8,10 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import {AiOutlineLogout} from 'react-icons/ai'
 import Sidebar from '../../Components/Sidebar'
 import Axios from 'axios'
+import {IoSave} from 'react-icons/io5'
+import 'react-toastify/dist/ReactToastify.css'
+import {toast} from 'react-toastify'
+toast.configure()
 
 function Evs(){
     const [img,setimg] = useState()
@@ -17,6 +21,7 @@ function Evs(){
     console.log(uData)
     const history = useHistory()
     const [sb,setSb] = useState(false)
+    const [save,Setsave] = useState(false)
 
     const callAboutPage = async () => {
         try{
@@ -126,7 +131,7 @@ function Evs(){
                                 Axios.post('http://localhost:3000/forms/events/evs',dat)
                                 .then(res => console.log(res),setSubmitting(false),
                                     resetForm(),
-                                    alert("Data Inserted"),
+                                    toast.success("Data Inserted",{autoClose:1000}),
                                     history.push("/dashboard/view_staffs"))
                                 .catch(err => console.log(err))
                             }, 400);
@@ -177,7 +182,12 @@ function Evs(){
                             />
 
                             <div className="btn">
-                                <button type="submit">Save</button>
+                                {/* <button type="reset">Reset</button> */}
+                                {
+                                    save ? 
+                                    <button style={{pointerEvents: 'none'}}>Save <i class="fa fa-spinner fa-spin"></i></button> : 
+                                    <button onClick={e=>Setsave(!save)} type="submit">Save <IoSave/></button> 
+                                }
                             </div>
                         </Form>
                     </Formik>
