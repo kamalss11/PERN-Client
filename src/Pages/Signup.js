@@ -10,6 +10,8 @@ import {AiFillLock} from 'react-icons/ai'
 import { useState } from 'react'
 import {TiArrowSortedUp} from 'react-icons/ti'
 import {IoMdArrowDropdownCircle} from 'react-icons/io'
+import {AiFillEye} from 'react-icons/ai'
+import {AiFillEyeInvisible} from 'react-icons/ai'
 import {RiUser3Fill} from 'react-icons/ri'
 // import {AiFillCloseCircle} from 'react-icons/ai'
 import {toast} from 'react-toastify'
@@ -26,6 +28,16 @@ function Signup(){
     const [select2,setSelect2] = useState('Select Roll')
     const [drp2,Setdrp2] = useState(false)
     const [er2,setEr2] = useState(false)
+    const [pstype,Setpstype] = useState('password')
+
+    const Togglepass = ()=>{
+        if(pstype === 'password'){
+            Setpstype('text')
+        }
+        else{
+            Setpstype('password')            
+        }
+    }
 
     const TextInput = ({ label,...props }) => {
         const [field,meta] = useField(props)
@@ -33,9 +45,13 @@ function Signup(){
             <>
                 <div className="fields">
                     <div>
+                        {
+                        label === 'pass' ?
+                        <>
+                            {pstype === 'password' ? <AiFillEyeInvisible onClick={Togglepass} className='sh' /> : <AiFillEye onClick={Togglepass} className='sh'/>}
+                        </>  : ''}
                         {props.icon}
                         <input {...field}{...props}></input>
-                        <label htmlFor={props.id || props.name}>{label}</label>
                     </div>
                     {
                         meta.touched && meta.error ?(
@@ -52,9 +68,9 @@ function Signup(){
         return (
             <div className="fields">
                 <div>
+                    {pstype === 'password' ? <AiFillEyeInvisible onClick={Togglepass} className='sh' /> : <AiFillEye onClick={Togglepass} className='sh'/>}
                     {props.icon}
                     <select {...field} {...props} />
-                    <label htmlFor={props.id || props.name}>{label}</label>
                 </div>
                 {
                     meta.touched && meta.error ?(
@@ -221,8 +237,9 @@ function Signup(){
 
                                 <TextInput icon={<AiFillLock />}
                                     name="password"
-                                    type="password"
+                                    type={pstype}
                                     placeholder="Enter Password"
+                                    label={'pass'}
                                 />
 
                                 <TextInput icon={<AiFillLock />}

@@ -5,6 +5,8 @@ import { Link,useHistory } from 'react-router-dom'
 import '../CSS/LS.css'
 import {IoPerson} from 'react-icons/io5'
 import {AiFillLock} from 'react-icons/ai'
+import {AiFillEye} from 'react-icons/ai'
+import {AiFillEyeInvisible} from 'react-icons/ai'
 import {TiArrowSortedUp} from 'react-icons/ti'
 import 'react-toastify/dist/ReactToastify.css'
 import {toast} from 'react-toastify'
@@ -14,7 +16,16 @@ function Signin(){
     const history = useHistory()
     const [btnld,Setbtnld] = useState(false)
     const [ers,Seters] = useState()
+    const [pstype,Setpstype] = useState('password')
 
+    const Togglepass = ()=>{
+        if(pstype === 'password'){
+            Setpstype('text')
+        }
+        else{
+            Setpstype('password')            
+        }
+    }
     const callAboutPage = async () => {
         try{
             const res = await fetch('/dashboard',{
@@ -27,7 +38,7 @@ function Signin(){
             })
 
             const datas = await res.json()
-            console.log(datas)
+            // console.log(datas)
 
             if(!res.status === 200){
                 console.log(datas.error)
@@ -46,9 +57,12 @@ function Signin(){
             <>
                 <div className="fields">
                     <div>
+                        {label === 'pass' ?
+                        <>
+                            {pstype === 'password' ? <AiFillEyeInvisible onClick={Togglepass} className='sh' /> : <AiFillEye onClick={Togglepass} className='sh'/>}
+                        </>  : ''}
                         {props.icon}
                         <input {...field}{...props}></input>
-                        <label htmlFor={props.id || props.name}>{label}</label>
                     </div>
                     {
                         meta.touched && meta.error ?(
@@ -150,9 +164,10 @@ function Signin(){
 
                             <TextInput
                                 icon={<AiFillLock />}
-                                name="password"
-                                type="password"
-                                placeholder="Enter Password"
+                                type={pstype}
+                                name='password'
+                                placeholder='Enter your password'
+                                label="pass"
                             />
 
                             <div className="btn">
